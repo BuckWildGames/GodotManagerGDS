@@ -9,7 +9,7 @@ Made in Godot 4.3
 
 Inspired by GodotManager: https://github.com/eumario/godot-manager
 
-This project has been made from scratch other, than the Godot icons.
+This project has been made from scratch, other than the Godot icons.
 
 The original is written in C# so no code was used in this project.
 

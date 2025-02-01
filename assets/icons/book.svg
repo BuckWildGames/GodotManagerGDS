@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="73.202286"
+   height="77.143501"
+   fill="none"
+   stroke="currentColor"
+   stroke-width="2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   version="1.1"
+   id="svg9"
+   sodipodi:docname="book.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs13" />
+  <sodipodi:namedview
+     id="namedview11"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="4.3333333"
+     inkscape:cx="63.115385"
+     inkscape:cy="23.884615"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g7" />
+  <rect
+     id="backgroundrect"
+     width="406.67938%"
+     height="350.65225%"
+     x="-12.200378"
+     y="-3.5065258"
+     fill="none"
+     stroke="none"
+     style="stroke-width:7.55256" />
+  <g
+     class="currentLayer"
+     id="g7"
+     transform="matrix(4.0667937,0,0,3.5065227,-12.200381,-3.5065227)">
+    <title
+       id="title3">Layer 1</title>
+    <path
+       d="M 5.734348,17.988451 A 1.9934817,2.0347968 0 0 1 7.7278297,15.953655 H 18.49263"
+       id="svg_1"
+       class=""
+       stroke="#ffffff"
+       stroke-opacity="1"
+       style="stroke-width:1.61123" />
+    <path
+       d="M 7.7278297,3.7448739 H 18.49263 V 20.023248 H 7.7278297 A 1.9934817,2.0347968 0 0 1 5.734348,17.988451 V 5.7796708 A 1.9934817,2.0347968 0 0 1 7.7278297,3.7448739 Z"
+       id="svg_2"
+       class=""
+       stroke="#ffffff"
+       stroke-opacity="1"
+       style="stroke-width:1.61123" />
+  </g>
+</svg>

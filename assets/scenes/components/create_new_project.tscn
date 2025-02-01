@@ -1,0 +1,187 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7vrmx3lii178"]
+
+[ext_resource type="Script" path="res://assets/scripts/components/new_project_panel.gd" id="1_ql1u6"]
+[ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_2cie8"]
+[ext_resource type="Texture2D" uid="uid://b252fmda74tb0" path="res://assets/icons/x.svg" id="3_a6v3w"]
+[ext_resource type="Texture2D" uid="uid://262u2h1excpv" path="res://assets/icons/icon_add_folder.svg" id="4_mw4r1"]
+[ext_resource type="Texture2D" uid="uid://b6soxxcjp27fy" path="res://assets/icons/icon_status_error.svg" id="5_5mni4"]
+[ext_resource type="Texture2D" uid="uid://c6k7vd8suocu0" path="res://assets/icons/folder_browse.svg" id="6_ukt6a"]
+[ext_resource type="Texture2D" uid="uid://lougnnkm8u20" path="res://assets/icons/icon_save.svg" id="7_bo1ex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arkm2"]
+bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+
+[node name="CreateNewProject" type="PanelContainer"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_arkm2")
+script = ExtResource("1_ql1u6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TitleBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TitleBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_2cie8")
+theme_override_font_sizes/font_size = 24
+text = "Create New Project"
+horizontal_alignment = 1
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/TitleBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Cancel"
+icon = ExtResource("3_a6v3w")
+icon_alignment = 1
+
+[node name="ProjectNameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Project Name:"
+
+[node name="ProjectName" type="LineEdit" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "New Project"
+placeholder_text = "Project Name"
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+drag_and_drop_selection_enabled = false
+caret_blink = true
+
+[node name="ProjectPathBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectPathLabel" type="Label" parent="MarginContainer/VBoxContainer/ProjectPathBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Project Path:"
+
+[node name="CreateFolderButton" type="CheckButton" parent="MarginContainer/VBoxContainer/ProjectPathBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Create Folder"
+button_pressed = true
+icon = ExtResource("4_mw4r1")
+
+[node name="ProjectPathInputBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectPath" type="LineEdit" parent="MarginContainer/VBoxContainer/ProjectPathInputBox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "Project Path"
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+drag_and_drop_selection_enabled = false
+caret_blink = true
+
+[node name="PathInfo" type="TextureRect" parent="MarginContainer/VBoxContainer/ProjectPathInputBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Path Not Valid"
+texture = ExtResource("5_5mni4")
+stretch_mode = 2
+
+[node name="BrowseFolderButton" type="Button" parent="MarginContainer/VBoxContainer/ProjectPathInputBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Browse Folders"
+icon = ExtResource("6_ukt6a")
+icon_alignment = 1
+
+[node name="ProjectDescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Project Description:"
+
+[node name="ProjectDescription" type="TextEdit" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "No Description"
+placeholder_text = "Project Description"
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+caret_blink = true
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="EngineVersionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Engine Version:"
+
+[node name="EngineVersionButton" type="OptionButton" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Select An Engine Version"
+selected = 0
+item_count = 1
+popup/item_0/text = "4.3"
+
+[node name="EngineRendererLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Renderer:"
+
+[node name="EngineRendererButton" type="OptionButton" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Select An Engine Version"
+selected = 0
+item_count = 3
+popup/item_0/text = "Forward Plus"
+popup/item_0/id = 2
+popup/item_1/text = "Mobile"
+popup/item_1/id = 1
+popup/item_2/text = "GL Compatibility"
+
+[node name="VersionControlButton" type="CheckButton" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+button_pressed = true
+text = "Git Verson Control:"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+tooltip_text = "Save And Edit"
+icon = ExtResource("7_bo1ex")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PathDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Select Project Path"
+initial_position = 1
+size = Vector2i(640, 480)
+transient_to_focused = true
+unresizable = true
+min_size = Vector2i(640, 480)
+max_size = Vector2i(1280, 720)
+ok_button_text = "Select Current Folder"
+dialog_hide_on_ok = true
+cancel_button_text = ""
+file_mode = 2
+access = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TitleBox/CancelButton" to="." method="button_pressed" binds= ["cancel"]]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/ProjectName" to="." method="value_received" binds= ["title_changed"]]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/ProjectPathBox/CreateFolderButton" to="." method="button_toggled" binds= ["create_folder"]]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/ProjectPathInputBox/ProjectPath" to="." method="value_received" binds= ["path_changed"]]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/ProjectPathInputBox/ProjectPath" to="." method="value_received" binds= ["path_submitted"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ProjectPathInputBox/BrowseFolderButton" to="." method="button_pressed" binds= ["browse"]]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/ProjectDescription" to="." method="value_received" binds= ["desc_changed"]]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/EngineVersionButton" to="." method="value_received" binds= ["version_changed"]]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/EngineRendererButton" to="." method="value_received" binds= ["renderer_changed"]]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/VersionControlButton" to="." method="button_toggled" binds= ["version_control"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SaveButton" to="." method="button_pressed" binds= ["save"]]
+[connection signal="dir_selected" from="PathDialog" to="." method="value_received" binds= ["path_selected"]]

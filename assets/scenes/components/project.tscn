@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://hanjvknsffsn"]
+
+[ext_resource type="Texture2D" uid="uid://cawedkgahcibb" path="res://assets/icons/default_project_icon.png" id="1_pj3ou"]
+[ext_resource type="Script" path="res://assets/scripts/components/project.gd" id="1_qrneh"]
+[ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_olu26"]
+[ext_resource type="Texture2D" uid="uid://dmvhhoeadp68c" path="res://assets/icons/icon_play_overlay.svg" id="3_y40ql"]
+[ext_resource type="Texture2D" uid="uid://dfjfg3urciamj" path="res://assets/icons/icon_edit.svg" id="4_i07bh"]
+[ext_resource type="Texture2D" uid="uid://dt7l8xwranyfe" path="res://assets/icons/icon_heart.svg" id="5_glp54"]
+[ext_resource type="Texture2D" uid="uid://bf5krva5rxd1t" path="res://assets/icons/add_category.svg" id="6_g7fgt"]
+[ext_resource type="Texture2D" uid="uid://c2xbkbwbsmsou" path="res://assets/icons/rem_category.svg" id="7_hn4pb"]
+[ext_resource type="Texture2D" uid="uid://daw83uwtd0e81" path="res://assets/icons/submenu.svg" id="9_7e2h5"]
+[ext_resource type="Texture2D" uid="uid://dve6nltqywobb" path="res://assets/icons/icon_remove.svg" id="10_10jt3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jwesv"]
+
+[node name="Project" type="PanelContainer"]
+script = ExtResource("1_qrneh")
+
+[node name="GroupsButton" type="MenuButton" parent="."]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+button_mask = 0
+flat = false
+icon_alignment = 1
+
+[node name="ProjectButton" type="Button" parent="."]
+layout_mode = 2
+
+[node name="ProjectContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Icon" type="TextureRect" parent="ProjectContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_pj3ou")
+expand_mode = 1
+
+[node name="Info" type="VBoxContainer" parent="ProjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Title" type="Label" parent="ProjectContainer/Info"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_olu26")
+text = "New Project"
+
+[node name="Description" type="Label" parent="ProjectContainer/Info"]
+layout_mode = 2
+text = "No Description"
+
+[node name="Path" type="Label" parent="ProjectContainer/Info"]
+layout_mode = 2
+text = "No File Path"
+
+[node name="VSeparator" type="VSeparator" parent="ProjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 64
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
+
+[node name="Version" type="Label" parent="ProjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Unknown Version"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="EngineVersion" type="Label" parent="ProjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unknown Engine Version"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="ProjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 128
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
+
+[node name="ButtonContainer" type="HBoxContainer" parent="ProjectContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="FavoriteButton" type="Button" parent="ProjectContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Copy To Favorites"
+theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
+toggle_mode = true
+icon = ExtResource("5_glp54")
+icon_alignment = 1
+expand_icon = true
+
+[node name="MenuButton" type="MenuButton" parent="ProjectContainer/ButtonContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+tooltip_text = "Options"
+icon = ExtResource("9_7e2h5")
+flat = false
+icon_alignment = 1
+item_count = 5
+popup/item_0/icon = ExtResource("4_i07bh")
+popup/item_0/id = 1
+popup/item_1/icon = ExtResource("3_y40ql")
+popup/item_2/icon = ExtResource("6_g7fgt")
+popup/item_2/id = 2
+popup/item_3/icon = ExtResource("7_hn4pb")
+popup/item_3/id = 3
+popup/item_4/icon = ExtResource("10_10jt3")
+popup/item_4/id = 4
+
+[connection signal="pressed" from="ProjectButton" to="." method="_on_project_button_pressed"]
+[connection signal="toggled" from="ProjectContainer/ButtonContainer/FavoriteButton" to="." method="_on_favorite_button_toggled"]

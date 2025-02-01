@@ -1,0 +1,399 @@
+[gd_scene load_steps=34 format=3 uid="uid://bh5qukhbtj3l8"]
+
+[ext_resource type="Script" path="res://assets/scripts/main.gd" id="1_fal7w"]
+[ext_resource type="Script" path="res://assets/scripts/ui/main/ui_manager.gd" id="2_tnjal"]
+[ext_resource type="Script" path="res://assets/scripts/ui/main/ui_state.gd" id="3_qetjj"]
+[ext_resource type="Script" path="res://assets/scripts/ui/panels/menu/projects.gd" id="4_iuch6"]
+[ext_resource type="VideoStream" path="res://assets/theme/intro/blue_animation_short_.ogv" id="4_w3iyo"]
+[ext_resource type="Script" path="res://assets/scripts/ui/panels/menu/top_bar.gd" id="6_mf18v"]
+[ext_resource type="Texture2D" uid="uid://immt4g820m0t" path="res://assets/icons/icon_new.svg" id="6_yfqsu"]
+[ext_resource type="Texture2D" uid="uid://bvw52dswus7v" path="res://assets/icons/import.svg" id="7_j1i18"]
+[ext_resource type="Texture2D" uid="uid://brjqd6fprckfc" path="res://assets/icons/project.svg" id="7_jlp00"]
+[ext_resource type="Texture2D" uid="uid://d1ngnpuhm540n" path="res://assets/icons/scan.svg" id="8_g0prn"]
+[ext_resource type="Theme" uid="uid://k2g424t5l0y3" path="res://assets/theme/theme.tres" id="8_v36ak"]
+[ext_resource type="Texture2D" uid="uid://o2ykjo8ca67j" path="res://assets/icons/godot.svg" id="9_o0qh1"]
+[ext_resource type="Texture2D" uid="uid://cnv80x0yym08o" path="res://assets/icons/book.svg" id="10_e1jh8"]
+[ext_resource type="Texture2D" uid="uid://c0wloxqgfr443" path="res://assets/icons/list_view.svg" id="10_gl32o"]
+[ext_resource type="Texture2D" uid="uid://badxu3qu3vn1a" path="res://assets/icons/category_view.svg" id="11_bgy32"]
+[ext_resource type="Texture2D" uid="uid://1duaj2y4lena" path="res://assets/icons/settings.svg" id="11_d4u4i"]
+[ext_resource type="PackedScene" uid="uid://b7vrmx3lii178" path="res://assets/scenes/components/create_new_project.tscn" id="11_fjxcw"]
+[ext_resource type="Script" path="res://assets/scripts/components/import_project_panel.gd" id="12_scykc"]
+[ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="13_inmwf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01aal"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2nqfc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o0yy7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45hij"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vka4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuuw6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_abekw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltgvx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xbsnq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ms1t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vorq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xcak"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.133197, 0.133196, 0.133196, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88pc8"]
+bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu7m7"]
+bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
+
+[node name="Main" type="Node" node_paths=PackedStringArray("ui_manager")]
+script = ExtResource("1_fal7w")
+ui_manager = NodePath("UiManager")
+
+[node name="UiManager" type="Node" parent="." node_paths=PackedStringArray("canvas_layers")]
+script = ExtResource("2_tnjal")
+canvas_layers = [NodePath("Menu"), NodePath("Notification")]
+
+[node name="Menu" type="CanvasLayer" parent="UiManager"]
+
+[node name="Intro" type="Panel" parent="UiManager/Menu"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qetjj")
+start = true
+can_go_back = false
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UiManager/Menu/Intro"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("4_w3iyo")
+autoplay = true
+
+[node name="SkipButton" type="Button" parent="UiManager/Menu/Intro"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_01aal")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2nqfc")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_o0yy7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_45hij")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8vka4")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_kuuw6")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_abekw")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ltgvx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xbsnq")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1ms1t")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6vorq")
+
+[node name="Projects" type="Panel" parent="UiManager/Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_iuch6")
+can_go_back = false
+
+[node name="ProjectButtonPanel" type="PanelContainer" parent="UiManager/Menu/Projects"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 80.0
+offset_right = 56.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
+
+[node name="ProjectButtons" type="HBoxContainer" parent="UiManager/Menu/Projects/ProjectButtonPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="NewProjectButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "New Project"
+icon = ExtResource("6_yfqsu")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ImportProjectButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Import Project"
+icon = ExtResource("7_j1i18")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ScanProjectsButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Scan For Projects"
+icon = ExtResource("8_g0prn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ViewButtonPanel" type="PanelContainer" parent="UiManager/Menu/Projects"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 80.0
+offset_right = -16.0
+offset_bottom = 112.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
+
+[node name="ViewButtons" type="HBoxContainer" parent="UiManager/Menu/Projects/ViewButtonPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="ListViewButton" type="Button" parent="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "List View"
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("10_gl32o")
+icon_alignment = 1
+expand_icon = true
+
+[node name="GroupViewButton" type="Button" parent="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Group View"
+toggle_mode = true
+icon = ExtResource("11_bgy32")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Projects"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Projects/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ProjectContainer" type="VBoxContainer" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+text = "Hmm, So Empty..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Projects"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CreateNewProject" parent="UiManager/Menu/Projects/DialogContainer" instance=ExtResource("11_fjxcw")]
+visible = false
+layout_mode = 2
+
+[node name="ImportProjectDialog" type="FileDialog" parent="UiManager/Menu/Projects/DialogContainer"]
+title = "Open a Directory"
+initial_position = 1
+size = Vector2i(640, 480)
+transient_to_focused = true
+unresizable = true
+min_size = Vector2i(640, 480)
+max_size = Vector2i(1280, 720)
+ok_button_text = "Select Current Folder"
+dialog_hide_on_ok = true
+file_mode = 2
+access = 2
+script = ExtResource("12_scykc")
+
+[node name="TopBar" type="Panel" parent="UiManager/Menu"]
+custom_minimum_size = Vector2(0, 56)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+script = ExtResource("6_mf18v")
+can_go_back = false
+persistent = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/TopBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleBox" type="HBoxContainer" parent="UiManager/Menu/TopBar/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="UiManager/Menu/TopBar/MarginContainer/TitleBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("13_inmwf")
+theme_override_font_sizes/font_size = 32
+text = "Godot Manager"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title2" type="Label" parent="UiManager/Menu/TopBar/MarginContainer/TitleBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "Redux"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="VersionLabel" type="Label" parent="UiManager/Menu/TopBar/MarginContainer/TitleBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 0.196078)
+text = "Version Info"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainButtons" type="HBoxContainer" parent="UiManager/Menu/TopBar/MarginContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+alignment = 1
+
+[node name="ProjectsButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/MainButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Projects"
+toggle_mode = true
+icon = ExtResource("7_jlp00")
+icon_alignment = 1
+expand_icon = true
+
+[node name="EnginesButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/MainButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Godot Engine"
+toggle_mode = true
+icon = ExtResource("9_o0qh1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="AssetLibButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/MainButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Asset Library"
+toggle_mode = true
+icon = ExtResource("10_e1jh8")
+icon_alignment = 1
+expand_icon = true
+
+[node name="SettingsButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/MainButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Settings"
+toggle_mode = true
+icon = ExtResource("11_d4u4i")
+icon_alignment = 1
+expand_icon = true
+
+[node name="WindowButtons" type="HBoxContainer" parent="UiManager/Menu/TopBar/MarginContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+alignment = 2
+
+[node name="HideButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/WindowButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Minimize"
+theme = ExtResource("8_v36ak")
+text = "⚊"
+icon_alignment = 1
+
+[node name="MinMaxButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/WindowButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Fullscreen"
+text = "❐"
+
+[node name="CloseButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/WindowButtons"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "Close"
+theme_override_styles/hover = SubResource("StyleBoxFlat_88pc8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qu7m7")
+text = "✖"
+icon_alignment = 1
+
+[node name="Notification" type="CanvasLayer" parent="UiManager"]
+visible = false
+
+[connection signal="finished" from="UiManager/Menu/Intro/VideoStreamPlayer" to="UiManager/Menu/Intro" method="transition" binds= ["topbar"]]
+[connection signal="pressed" from="UiManager/Menu/Intro/SkipButton" to="UiManager/Menu/Intro" method="transition" binds= ["topbar"]]
+[connection signal="pressed" from="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons/NewProjectButton" to="UiManager/Menu/Projects" method="button_pressed" binds= ["new_project"]]
+[connection signal="pressed" from="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons/ImportProjectButton" to="UiManager/Menu/Projects" method="button_pressed" binds= ["import"]]
+[connection signal="pressed" from="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons/ScanProjectsButton" to="UiManager/Menu/Projects" method="button_pressed" binds= ["scan"]]
+[connection signal="toggled" from="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons/ListViewButton" to="UiManager/Menu/Projects" method="button_toggled" binds= ["list_view"]]
+[connection signal="toggled" from="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons/GroupViewButton" to="UiManager/Menu/Projects" method="button_toggled" binds= ["group_view"]]
+[connection signal="canceled" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_canceled"]
+[connection signal="confirmed" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_confirmed"]
+[connection signal="dir_selected" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_dir_selected"]
+[connection signal="pressed" from="UiManager/Menu/TopBar/MarginContainer/WindowButtons/HideButton" to="UiManager/Menu/TopBar" method="button_pressed" binds= ["hide"]]
+[connection signal="pressed" from="UiManager/Menu/TopBar/MarginContainer/WindowButtons/MinMaxButton" to="UiManager/Menu/TopBar" method="button_pressed" binds= ["min_max"]]
+[connection signal="pressed" from="UiManager/Menu/TopBar/MarginContainer/WindowButtons/CloseButton" to="UiManager/Menu/TopBar" method="button_pressed" binds= ["close"]]

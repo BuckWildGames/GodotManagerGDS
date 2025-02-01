@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dibi0y4uuijcl"]
+
+[ext_resource type="Script" path="res://assets/scripts/components/project_group.gd" id="1_3goeg"]
+[ext_resource type="Texture2D" uid="uid://b6g0f2635xog7" path="res://assets/icons/drop_down1.svg" id="2_etaph"]
+
+[node name="BaseGroup" type="MarginContainer"]
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_3goeg")
+
+[node name="GroupButton" type="Button" parent="."]
+layout_mode = 2
+
+[node name="GroupVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Main" type="HBoxContainer" parent="GroupVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="GroupVBox/Main"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Title"
+
+[node name="HBox" type="HBoxContainer" parent="GroupVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="GroupVBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideButton" type="Button" parent="GroupVBox/HBox"]
+layout_mode = 2
+tooltip_text = "Hide"
+toggle_mode = true
+icon = ExtResource("2_etaph")
+icon_alignment = 1
+
+[node name="GroupContainer" type="VBoxContainer" parent="GroupVBox"]
+layout_mode = 2
+
+[connection signal="pressed" from="GroupButton" to="." method="_on_group_button_pressed"]
+[connection signal="pressed" from="GroupVBox/HBox/HideButton" to="." method="_on_hide_button_pressed"]

@@ -13,7 +13,7 @@ This project has been made from scratch other, than the Godot icons.
 
 The original is written in C# so no code was used in this project.
 
-The original also has not been update in a while and doesn't seem to work for me in version 4x.
+The original also has not been updated in a while and doesn't seem to work for me in version 4x.
 
 # Plan
 

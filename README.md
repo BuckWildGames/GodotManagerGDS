@@ -5,7 +5,7 @@ Made in Godot 4.3
 
 *Work in progress
 
-# About
+# About:
 
 Inspired by GodotManager: https://github.com/eumario/godot-manager
 
@@ -15,7 +15,7 @@ The original is written in C# so no code was used in this project.
 
 The original also has not been updated in a while and doesn't seem to work for me in version 4x.
 
-# Plan
+# Plan:
 
 -Add full project management for multiple Godot versions (old and new).
 
@@ -25,24 +25,23 @@ The original also has not been updated in a while and doesn't seem to work for m
 
 -Add lots of customizable options.
 
-# Screenshots
+# Screenshots:
 
 ![Godot Engine 2025 02 01 - 00 54 03 01 - frame at 3m0s](https://github.com/user-attachments/assets/735f5804-4ac4-4d2b-a4bd-ea301d1a29fd)
 ![Godot Engine 2025 02 01 - 00 54 03 01 - frame at 2m57s](https://github.com/user-attachments/assets/5148dbd6-0b1b-412e-a48f-d7540c967348)
 ![Godot Engine 2025 02 01 - 00 54 03 01 - frame at 0m13s](https://github.com/user-attachments/assets/a843176b-d071-4cfb-9930-05966d7c6870)
 ![Godot Engine 2025 02 01 - 00 54 03 01 - frame at 0m7s](https://github.com/user-attachments/assets/4f07335d-2485-4048-98b6-4a1a4930dab5)
 
-# Credit
-
-Godot startup animation: https://cenullum.itch.io/godot-engine-animation-intro
-
-Original Godot Manager: https://github.com/eumario/godot-manager
 
 # License:
 
 MIT License
 
 # Credit:
+
+Godot startup animation: https://cenullum.itch.io/godot-engine-animation-intro
+
+Original Godot Manager: https://github.com/eumario/godot-manager
 
 Made by BuckWildGames
 

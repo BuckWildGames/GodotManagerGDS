@@ -32,6 +32,11 @@ The original also has not been updated in a while and doesn't seem to work for m
 ![Godot Engine 2025 02 01 - 00 54 03 01 - frame at 0m13s](https://github.com/user-attachments/assets/a843176b-d071-4cfb-9930-05966d7c6870)
 ![Godot Engine 2025 02 01 - 00 54 03 01 - frame at 0m7s](https://github.com/user-attachments/assets/4f07335d-2485-4048-98b6-4a1a4930dab5)
 
+# Credit
+
+Godot startup animation: https://cenullum.itch.io/godot-engine-animation-intro
+
+Original Godot Manager: https://github.com/eumario/godot-manager
 
 # License:
 

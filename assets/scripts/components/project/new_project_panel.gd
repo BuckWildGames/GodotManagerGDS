@@ -61,6 +61,8 @@ func button_pressed(button: String) -> void:
 					ProjectManager.create_project(title, description, path, "0.0.0", engine_version)
 					get_parent().hide()
 					hide()
+				else:
+					NotificationManager.notify("Failed To Create Project", 5.0, true)
 
 
 func button_toggled(toggled_on: bool, button: String) -> void:
@@ -101,7 +103,6 @@ func value_received(value: Variant, button: String) -> void:
 
 
 func _check_path(update: bool) -> void:
-	print(path)
 	var dir = DirAccess.open(path)
 	if not dir: 
 		path_info.set_texture(PATH_BAD)

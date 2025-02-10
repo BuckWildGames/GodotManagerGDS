@@ -1,11 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://bh5qukhbtj3l8"]
+[gd_scene load_steps=42 format=3 uid="uid://bh5qukhbtj3l8"]
 
-[ext_resource type="Script" path="res://assets/scripts/main.gd" id="1_fal7w"]
 [ext_resource type="Script" path="res://assets/scripts/ui/main/ui_manager.gd" id="2_tnjal"]
 [ext_resource type="Script" path="res://assets/scripts/ui/main/ui_state.gd" id="3_qetjj"]
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/menu/projects.gd" id="4_iuch6"]
+[ext_resource type="Script" path="res://assets/scripts/ui/panels/projects.gd" id="4_iuch6"]
 [ext_resource type="VideoStream" path="res://assets/theme/intro/blue_animation_short_.ogv" id="4_w3iyo"]
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/menu/top_bar.gd" id="6_mf18v"]
+[ext_resource type="Script" path="res://assets/scripts/ui/panels/top_bar.gd" id="6_mf18v"]
 [ext_resource type="Texture2D" uid="uid://immt4g820m0t" path="res://assets/icons/icon_new.svg" id="6_yfqsu"]
 [ext_resource type="Texture2D" uid="uid://bvw52dswus7v" path="res://assets/icons/import.svg" id="7_j1i18"]
 [ext_resource type="Texture2D" uid="uid://brjqd6fprckfc" path="res://assets/icons/project.svg" id="7_jlp00"]
@@ -16,9 +15,17 @@
 [ext_resource type="Texture2D" uid="uid://c0wloxqgfr443" path="res://assets/icons/list_view.svg" id="10_gl32o"]
 [ext_resource type="Texture2D" uid="uid://badxu3qu3vn1a" path="res://assets/icons/category_view.svg" id="11_bgy32"]
 [ext_resource type="Texture2D" uid="uid://1duaj2y4lena" path="res://assets/icons/settings.svg" id="11_d4u4i"]
-[ext_resource type="PackedScene" uid="uid://b7vrmx3lii178" path="res://assets/scenes/components/create_new_project.tscn" id="11_fjxcw"]
-[ext_resource type="Script" path="res://assets/scripts/components/import_project_panel.gd" id="12_scykc"]
+[ext_resource type="PackedScene" uid="uid://b7vrmx3lii178" path="res://assets/scenes/components/project/create_new_project.tscn" id="11_fjxcw"]
+[ext_resource type="Script" path="res://assets/scripts/ui/panels/engines.gd" id="12_848c3"]
+[ext_resource type="Script" path="res://assets/scripts/components/project/import_project_panel.gd" id="12_scykc"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="13_inmwf"]
+[ext_resource type="Texture2D" uid="uid://donrhresjoen1" path="res://assets/icons/web.svg" id="13_lukhs"]
+[ext_resource type="Script" path="res://assets/scripts/components/engine/import_engine_panel.gd" id="13_uh2lq"]
+[ext_resource type="Script" path="res://assets/scripts/components/engine/engine_group.gd" id="14_ko5hj"]
+[ext_resource type="Texture2D" uid="uid://b6g0f2635xog7" path="res://assets/icons/drop_down1.svg" id="15_6n8gi"]
+[ext_resource type="Texture2D" uid="uid://c4b02jaf0qdg7" path="res://assets/icons/minus.svg" id="20_5car4"]
+[ext_resource type="Texture2D" uid="uid://w5ub5mjcd1v5" path="res://assets/icons/min_max.svg" id="21_ey4mm"]
+[ext_resource type="Texture2D" uid="uid://b252fmda74tb0" path="res://assets/icons/x.svg" id="22_xj411"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01aal"]
 
@@ -51,6 +58,8 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w4jdi"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88pc8"]
 bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
 corner_radius_top_left = 5
@@ -65,9 +74,7 @@ expand_margin_bottom = 2.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu7m7"]
 bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
 
-[node name="Main" type="Node" node_paths=PackedStringArray("ui_manager")]
-script = ExtResource("1_fal7w")
-ui_manager = NodePath("UiManager")
+[node name="Main" type="Node"]
 
 [node name="UiManager" type="Node" parent="." node_paths=PackedStringArray("canvas_layers")]
 script = ExtResource("2_tnjal")
@@ -116,6 +123,7 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1ms1t")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_6vorq")
 
 [node name="Projects" type="Panel" parent="UiManager/Menu"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -245,7 +253,7 @@ visible = false
 layout_mode = 2
 
 [node name="ImportProjectDialog" type="FileDialog" parent="UiManager/Menu/Projects/DialogContainer"]
-title = "Open a Directory"
+title = "Import A Project"
 initial_position = 1
 size = Vector2i(640, 480)
 transient_to_focused = true
@@ -254,9 +262,337 @@ min_size = Vector2i(640, 480)
 max_size = Vector2i(1280, 720)
 ok_button_text = "Select Current Folder"
 dialog_hide_on_ok = true
+mode_overrides_title = false
 file_mode = 2
 access = 2
 script = ExtResource("12_scykc")
+
+[node name="Engines" type="Panel" parent="UiManager/Menu"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_848c3")
+can_go_back = false
+
+[node name="EngineButtonPanel" type="PanelContainer" parent="UiManager/Menu/Engines"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 80.0
+offset_right = 56.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
+
+[node name="EngineButtons" type="HBoxContainer" parent="UiManager/Menu/Engines/EngineButtonPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Import Engine Version"
+icon = ExtResource("7_j1i18")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Scan For Engine Versions"
+icon = ExtResource("8_g0prn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Fetch Available Versions From Web"
+icon = ExtResource("13_lukhs")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Engines"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Installed" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+script = ExtResource("14_ko5hj")
+
+[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+layout_mode = 2
+text = "Installed Versions"
+
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox"]
+layout_mode = 2
+tooltip_text = "Hide"
+toggle_mode = true
+icon = ExtResource("15_6n8gi")
+icon_alignment = 1
+
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+layout_mode = 2
+
+[node name="NotInstalled" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+script = ExtResource("14_ko5hj")
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+theme_override_constants/separation = 24
+theme_override_styles/separator = SubResource("StyleBoxEmpty_w4jdi")
+
+[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+text = "Available Versions"
+
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox"]
+layout_mode = 2
+tooltip_text = "Hide"
+toggle_mode = true
+icon = ExtResource("15_6n8gi")
+icon_alignment = 1
+
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+
+[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+text = "Hmm, So Empty..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Engines"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ImportEngineDialog" type="FileDialog" parent="UiManager/Menu/Engines/DialogContainer"]
+auto_translate_mode = 1
+title = "Import A Project"
+initial_position = 1
+size = Vector2i(640, 480)
+transient_to_focused = true
+unresizable = true
+min_size = Vector2i(640, 480)
+max_size = Vector2i(1280, 720)
+ok_button_text = "Select Current Folder"
+dialog_hide_on_ok = true
+mode_overrides_title = false
+file_mode = 2
+access = 2
+script = ExtResource("13_uh2lq")
+
+[node name="Settings" type="Panel" parent="UiManager/Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_848c3")
+can_go_back = false
+
+[node name="EngineButtonPanel" type="PanelContainer" parent="UiManager/Menu/Settings"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.0
+offset_top = 80.0
+offset_right = 56.0
+offset_bottom = 112.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
+
+[node name="EngineButtons" type="HBoxContainer" parent="UiManager/Menu/Settings/EngineButtonPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Settings/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Import Engine Version"
+icon = ExtResource("7_j1i18")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Settings/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Scan For Engine Versions"
+icon = ExtResource("8_g0prn")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Settings/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Fetch Available Versions From Web"
+icon = ExtResource("13_lukhs")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Settings/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Installed" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+script = ExtResource("14_ko5hj")
+
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+layout_mode = 2
+text = "Installed Versions"
+
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox"]
+layout_mode = 2
+tooltip_text = "Hide"
+toggle_mode = true
+icon = ExtResource("15_6n8gi")
+icon_alignment = 1
+
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+layout_mode = 2
+
+[node name="NotInstalled" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+script = ExtResource("14_ko5hj")
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+theme_override_constants/separation = 24
+theme_override_styles/separator = SubResource("StyleBoxEmpty_w4jdi")
+
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+text = "Available Versions"
+
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HideButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox"]
+layout_mode = 2
+tooltip_text = "Hide"
+toggle_mode = true
+icon = ExtResource("15_6n8gi")
+icon_alignment = 1
+
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+layout_mode = 2
+
+[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+text = "Hmm, So Empty..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Settings"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ImportEngineDialog" type="FileDialog" parent="UiManager/Menu/Settings/DialogContainer"]
+auto_translate_mode = 1
+title = "Import A Project"
+initial_position = 1
+size = Vector2i(640, 480)
+transient_to_focused = true
+unresizable = true
+min_size = Vector2i(640, 480)
+max_size = Vector2i(1280, 720)
+ok_button_text = "Select Current Folder"
+dialog_hide_on_ok = true
+mode_overrides_title = false
+file_mode = 2
+access = 2
+script = ExtResource("13_uh2lq")
 
 [node name="TopBar" type="Panel" parent="UiManager/Menu"]
 custom_minimum_size = Vector2(0, 56)
@@ -363,14 +699,15 @@ custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Minimize"
 theme = ExtResource("8_v36ak")
-text = "⚊"
+icon = ExtResource("20_5car4")
 icon_alignment = 1
 
 [node name="MinMaxButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/WindowButtons"]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Fullscreen"
-text = "❐"
+icon = ExtResource("21_ey4mm")
+icon_alignment = 1
 
 [node name="CloseButton" type="Button" parent="UiManager/Menu/TopBar/MarginContainer/WindowButtons"]
 custom_minimum_size = Vector2(48, 0)
@@ -378,7 +715,7 @@ layout_mode = 2
 tooltip_text = "Close"
 theme_override_styles/hover = SubResource("StyleBoxFlat_88pc8")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qu7m7")
-text = "✖"
+icon = ExtResource("22_xj411")
 icon_alignment = 1
 
 [node name="Notification" type="CanvasLayer" parent="UiManager"]
@@ -394,6 +731,26 @@ visible = false
 [connection signal="canceled" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_canceled"]
 [connection signal="confirmed" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_confirmed"]
 [connection signal="dir_selected" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_dir_selected"]
+[connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ImportEngineButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["import"]]
+[connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ScanEnginesButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["scan"]]
+[connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/RefreshAvailableButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["refresh"]]
+[connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed" method="_on_hide_button_pressed"]
+[connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled" method="_on_hide_button_pressed"]
+[connection signal="canceled" from="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" method="_on_canceled"]
+[connection signal="confirmed" from="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" method="_on_confirmed"]
+[connection signal="dir_selected" from="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" method="_on_dir_selected"]
+[connection signal="pressed" from="UiManager/Menu/Settings/EngineButtonPanel/EngineButtons/ImportEngineButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["import"]]
+[connection signal="pressed" from="UiManager/Menu/Settings/EngineButtonPanel/EngineButtons/ScanEnginesButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["scan"]]
+[connection signal="pressed" from="UiManager/Menu/Settings/EngineButtonPanel/EngineButtons/RefreshAvailableButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["refresh"]]
+[connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox/HideButton" to="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed" method="_on_hide_button_pressed"]
+[connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox/HideButton" to="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled" method="_on_hide_button_pressed"]
+[connection signal="canceled" from="UiManager/Menu/Settings/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Settings/DialogContainer/ImportEngineDialog" method="_on_canceled"]
+[connection signal="confirmed" from="UiManager/Menu/Settings/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Settings/DialogContainer/ImportEngineDialog" method="_on_confirmed"]
+[connection signal="dir_selected" from="UiManager/Menu/Settings/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Settings/DialogContainer/ImportEngineDialog" method="_on_dir_selected"]
+[connection signal="toggled" from="UiManager/Menu/TopBar/MarginContainer/MainButtons/ProjectsButton" to="UiManager/Menu/TopBar" method="button_toggled" binds= ["projects"]]
+[connection signal="toggled" from="UiManager/Menu/TopBar/MarginContainer/MainButtons/EnginesButton" to="UiManager/Menu/TopBar" method="button_toggled" binds= ["engines"]]
+[connection signal="toggled" from="UiManager/Menu/TopBar/MarginContainer/MainButtons/AssetLibButton" to="UiManager/Menu/TopBar" method="button_toggled" binds= ["assets"]]
+[connection signal="toggled" from="UiManager/Menu/TopBar/MarginContainer/MainButtons/SettingsButton" to="UiManager/Menu/TopBar" method="button_toggled" binds= ["settings"]]
 [connection signal="pressed" from="UiManager/Menu/TopBar/MarginContainer/WindowButtons/HideButton" to="UiManager/Menu/TopBar" method="button_pressed" binds= ["hide"]]
 [connection signal="pressed" from="UiManager/Menu/TopBar/MarginContainer/WindowButtons/MinMaxButton" to="UiManager/Menu/TopBar" method="button_pressed" binds= ["min_max"]]
 [connection signal="pressed" from="UiManager/Menu/TopBar/MarginContainer/WindowButtons/CloseButton" to="UiManager/Menu/TopBar" method="button_pressed" binds= ["close"]]

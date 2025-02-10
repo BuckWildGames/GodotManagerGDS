@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=3 uid="uid://rssm5d1ogvyj"]
+
+[ext_resource type="Script" path="res://assets/scripts/components/engine/engine.gd" id="1_2uetq"]
+[ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_ayk2b"]
+[ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_hkp8i"]
+[ext_resource type="Texture2D" uid="uid://rt86oqy7ww5x" path="res://assets/icons/download.svg" id="3_wr1pd"]
+[ext_resource type="Texture2D" uid="uid://17otjx5n2k44" path="res://assets/icons/uninstall.svg" id="4_xufpf"]
+[ext_resource type="Texture2D" uid="uid://byx0jqnxqmq5g" path="res://assets/icons/default.svg" id="5_jlm80"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jwesv"]
+
+[node name="Engine" type="PanelContainer"]
+script = ExtResource("1_2uetq")
+
+[node name="EngineContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Icon" type="TextureRect" parent="EngineContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_ayk2b")
+expand_mode = 1
+
+[node name="Info" type="VBoxContainer" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="EngineContainer/Info"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_hkp8i")
+text = "Engine Version"
+
+[node name="Source" type="Label" parent="EngineContainer/Info"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
+text = "No Source"
+
+[node name="VSeparator" type="VSeparator" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 64
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
+
+[node name="ButtonContainer" type="HBoxContainer" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="DownloadButton" type="Button" parent="EngineContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Download"
+icon = ExtResource("3_wr1pd")
+icon_alignment = 1
+expand_icon = true
+
+[node name="UninstallButton" type="Button" parent="EngineContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Uninstall"
+theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
+icon = ExtResource("4_xufpf")
+icon_alignment = 1
+expand_icon = true
+
+[node name="DefaultButton" type="Button" parent="EngineContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Set As Default"
+theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
+icon = ExtResource("5_jlm80")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="EngineContainer/ButtonContainer/DownloadButton" to="." method="button_pressed" binds= ["download"]]
+[connection signal="pressed" from="EngineContainer/ButtonContainer/UninstallButton" to="." method="button_pressed" binds= ["uninstall"]]
+[connection signal="pressed" from="EngineContainer/ButtonContainer/DefaultButton" to="." method="button_pressed" binds= ["default"]]

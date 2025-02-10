@@ -69,13 +69,13 @@ func has_active_prompt() -> bool:
 
 
 func _get_canvas() -> void:
-	var ui = System.get_manager("ui")
+	var ui = get_node("/root/Main/UiManager")
 	if not ui:
-		_debugger("UI Manager not found")
+		_debugger("UI Manager not found", true)
 		return
 	var canvas = ui.get_canvas("notification")
 	if not canvas:
-		_debugger("Notification canvas not found")
+		_debugger("Notification canvas not found", true)
 		return
 	canvas_layer = canvas
 	#canvas_layer = CanvasLayer.new()
@@ -266,8 +266,11 @@ func _on_prompt_timeout(default_option: String, prompt: Control, target: Object,
 	_on_option_button_pressed(default_option, prompt, target, callback_name)
 
 
-func _debugger(debug_message: String) -> void:
-	DebugManager.log_debug(debug_message, str(get_script().get_path()))
+func _debugger(debug_message: String, error: bool = false) -> void:
+	if error:
+		DebugManager.log_error(debug_message, str(get_script().get_path()))
+	else:
+		DebugManager.log_debug(debug_message, str(get_script().get_path()))
 	# Check if script is debug
 	if DEBUGGER == true:
 		# Check if os debug on

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cmnrp3bldqj8w"]
 
-[ext_resource type="Script" path="res://assets/scripts/components/project_custom_group.gd" id="1_drdp7"]
+[ext_resource type="Script" path="res://assets/scripts/components/project/project_custom_group.gd" id="1_drdp7"]
 [ext_resource type="Texture2D" uid="uid://daw83uwtd0e81" path="res://assets/icons/submenu.svg" id="2_bxnnn"]
 [ext_resource type="Texture2D" uid="uid://dve6nltqywobb" path="res://assets/icons/icon_remove.svg" id="3_g7xpq"]
 [ext_resource type="Texture2D" uid="uid://v072cpfhx0rq" path="res://assets/icons/move_up.svg" id="4_8bo7m"]
@@ -50,6 +50,7 @@ popup/item_0/id = 1
 popup/item_1/icon = ExtResource("5_xcjwy")
 popup/item_1/id = 2
 popup/item_2/icon = ExtResource("3_g7xpq")
+popup/item_2/id = 2
 
 [node name="HBox" type="HBoxContainer" parent="GroupVBox"]
 layout_mode = 2
@@ -68,6 +69,7 @@ icon_alignment = 1
 [node name="GroupContainer" type="VBoxContainer" parent="GroupVBox"]
 layout_mode = 2
 
+[connection signal="pressed" from="GroupButton" to="." method="_on_group_button_pressed"]
 [connection signal="focus_exited" from="GroupVBox/Main/Title" to="." method="_on_title_focus_exited"]
 [connection signal="text_changed" from="GroupVBox/Main/Title" to="." method="value_received" binds= ["title_changed"]]
 [connection signal="text_submitted" from="GroupVBox/Main/Title" to="." method="value_received" binds= ["title_saved"]]

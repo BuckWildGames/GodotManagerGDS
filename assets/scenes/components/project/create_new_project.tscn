@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b7vrmx3lii178"]
 
-[ext_resource type="Script" path="res://assets/scripts/components/new_project_panel.gd" id="1_ql1u6"]
+[ext_resource type="Script" path="res://assets/scripts/components/project/new_project_panel.gd" id="1_ql1u6"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_2cie8"]
 [ext_resource type="Texture2D" uid="uid://b252fmda74tb0" path="res://assets/icons/x.svg" id="3_a6v3w"]
 [ext_resource type="Texture2D" uid="uid://262u2h1excpv" path="res://assets/icons/icon_add_folder.svg" id="4_mw4r1"]
@@ -140,6 +140,7 @@ popup/item_0/id = 2
 popup/item_1/text = "Mobile"
 popup/item_1/id = 1
 popup/item_2/text = "GL Compatibility"
+popup/item_2/id = 2
 
 [node name="VersionControlButton" type="CheckButton" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -160,7 +161,7 @@ expand_icon = true
 
 [node name="PathDialog" type="FileDialog" parent="."]
 auto_translate_mode = 1
-title = "Select Project Path"
+title = "Select A Folder"
 initial_position = 1
 size = Vector2i(640, 480)
 transient_to_focused = true
@@ -170,6 +171,7 @@ max_size = Vector2i(1280, 720)
 ok_button_text = "Select Current Folder"
 dialog_hide_on_ok = true
 cancel_button_text = ""
+mode_overrides_title = false
 file_mode = 2
 access = 2
 

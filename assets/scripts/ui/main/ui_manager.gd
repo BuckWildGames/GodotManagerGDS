@@ -1,7 +1,7 @@
 extends Node
 
 const DEBUGGER: bool = false
-const FORWARD_SIGNALS: bool = true
+const FORWARD_SIGNALS: bool = false
 const SIGNAL_KEYWORD: String = "ui"
 
 @export var canvas_layers: Array [CanvasLayer]

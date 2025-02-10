@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://hanjvknsffsn"]
 
-[ext_resource type="Texture2D" uid="uid://cawedkgahcibb" path="res://assets/icons/default_project_icon.png" id="1_pj3ou"]
-[ext_resource type="Script" path="res://assets/scripts/components/project.gd" id="1_qrneh"]
+[ext_resource type="Script" path="res://assets/scripts/components/project/project.gd" id="1_qrneh"]
+[ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_m00bx"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_olu26"]
-[ext_resource type="Texture2D" uid="uid://dmvhhoeadp68c" path="res://assets/icons/icon_play_overlay.svg" id="3_y40ql"]
+[ext_resource type="Texture2D" uid="uid://dmvhhoeadp68c" path="res://assets/icons/icon_play.svg" id="3_y40ql"]
 [ext_resource type="Texture2D" uid="uid://dfjfg3urciamj" path="res://assets/icons/icon_edit.svg" id="4_i07bh"]
 [ext_resource type="Texture2D" uid="uid://dt7l8xwranyfe" path="res://assets/icons/icon_heart.svg" id="5_glp54"]
 [ext_resource type="Texture2D" uid="uid://bf5krva5rxd1t" path="res://assets/icons/add_category.svg" id="6_g7fgt"]
@@ -36,7 +36,7 @@ size_flags_horizontal = 3
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 0
-texture = ExtResource("1_pj3ou")
+texture = ExtResource("2_m00bx")
 expand_mode = 1
 
 [node name="Info" type="VBoxContainer" parent="ProjectContainer"]
@@ -51,9 +51,11 @@ text = "New Project"
 [node name="Description" type="Label" parent="ProjectContainer/Info"]
 layout_mode = 2
 text = "No Description"
+text_overrun_behavior = 3
 
 [node name="Path" type="Label" parent="ProjectContainer/Info"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
 text = "No File Path"
 
 [node name="VSeparator" type="VSeparator" parent="ProjectContainer"]
@@ -99,6 +101,17 @@ icon = ExtResource("5_glp54")
 icon_alignment = 1
 expand_icon = true
 
+[node name="DeleteButton" type="Button" parent="ProjectContainer/ButtonContainer"]
+visible = false
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Remove Project"
+theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
+icon = ExtResource("10_10jt3")
+icon_alignment = 1
+expand_icon = true
+
 [node name="MenuButton" type="MenuButton" parent="ProjectContainer/ButtonContainer"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
@@ -110,6 +123,7 @@ item_count = 5
 popup/item_0/icon = ExtResource("4_i07bh")
 popup/item_0/id = 1
 popup/item_1/icon = ExtResource("3_y40ql")
+popup/item_1/id = 1
 popup/item_2/icon = ExtResource("6_g7fgt")
 popup/item_2/id = 2
 popup/item_3/icon = ExtResource("7_hn4pb")
@@ -117,5 +131,10 @@ popup/item_3/id = 3
 popup/item_4/icon = ExtResource("10_10jt3")
 popup/item_4/id = 4
 
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="pressed" from="ProjectButton" to="." method="_on_project_button_pressed"]
 [connection signal="toggled" from="ProjectContainer/ButtonContainer/FavoriteButton" to="." method="_on_favorite_button_toggled"]
+[connection signal="pressed" from="ProjectContainer/ButtonContainer/DeleteButton" to="." method="_on_delete" binds= ["Remove"]]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_delay_timer_timeout"]

@@ -335,18 +335,18 @@ func _parse_free_space_bytes(output: Array) -> int:
 		# Look for the line containing "bytes free"
 		if line_str.find("bytes free") != -1:
 			line_str = line_str.substr(line_str.find("Dir(s)"))
-			print("Matched line: ", line_str)  # Debugging output
+			_debugger("Matched line: " + str(line_str))
 			# Extract all digits and commas from the line
 			var free_space_str = ""
 			for charr in line_str:
 				if charr.is_valid_int() or charr == ",":
 					free_space_str += charr
 			if free_space_str != "":
-				print("Extracted free space string: ", free_space_str)  # Debugging output
+				_debugger("Extracted free space string: " + str(free_space_str))
 				var free_space = int(free_space_str.replace(",", ""))  # Remove commas and convert to int
-				print("Parsed free space (bytes): ", free_space)  # Debugging output
+				_debugger("Parsed free space (bytes): " + str(free_space))
 				return free_space
-	print("No matching line found for 'bytes free'.")  # Debugging output if no line matches
+	_debugger("No matching line found for 'bytes free'")
 	return -1
 
 

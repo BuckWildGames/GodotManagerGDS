@@ -12,7 +12,7 @@ extends UIState
 
 func _ready() -> void:
 	_clear_project_container()
-	ProjectManager.setup(self, project_container)
+	ProjectManager.call_deferred("setup", self, project_container)
 	if ProjectManager.get_view_mode() == "group":
 		_add_groups()
 	_add_projects()
@@ -52,14 +52,26 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 func _process(_delta: float) -> void:
 	if not project_container:
 		return
-	var count = 0
+	var show_label = false
 	if ProjectManager.get_view_mode() == "group":
-		count = 2
-	if project_container.get_child_count() < count:
-		if !empty_label.is_visible():
+		if _check_groups_empty():
+			show_label = true
+	else:
+		if project_container.get_child_count() <= 0:
+			show_label = true
+	if show_label:
+		if not empty_label.is_visible():
 			empty_label.set_visible(true)
 	elif empty_label.is_visible():
 		empty_label.set_visible(false)
+
+
+func _check_groups_empty() -> bool:
+	for group in project_container.get_children():
+		var container = group.get_container()
+		if container.get_child_count() > 0:
+			return false
+	return true
 
 
 func _add_groups() -> void:
@@ -140,5 +152,7 @@ func _reorder_projects() -> void:
 
 
 func _clear_project_container() -> void:
+	if not project_container:
+		return
 	for child in project_container.get_children():
 		child.queue_free()

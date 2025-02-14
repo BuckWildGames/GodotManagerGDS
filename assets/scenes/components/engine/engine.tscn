@@ -1,31 +1,43 @@
-[gd_scene load_steps=8 format=3 uid="uid://rssm5d1ogvyj"]
+[gd_scene load_steps=10 format=3 uid="uid://rssm5d1ogvyj"]
 
 [ext_resource type="Script" path="res://assets/scripts/components/engine/engine.gd" id="1_2uetq"]
 [ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_ayk2b"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_hkp8i"]
 [ext_resource type="Texture2D" uid="uid://rt86oqy7ww5x" path="res://assets/icons/download.svg" id="3_wr1pd"]
+[ext_resource type="Script" path="res://assets/scripts/ui/elements/passthrough_label.gd" id="4_onlox"]
 [ext_resource type="Texture2D" uid="uid://17otjx5n2k44" path="res://assets/icons/uninstall.svg" id="4_xufpf"]
 [ext_resource type="Texture2D" uid="uid://byx0jqnxqmq5g" path="res://assets/icons/default.svg" id="5_jlm80"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek1pc"]
+bg_color = Color(0.411765, 0.611765, 0.909804, 0.392157)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jwesv"]
 
 [node name="Engine" type="PanelContainer"]
 script = ExtResource("1_2uetq")
 
+[node name="EngineButton" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_ek1pc")
+
 [node name="EngineContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Icon" type="TextureRect" parent="EngineContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 texture = ExtResource("2_ayk2b")
 expand_mode = 1
 
 [node name="Info" type="VBoxContainer" parent="EngineContainer"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 alignment = 1
 
 [node name="Title" type="Label" parent="EngineContainer/Info"]
@@ -33,14 +45,19 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_hkp8i")
 text = "Engine Version"
 
-[node name="Source" type="Label" parent="EngineContainer/Info"]
+[node name="Source" type="Label" parent="EngineContainer/Info" node_paths=PackedStringArray("target_button")]
 layout_mode = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
 text = "No Source"
+text_overrun_behavior = 3
+script = ExtResource("4_onlox")
+target_button = NodePath("../../../EngineButton")
 
 [node name="VSeparator" type="VSeparator" parent="EngineContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 theme_override_constants/separation = 64
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
 
@@ -78,6 +95,16 @@ icon = ExtResource("5_jlm80")
 icon_alignment = 1
 expand_icon = true
 
+[node name="VSeparator2" type="VSeparator" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
+
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="EngineButton" to="." method="button_pressed" binds= ["run"]]
 [connection signal="pressed" from="EngineContainer/ButtonContainer/DownloadButton" to="." method="button_pressed" binds= ["download"]]
 [connection signal="pressed" from="EngineContainer/ButtonContainer/UninstallButton" to="." method="button_pressed" binds= ["uninstall"]]
 [connection signal="toggled" from="EngineContainer/ButtonContainer/DefaultButton" to="." method="_on_default_button_toggled"]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_delay_timer_timeout"]

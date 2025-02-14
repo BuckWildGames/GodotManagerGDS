@@ -2,10 +2,6 @@ extends Node
 
 const DEBUGGER: bool = false
 
-const BASE_GROUP: PackedScene = preload("res://assets/scenes/components/project/project_base_group.tscn")
-const CUSTOM_GROUP: PackedScene = preload("res://assets/scenes/components/project/project_custom_group.tscn")
-const PROJECT: PackedScene = preload("res://assets/scenes/components/project/project.tscn")
-
 const DEFAULT_GROUPS: Dictionary = {0: {"name": "Favorites", "position": 0, "size": 0, "node": null, "hidden": false}, 1: {"name": "Ungrouped", "position": 1, "size": 0, "node": null, "hidden": false}}
 
 enum VIEW_MODE {LIST, GROUP}
@@ -56,25 +52,17 @@ func get_groups_dic() -> Dictionary:
 	return groups.duplicate()
 
 
-func create_project(title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
+func create_project(new_project: Node, project_pos: int, title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
 	if _check_duplicate(title):
 		_debugger("Project already exists: " + title)
+		if new_project:
+			new_project.queue_free()
 		return
 	var project_count = projects.size()
-	var container = project_container
-	if view_mode == VIEW_MODE.GROUP:
-		container = groups[1]["node"].get_container()
-	if container != null:
-		var project_pos = container.get_child_count()
-		var new_project = PROJECT.instantiate()
-		container.add_child(new_project)
-		new_project.setup(project_master, project_count, title, description, path, version, engine_version, icon, false)
-		groups[1]["size"] += 1
-		projects[project_count] = {"name": title, "description": description, "path": path, "version": version, "engine_version": engine_version, "icon": icon, "group": 1, "position": project_count, "group_position": project_pos, "favorite": false, "node": new_project, "favorite_node": null}
-		_debugger("New project created: " + str(title))
-		_save_data()
-		return
-	_debugger("Failed to create project: "  + str(title), true)
+	groups[1]["size"] += 1
+	projects[project_count] = {"name": title, "description": description, "path": path, "version": version, "engine_version": engine_version, "icon": icon, "group": 1, "position": project_count, "group_position": project_pos, "favorite": false, "node": new_project, "favorite_node": null}
+	_debugger("New project created: " + str(title))
+	_save_data()
 
 
 func remove_project(project_num: int) -> void:
@@ -114,11 +102,11 @@ func move_project_front(project_num: int) -> void:
 	var group_pos = projects[project_num]["group_position"]
 	if container != null or group_container != null:
 		if view_mode == VIEW_MODE.GROUP:
-			container.move_child(this_project, 0)
+			group_container.move_child(this_project, 0)
 			if fav:
 				fav_container.move_child(this_project, 0)
 		else:
-			group_container.move_child(this_project, 0)
+			container.move_child(this_project, 0)
 		for project in projects:
 			if project != this_project:
 				var project_pos = projects[project]["position"]
@@ -204,6 +192,9 @@ func remove_project_from_group(project_num: int) -> void:
 
 
 func add_project_to_favorites(project_num: int) -> void:
+	if project_master == null:
+		_debugger("Project master not found", true)
+		return
 	if not projects.has(project_num):
 		_debugger("Project not found: " + str(project_num), true)
 		return
@@ -221,7 +212,7 @@ func add_project_to_favorites(project_num: int) -> void:
 	var icon = projects[project_num]["icon"]
 	var container = groups[0]["node"].get_container()
 	if container != null:
-		var new_project = PROJECT.instantiate()
+		var new_project = project_master.PROJECT.instantiate()
 		container.add_child(new_project)
 		new_project.setup(project_master, project_num, title, desc, path, version, engine_version, icon, fav)
 		projects[project_num]["favorite_node"] = new_project
@@ -253,17 +244,8 @@ func remove_project_from_favorites(project_num: int) -> void:
 	_debugger("Failed to remove project from favorites: " + str(project_num), true)
 
 
-func create_group() -> void:
-	if not project_container:
-		_debugger("Project container not found", true)
-		return
+func create_group(new_group: Node) -> void:
 	var group_count = groups.size()
-	var title = ""
-	var new_group = null
-	if view_mode == VIEW_MODE.GROUP:
-		new_group = CUSTOM_GROUP.instantiate()
-		project_container.add_child(new_group)
-		new_group.setup(project_master, group_count, false, title)
 	groups[group_count] = {"name": "", "position": group_count, "size": 0, "node": new_group, "hidden": false}
 	_debugger("Group created")
 	_save_data()
@@ -350,30 +332,63 @@ func scan_for_projects(paths: Array) -> void:
 
 
 func import_project(path: String) -> bool:
-	var is_project = false
+	if project_master == null:
+		_debugger("Project master not found", true)
+		return false
 	var files = FileManager.get_files(path)
-	if not files.is_empty():
-		for file in files:
-			if file == "project.godot":
-				is_project = true
-				break
-		if is_project:
-			var project_data = _get_project_data(path)
-			create_project(
-				project_data["name"],
-				project_data["description"],
-				project_data["path"],
-				project_data["version"],
-				project_data["engine_version"],
-				project_data["icon"]
-			)
-			_debugger("Project Imported: " + str(project_data["name"]))
-			return true
+	if files.is_empty():
+		_debugger("Path not found: " + path, true)
+		return false
+	var is_project = false
+	for file in files:
+		if file == "project.godot":
+			is_project = true
+			break
+	if not is_project:
 		_debugger("Project file not found in path: " + path, true)
-	return false
+		return false
+	var project_data = _get_project_data(path)
+	project_master.create_project(
+		project_data["name"],
+		project_data["description"],
+		project_data["path"],
+		project_data["version"],
+		project_data["engine_version"],
+		project_data["icon"]
+	)
+	_debugger("Project Imported: " + str(project_data["name"]))
+	return true
 
 
-func create_project_folder(title: String, description: String, path: String, engine: String, renderer: String, create_folder: bool, create_git: bool) -> bool:
+func update_project(project_num: int, path: String) -> void:
+	if not projects.has(project_num):
+		_debugger("Project not found: " + str(project_num), true)
+		return
+	var files = FileManager.get_files(path)
+	if files.is_empty():
+		_debugger("Path not found: " + path, true)
+		return
+	var is_project = false
+	for file in files:
+		if file == "project.godot":
+			is_project = true
+			break
+	if not is_project:
+		_debugger("Project file not found in path: " + path, true)
+		return
+	var project_data = _get_project_data(path)
+	projects[project_num]["name"] = project_data["name"]
+	projects[project_num]["description"] = project_data["description"]
+	projects[project_num]["path"] = project_data["path"]
+	projects[project_num]["version"] = project_data["version"]
+	if not "x" in project_data["engine_version"]:
+		projects[project_num]["engine_version"] = project_data["engine_version"]
+	projects[project_num]["icon"] = project_data["icon"]
+	_debugger("Project Updated: " + str(project_num))
+	return
+
+
+func create_project_folder(title: String, description: String, path: String, engine: String, renderer: String, create_folder: bool, create_git: bool, template: int = -1) -> bool:
 	if _check_duplicate(title):
 		_debugger("Project already exists: " + title)
 		return false
@@ -382,18 +397,32 @@ func create_project_folder(title: String, description: String, path: String, eng
 			_debugger("Path not found: " + path)
 			return false
 		DirAccess.make_dir_recursive_absolute(path)
-	var folders = [".godot"]
-	for folder in folders:
-		DirAccess.make_dir_recursive_absolute(path + "/" + folder)
+	_set_project_template(template, path)
 	var project_file_path = path + "/project.godot"
 	if "3." in engine:
-		var _config_version = 4
-		_debugger("No godot 3X yet")
-		NotificationManager.notify("No Godot 3X Yet", -1.0, true)
-		return false
+		var complete = _create_godot_3x_project_file(project_file_path, title, description, renderer)
+		if not complete:
+			_debugger("Failed to create project file", true)
+			return false
+		complete = FileManager.copy_file("res://", path, "icon.png")
+		if not complete:
+			_debugger("Failed to copy icon.png", true)
+			return false
+		complete = FileManager.copy_file("res://", path, "default_env.tres")
+		if not complete:
+			_debugger("Failed to copy default_env.tres", true)
+			return false
+		if create_git:
+			complete = FileManager.copy_file("res://", path, ".gitattributes")
+			if not complete:
+				_debugger("Failed to copy .gitattributes", true)
+				return false
+			complete = FileManager.copy_file("res://", path, ".gitignore")
+			if not complete:
+				_debugger("Failed to copy .gitignore", true)
+				return false
 	elif "4." in engine:
-		var config_version = 5
-		var complete = _create_godot_4x_project_file(config_version, project_file_path, title, description, engine, renderer)
+		var complete = _create_godot_4x_project_file(project_file_path, title, description, engine, renderer)
 		if not complete:
 			_debugger("Failed to create project file", true)
 			return false
@@ -413,8 +442,41 @@ func create_project_folder(title: String, description: String, path: String, eng
 	_debugger("Project successfully created at:" + path)
 	return true
 
+# Not finished!!!!!!!!!!!!!!
+func _set_project_template(template: int, path: String) -> void:
+	if template == -1:
+		return
+	var folders = []
+	for folder in folders:
+		DirAccess.make_dir_recursive_absolute(path + "/" + folder)
 
-func _create_godot_4x_project_file(config_version: int, project_file_path: String, title: String, description: String, engine: String, renderer: String) -> bool:
+
+func _create_godot_3x_project_file(project_file_path: String, title: String, description: String, renderer: String) -> bool:
+	var config_version = 4
+	var config = ConfigFile.new()
+	config.set_value("", "config_version", config_version)
+	config.set_value("application", "config/name", title)
+	config.set_value("application", "config/description", description)
+	config.set_value("application", "config/icon", "res://icon.png")
+	if "GLES2" in renderer:
+		config.set_value("rendering", "quality/driver/driver_name", "GLES2")
+	var error = config.save(project_file_path)
+	if error != OK:
+		_debugger("Failed to save project file", true)
+		return false
+	var file = FileAccess.open(project_file_path, FileAccess.READ_WRITE)
+	if file:
+		var content = file.get_as_text()
+		file.seek(0)
+		file.store_string("; Engine configuration file.\n; It's best edited using the editor UI and not directly,\n; since the parameters that go here are not all obvious.\n;\n; Format:\n;   [section] ; section goes between []\n;   param=value ; assign values to parameters\n\n")
+		file.store_string(content)
+	file.close()
+	_debugger("Created 3x project file")
+	return true
+
+
+func _create_godot_4x_project_file(project_file_path: String, title: String, description: String, engine: String, renderer: String) -> bool:
+	var config_version = 5
 	var config = ConfigFile.new()
 	config.set_value("", "config_version", config_version)
 	config.set_value("application", "config/name", title)
@@ -475,10 +537,12 @@ func _get_godot_version(config: ConfigFile) -> String:
 	if config.has_section(""):
 		if config.has_section_key("application", "config/features"):
 			return config.get_value("application", "config/features")[0]
-		var config_version = config.get_value("global", "config_version", -1)
+		var config_version = config.get_value("", "config_version", -1)
 		match config_version:
-			5: return "4.x (Unknown Minor Version)"
-			4: return "3.x (Unknown Minor Version)"
+			4: 
+				return "3.x"
+			5: 
+				return "4.x"
 	return "Unknown Version"
 
 
@@ -511,6 +575,7 @@ func _load_data() -> void:
 			for property in projects[project.to_int()]:
 				if projects[project.to_int()][property] is float:
 					projects[project.to_int()][property] = int(projects[project.to_int()][property])
+			update_project(project.to_int(), projects[project.to_int()]["path"])
 		var loaded_groups = data["groups"].duplicate()
 		for group in loaded_groups:
 			groups[group.to_int()] = loaded_groups[group]

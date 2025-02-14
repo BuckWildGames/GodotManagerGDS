@@ -367,61 +367,75 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Installed" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="InstalledContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Installed" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer"]
 layout_mode = 2
 script = ExtResource("14_ko5hj")
 
-[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed"]
 layout_mode = 2
 text = "Installed Versions"
 
-[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed"]
 layout_mode = 2
 alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox"]
+[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox"]
 layout_mode = 2
 tooltip_text = "Hide"
 toggle_mode = true
 icon = ExtResource("15_6n8gi")
 icon_alignment = 1
 
-[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed"]
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed"]
 layout_mode = 2
 
-[node name="NotInstalled" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="NotInstalledContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="NotInstalled" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer"]
 layout_mode = 2
 script = ExtResource("14_ko5hj")
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
 layout_mode = 2
 theme_override_constants/separation = 24
 theme_override_styles/separator = SubResource("StyleBoxEmpty_w4jdi")
 
-[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
 layout_mode = 2
 text = "Available Versions"
 
-[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
 layout_mode = 2
 alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox"]
+[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox"]
 layout_mode = 2
 tooltip_text = "Hide"
 toggle_mode = true
 icon = ExtResource("15_6n8gi")
 icon_alignment = 1
 
-[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled"]
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
 layout_mode = 2
 
 [node name="EmptyLabel" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer"]
@@ -653,6 +667,10 @@ tooltip_text = "Browse Folders"
 icon = ExtResource("18_wxjwn")
 icon_alignment = 1
 
+[node name="OpenInstallButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+layout_mode = 2
+text = "Open Install Location"
+
 [node name="FetchEngineBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
 layout_mode = 2
 alignment = 1
@@ -716,7 +734,6 @@ theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
 [node name="ProjectsContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -746,6 +763,13 @@ popup/item_1/text = "List"
 popup/item_1/id = 1
 popup/item_2/text = "Group"
 popup/item_2/id = 2
+
+[node name="QuitEdit" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+tooltip_text = "Set Quit On Edit Project"
+text = "Quit On Edit Project"
 
 [node name="ClearDataButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
 layout_mode = 2
@@ -791,6 +815,7 @@ theme_override_constants/separation = 16
 layout_mode = 2
 
 [node name="OtherContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -833,6 +858,7 @@ alignment = 1
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "Set Start With Admin Permissions"
 text = "Start As Admin"
 
 [node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons"]
@@ -843,6 +869,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_3jv2q")
 [node name="RelaunchButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+tooltip_text = "Relaunch With Admin Permissions"
 text = "Relaunch As Admin"
 
 [node name="SelectFolderDialog" type="FileDialog" parent="UiManager/Menu/Settings"]
@@ -1032,8 +1059,8 @@ visible = false
 [connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ImportEngineButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["import"]]
 [connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ScanEnginesButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["scan"]]
 [connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/RefreshAvailableButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["refresh"]]
-[connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed" method="_on_hide_button_pressed"]
-[connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled" method="_on_hide_button_pressed"]
+[connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed" method="_on_hide_button_pressed"]
+[connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled" method="_on_hide_button_pressed"]
 [connection signal="canceled" from="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" method="_on_canceled"]
 [connection signal="confirmed" from="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" method="_on_confirmed"]
 [connection signal="dir_selected" from="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" to="UiManager/Menu/Engines/DialogContainer/ImportEngineDialog" method="_on_dir_selected"]
@@ -1043,9 +1070,11 @@ visible = false
 [connection signal="text_changed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox/InstallPath" to="UiManager/Menu/Settings" method="value_received" binds= ["path_changed"]]
 [connection signal="text_submitted" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox/InstallPath" to="UiManager/Menu/Settings" method="value_received" binds= ["path_submitted"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox/BrowseFolderButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["browse_install"]]
+[connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/OpenInstallButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["open_install"]]
 [connection signal="item_selected" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/FetchTimes" to="UiManager/Menu/Settings" method="value_received" binds= ["fetch_time"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/LatestVersion" to="UiManager/Menu/Settings" method="button_toggled" binds= ["latest_version"]]
 [connection signal="item_selected" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/DefaultProjectView" to="UiManager/Menu/Settings" method="value_received" binds= ["default_view"]]
+[connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/QuitEdit" to="UiManager/Menu/Settings" method="button_toggled" binds= ["quit_edit"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ClearDataButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["clear_data"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox/BrowseFolderButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["browse_project"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/SkipIntro" to="UiManager/Menu/Settings" method="button_toggled" binds= ["intro_video"]]

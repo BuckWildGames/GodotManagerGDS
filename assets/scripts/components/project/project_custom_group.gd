@@ -7,6 +7,7 @@ var temp_title: String = ""
 
 func _ready() -> void:
 	menu_button.get_popup().index_pressed.connect(value_received.bind("popup"))
+	menu_button.get_popup().transparent_bg = true
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):

@@ -1,9 +1,13 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://k2g424t5l0y3"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://k2g424t5l0y3"]
 
 [ext_resource type="FontFile" uid="uid://dxq1gtik46rtw" path="res://assets/theme/fonts/droid-sans.regular.ttf" id="1_1e0td"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_704th"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l67lt"]
 content_margin_left = 2.0
@@ -27,6 +31,10 @@ content_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uk48v"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arm6v"]
 content_margin_left = 2.0
@@ -39,10 +47,10 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.411765, 0.611765, 0.909804, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 expand_margin_left = 2.0
 expand_margin_top = 2.0
 expand_margin_right = 2.0
@@ -50,9 +58,26 @@ expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_be8ud"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jw8e"]
 bg_color = Color(0.168627, 0.168627, 0.168627, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ls7"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [resource]
 default_font = ExtResource("1_1e0td")
@@ -79,3 +104,4 @@ PopupMenu/constants/item_start_padding = 5
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_arm6v")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_be8ud")
 PopupPanel/styles/panel = SubResource("StyleBoxFlat_8jw8e")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_o0ls7")

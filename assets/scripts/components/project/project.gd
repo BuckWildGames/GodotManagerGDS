@@ -32,8 +32,10 @@ var clicked: bool = false
 
 func _ready() -> void:
 	group_popup = groups_button.get_popup()
+	group_popup.transparent_bg = true
 	group_popup.index_pressed.connect(value_received.bind("group"))
 	menu_button.get_popup().index_pressed.connect(value_received.bind("popup"))
+	menu_button.get_popup().transparent_bg = true
 
 
 func setup(new_master: Control, project: int, new_title: String, new_desc: String, new_path: String, new_version: String, new_engine: String, new_icon: CompressedTexture2D, is_favorite: bool) -> void:
@@ -68,6 +70,10 @@ func value_received(value: Variant, button: String) -> void:
 					var complete = EngineManager.run_project_in_editor(index, path)
 					if complete:
 						NotificationManager.notify("Opening Editor", 2.0, true)
+						var quit = ConfigManager.get_config_data("settings", "quit_edit")
+						if quit:
+							await get_tree().create_timer(2.0).timeout
+							get_tree().quit()
 					else:
 						NotificationManager.show_prompt("Failed To Open Project, Verify Engine Installation.", ["OK"], self, "")
 				1:# Play
@@ -93,7 +99,7 @@ func value_received(value: Variant, button: String) -> void:
 			if int(value) > 0:
 				ProjectManager.add_project_to_group(this_project, int(value) + 1)
 			else:
-				ProjectManager.create_group()
+				master.create_group()
 				ProjectManager.add_project_to_group(this_project, ProjectManager.get_project_groups().size() - 1)
 
 
@@ -114,8 +120,15 @@ func _on_project_button_pressed() -> void:
 	if master and path != "":
 		if clicked:
 			var index = EngineManager.get_version_index(engine_version)
-			EngineManager.run_project_in_editor(index, path)
-			NotificationManager.notify("Opening Editor", 2.0, true)
+			var complete = EngineManager.run_project_in_editor(index, path)
+			if complete:
+				NotificationManager.notify("Opening Editor", 2.0, true)
+				var quit = ConfigManager.get_config_data("settings", "quit_edit")
+				if quit:
+					await get_tree().create_timer(2.0).timeout
+					get_tree().quit()
+			else:
+				NotificationManager.show_prompt("Failed To Open Project, Verify Engine Installation.", ["OK"], self, "")
 		else:
 			clicked = true
 			delay_timer.start(click_delay)
@@ -137,7 +150,11 @@ func _on_delete(option: String) -> void:
 			queue_free()
 		"Delete":
 			var folder_path = path.replace("/" + title_label.get_text(), "")
-			FileManager.delete_folder(folder_path, title_label.get_text(), true)
+			if FileManager.delete_folder(folder_path, _convert_title(title_label.get_text()), true):
+				ProjectManager.remove_project(this_project)
+				queue_free()
+			else:
+				NotificationManager.show_prompt("Failed To Delete Project, Verify Project Location.", ["OK"], self, "")
 
 
 func _check_if_missing() -> void:
@@ -150,6 +167,11 @@ func _check_if_missing() -> void:
 		menu_button.set_visible(false)
 		project_button.set_disabled(true)
 		delete_button.set_visible(true)
+
+
+func _convert_title(text: String) -> String:
+	var new_title = text.replace(" ", "-")
+	return new_title.to_lower()
 
 
 func _on_delay_timer_timeout() -> void:

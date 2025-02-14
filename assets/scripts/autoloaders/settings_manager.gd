@@ -10,8 +10,21 @@ func init_settings() -> void:
 	ConfigManager.set_config_data("settings", "latest_version", false)
 	ConfigManager.set_config_data("settings", "intro_video", false)
 	ConfigManager.set_config_data("settings", "default_engine", "")
+	ConfigManager.set_config_data("settings", "quit_edit", false)
 	ConfigManager.set_config_data("settings", "default_view", 0)
 	ConfigManager.set_config_data("settings", "project_folders", [])
+
+
+func open_folder(path: String):
+	if path.is_empty():
+		return
+	if OS.has_feature("windows"):
+		OS.shell_open(path)
+	elif OS.has_feature("macos"):
+		OS.shell_open("open " + path)
+	elif OS.has_feature("linux"):
+		OS.shell_open("xdg-open " + path)
+		_debugger("Unsupported platform", true)
 
 
 func run_as_admin() -> bool:

@@ -14,6 +14,7 @@ const PATH_OK: CompressedTexture2D = preload("res://assets/icons/icon_status_suc
 @onready var engine_version_button: OptionButton = $MarginContainer/VBoxContainer/EngineVersionButton
 @onready var engine_renderer_button: OptionButton = $MarginContainer/VBoxContainer/EngineRendererButton
 
+var master: Control = null
 var title: String = ""
 var path: String = ""
 var description: String = ""
@@ -32,7 +33,9 @@ func _input(event: InputEvent) -> void:
 		project_path.call_deferred("release_focus")
 
 
-func setup() -> void:
+func setup(new_master: Control = null) -> void:
+	if !new_master == null:
+		master = new_master
 	title = "New Project"
 	path = "Unknown Path"
 	project_path.set_text(path)
@@ -59,12 +62,21 @@ func button_pressed(button: String) -> void:
 		"browse":
 			path_dialog.show()
 		"save":
+			if not master:
+				return
 			if can_create and title != "":
 				if ProjectManager.create_project_folder(title, description, path, engine_version, renderer, create_folder, version_control):
-					ProjectManager.create_project(title, description, path, "0.0.0", engine_version)
+					master.create_project(title, description, path, "0.0.0", engine_version)
 					get_parent().hide()
 					hide()
-					NotificationManager.notify("Project_created", 2.0, true)
+					NotificationManager.notify("Project Created", 2.0, true)
+					var index = EngineManager.get_version_index(engine_version)
+					EngineManager.run_project_in_editor(index, path)
+					NotificationManager.notify("Opening Editor", 2.0, true)
+					var quit = ConfigManager.get_config_data("settings", "quit_edit")
+					if quit:
+						await get_tree().create_timer(2.0).timeout
+						get_tree().quit()
 				else:
 					NotificationManager.notify("Failed To Create Project", 3.0, true)
 
@@ -101,9 +113,10 @@ func value_received(value: Variant, button: String) -> void:
 		"desc_changed":
 			description = str(value)
 		"version_changed":
-			engine_version = engine_version_button.get_item_text(value)
+			engine_version = engine_version_button.get_item_text(int(value))
+			_setup_renderer_button()
 		"renderer_changed":
-			renderer = engine_renderer_button.get_item_text(value)
+			renderer = engine_renderer_button.get_item_text(int(value))
 
 
 func _setup_engine_button() -> void:

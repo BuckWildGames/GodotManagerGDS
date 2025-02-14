@@ -22,6 +22,7 @@ const PATH_BUTTON: PackedScene = preload("res://assets/scenes/components/setting
 @onready var start_admin_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons/StartAdminButton
 
 @onready var default_project_view_button: OptionButton = $PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/DefaultProjectView
+@onready var quit_edit_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/QuitEdit
 
 
 var path: String = ""
@@ -52,6 +53,8 @@ func button_pressed(button: String) -> void:
 		"browse_project":
 			select_folder_dialog.show()
 			is_project_path = true
+		"open_install":
+			SettingsManager.open_folder(path)
 		"clear_data":
 			NotificationManager.show_prompt("Clear Project Data?\nThis Will Remove All Projects And Groups.", ["No", "Yes"], self, "_on_clear")
 		"run_admin":
@@ -71,6 +74,8 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 			_change_tab(3)
 		"latest_version":
 			ConfigManager.set_config_data("settings", "latest_version", toggled_on)
+		"quit_edit":
+			ConfigManager.set_config_data("settings", "quit_edit", toggled_on)
 		"intro_video":
 			ConfigManager.set_config_data("settings", "intro_video", toggled_on)
 		"run_admin":
@@ -163,13 +168,16 @@ func _load_settings(startup: bool = false) -> void:
 			if SettingsManager.run_as_admin():
 				get_tree().quit()
 	if settings.has("install_path"):
-		install_path.set_text(settings["install_path"])
+		path = settings["install_path"]
+		install_path.set_text(path)
 	if settings.has("fetch_time"):
 		fetch_times_button.select(settings["fetch_time"])
 	if settings.has("latest_version"):
 		latest_version_button.set_pressed_no_signal(settings["latest_version"])
 	if settings.has("intro_video"):
 		skip_intro_button.set_pressed_no_signal(settings["intro_video"])
+	if settings.has("quit_edit"):
+		quit_edit_button.set_pressed_no_signal(settings["quit_edit"])
 	if settings.has("default_engine"):
 		for index in default_engine_button.get_item_count():
 			if default_engine_button.get_item_text(index) == settings["default_engine"]:

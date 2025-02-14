@@ -3,8 +3,8 @@ extends UIState
 const ENGINE_SCENE: PackedScene = preload("res://assets/scenes/components/engine/engine.tscn")
 
 @onready var empty_label: Label = $PanelContainer/MarginContainer/EmptyLabel
-@onready var installed_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/Installed/GroupContainer
-@onready var available_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalled/GroupContainer
+@onready var installed_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/GroupContainer
+@onready var available_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/GroupContainer
 
 @onready var import_engine_dialog: FileDialog = $DialogContainer/ImportEngineDialog
 

@@ -179,7 +179,7 @@ func run_engine(index) -> bool:
 		return false
 	var godot_exe = _get_runnable_path(index)
 	if FileAccess.file_exists(godot_exe):
-		OS.create_process(godot_exe, [])
+		OS.create_process(godot_exe, ["--project-manager"])
 		_debugger("Running Godot version: " + version_name)
 	else:
 		_debugger("Executable not found for: " + version_name, true)
@@ -241,14 +241,14 @@ func _on_http_request_completed(_result, response_code, _headers, body) -> void:
 			for asset in assets:
 				var download_url = asset.get("browser_download_url", "")
 				if download_url.ends_with(".zip"):
-					if _get_os_version_engine(version_name, download_url):
+					if _get_os_version(version_name, download_url):
 						break
 	_debugger("Fetched %d versions" % [available_versions.size()])
 	_save_to_cache()
 	available_versions_changed.emit()
 
 
-func _get_os_version_engine(version_name: String, download_url: String) -> bool:
+func _get_os_version(version_name: String, download_url: String) -> bool:
 	var done = [false, false]
 	if OS.has_feature("windows"):
 		if "win64.exe" in download_url:

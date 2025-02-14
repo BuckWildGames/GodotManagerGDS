@@ -1,5 +1,9 @@
 extends UIState
 
+const BASE_GROUP: PackedScene = preload("res://assets/scenes/components/project/project_base_group.tscn")
+const CUSTOM_GROUP: PackedScene = preload("res://assets/scenes/components/project/project_custom_group.tscn")
+const PROJECT: PackedScene = preload("res://assets/scenes/components/project/project.tscn")
+
 @onready var empty_label: Label = $PanelContainer/MarginContainer/EmptyLabel
 @onready var project_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/ProjectContainer
 
@@ -21,7 +25,7 @@ func _enter_tree() -> void:
 func button_pressed(button: String) -> void:
 	match button:
 		"new_project":
-			create_new_project.setup()
+			create_new_project.setup(self)
 		"import":
 			import_project_dialog.setup()
 		"scan":
@@ -43,6 +47,33 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 			if toggled_on and ProjectManager.get_view_mode() == "list":
 				ProjectManager.set_view_mode("group")
 				_init_projects()
+
+
+func create_project(title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
+	var project_count = ProjectManager.get_projects_dic().size()
+	var container = project_container
+	if ProjectManager.get_view_mode() == "group":
+		var groups = ProjectManager.get_groups_dic()
+		container = groups[1]["node"].get_container()
+	if container != null:
+		var project_pos = container.get_child_count()
+		var new_project = PROJECT.instantiate()
+		container.add_child(new_project)
+		new_project.setup(self, project_count, title, description, path, version, engine_version, icon, false)
+		ProjectManager.create_project(new_project, project_pos, title, description, path, version, engine_version, icon)
+
+
+func create_group() -> void:
+	if not project_container:
+		return
+	var group_count = ProjectManager.get_groups_dic().size()
+	var title = ""
+	var new_group = null
+	if ProjectManager.get_view_mode() == "group":
+		new_group = CUSTOM_GROUP.instantiate()
+		project_container.add_child(new_group)
+		new_group.setup(self, group_count, false, title)
+	ProjectManager.create_group(new_group)
 
 
 func _process(_delta: float) -> void:
@@ -94,9 +125,9 @@ func _add_groups() -> void:
 		var is_hidden = groups[group]["hidden"]
 		var new_group = null
 		if group < 2:
-			new_group = ProjectManager.BASE_GROUP.instantiate()
+			new_group = BASE_GROUP.instantiate()
 		else:
-			new_group = ProjectManager.CUSTOM_GROUP.instantiate()
+			new_group = CUSTOM_GROUP.instantiate()
 		project_container.add_child(new_group)
 		new_group.setup(self, group, is_hidden, title)
 		ProjectManager.groups[group]["node"] = new_group
@@ -127,14 +158,14 @@ func _add_projects() -> void:
 		if ProjectManager.get_view_mode() == "group":
 			container = groups[group]["node"].get_container()
 		if container != null:
-			var new_project = ProjectManager.PROJECT.instantiate()
+			var new_project = PROJECT.instantiate()
 			container.add_child(new_project)
 			new_project.setup(self, project, title, desc, path, version, engine_version, icon, fav)
 			ProjectManager.projects[project]["node"] = new_project
 		if fav and ProjectManager.get_view_mode() == "group":
 			container = groups[0]["node"].get_container()
 			if container != null:
-				var new_project = ProjectManager.PROJECT.instantiate()
+				var new_project = PROJECT.instantiate()
 				container.add_child(new_project)
 				new_project.setup(self, project, title, desc, path, version, engine_version, icon, fav)
 				ProjectManager.projects[project]["favorite_node"] = new_project

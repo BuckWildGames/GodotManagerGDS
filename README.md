@@ -15,11 +15,33 @@ The original is written in C# so no code was used in this project.
 
 The original also has not been updated in a while and doesn't seem to work for me in version 4x.
 
+# Progress:
+
+-Project management basics working.
+
+-Support for 4x projects.
+
+-Create / Import projects.
+
+-Edit / Run Projects.
+
+-Grouping Projects.
+
+-Engine management basics working.
+
+-Download Godot Engine from GitHub.
+
+-Install / Uninstall engine version.
+
+-Multiple settings.
+
+-More to come!
+
 # Plan:
 
 -Add full project management for multiple Godot versions (old and new).
 
--Add full engine management (download, update, etc).
+-Add full engine management (choose mirror, etc).
 
 -Add asset library management (download, install, upload, etc).
 

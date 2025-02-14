@@ -11,11 +11,11 @@ extends UIState
 
 
 func _ready() -> void:
-	_clear_project_container()
 	ProjectManager.call_deferred("setup", self, project_container)
-	if ProjectManager.get_view_mode() == "group":
-		_add_groups()
-	_add_projects()
+
+
+func _enter_tree() -> void:
+	call_deferred("_init_projects")
 
 
 func button_pressed(button: String) -> void:
@@ -25,7 +25,12 @@ func button_pressed(button: String) -> void:
 		"import":
 			import_project_dialog.setup()
 		"scan":
-			ProjectManager.scan_for_projects([])
+			var folders = ConfigManager.get_config_data("settings", "project_folders")
+			if folders != null:
+				ProjectManager.scan_for_projects(folders)
+				NotificationManager.notify("Scanned For Projects", 2.0, true)
+			else:
+				NotificationManager.notify("No Project Folders Set", 3.0, true)
 
 
 func button_toggled(toggled_on: bool, button: String) -> void:
@@ -33,20 +38,11 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 		"list_view":
 			if toggled_on and ProjectManager.get_view_mode() == "group":
 				ProjectManager.set_view_mode("list")
-				group_view_button.set_pressed_no_signal(false)
-				_clear_project_container()
-				_add_projects()
-			else:
-				list_view_button.set_pressed_no_signal(true)
+				_init_projects()
 		"group_view":
 			if toggled_on and ProjectManager.get_view_mode() == "list":
 				ProjectManager.set_view_mode("group")
-				list_view_button.set_pressed_no_signal(false)
-				_clear_project_container()
-				_add_groups()
-				_add_projects()
-			else:
-				group_view_button.set_pressed_no_signal(true)
+				_init_projects()
 
 
 func _process(_delta: float) -> void:
@@ -66,6 +62,21 @@ func _process(_delta: float) -> void:
 		empty_label.set_visible(false)
 
 
+func _init_projects() -> void:
+	_clear_project_container()
+	if ProjectManager.get_view_mode() == "group":
+		_add_groups()
+		_set_buttons(true)
+	else:
+		_set_buttons(false)
+	_add_projects()
+
+
+func _set_buttons(group: bool) -> void:
+	list_view_button.set_pressed_no_signal(!group)
+	group_view_button.set_pressed_no_signal(group)
+
+
 func _check_groups_empty() -> bool:
 	for group in project_container.get_children():
 		var container = group.get_container()
@@ -80,13 +91,14 @@ func _add_groups() -> void:
 	var groups = ProjectManager.get_groups_dic()
 	for group in groups:
 		var title = groups[group]["name"]
+		var is_hidden = groups[group]["hidden"]
 		var new_group = null
 		if group < 2:
 			new_group = ProjectManager.BASE_GROUP.instantiate()
 		else:
 			new_group = ProjectManager.CUSTOM_GROUP.instantiate()
 		project_container.add_child(new_group)
-		new_group.setup(self, group, title)
+		new_group.setup(self, group, is_hidden, title)
 		ProjectManager.groups[group]["node"] = new_group
 	_reorder_groups()
 
@@ -119,7 +131,7 @@ func _add_projects() -> void:
 			container.add_child(new_project)
 			new_project.setup(self, project, title, desc, path, version, engine_version, icon, fav)
 			ProjectManager.projects[project]["node"] = new_project
-		if fav:
+		if fav and ProjectManager.get_view_mode() == "group":
 			container = groups[0]["node"].get_container()
 			if container != null:
 				var new_project = ProjectManager.PROJECT.instantiate()
@@ -144,9 +156,10 @@ func _reorder_projects() -> void:
 			pos = projects[project]["group_position"]
 			if fav:
 				var fav_container = groups[0]["node"].get_container()
-				pos = projects[project]["position"]
+				var fav_pos = projects[project]["position"]
 				if fav_container != null:
-					fav_container.move_child(fav_node, pos)
+					fav_pos = clamp(fav_pos, 0, groups[0]["size"])
+					fav_container.move_child(fav_node, fav_pos)
 		if container != null:
 			container.move_child(child, pos)
 

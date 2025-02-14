@@ -23,6 +23,7 @@ func _ready() -> void:
 	for canvas in canvas_layers:
 		_get_panels(canvas)
 	fade_colour_rect = _create_rect()
+	panels[current_canvas][current_panel].enter("")
 	if FORWARD_SIGNALS:
 		_forward_to_signal_bus()
 

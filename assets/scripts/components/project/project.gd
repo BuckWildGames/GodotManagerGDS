@@ -44,7 +44,9 @@ func setup(new_master: Control, project: int, new_title: String, new_desc: Strin
 	path = new_path
 	title_label.set_text(new_title)
 	description.set_text(new_desc)
+	description.set_tooltip_text(new_desc)
 	path_label.set_text("Path: " + new_path)
+	path_label.set_tooltip_text(new_path)
 	version_label.set_text(new_version)
 	engine_version = new_engine
 	engine_version_label.set_text("Godot: " + engine_version)

@@ -12,7 +12,12 @@ const ENGINE_SCENE: PackedScene = preload("res://assets/scenes/components/engine
 func _ready() -> void:
 	EngineManager.available_versions_changed.connect(_reset_engines)
 	EngineManager.installed_versions_changed.connect(_reset_engines)
-	EngineManager.setup()
+	EngineManager.call_deferred("setup")
+
+
+func enter(previous : String):
+	super.enter(previous)
+	EngineManager.load_settings()
 
 
 func button_pressed(button: String) -> void:
@@ -20,9 +25,19 @@ func button_pressed(button: String) -> void:
 		"import":
 			pass
 		"scan":
-			pass
+			EngineManager.get_installed_versions()
+			NotificationManager.notify("Scanning For Installed Versions", 2.0, true)
 		"refresh":
-			pass
+			EngineManager.fetch_available_versions(false)
+			NotificationManager.notify("Fetching Available Versions", 2.0, true)
+
+
+func reset_default_engine(ignore: Node) -> void:
+	if not installed_container:
+		return
+	for engine in installed_container.get_children():
+		if not engine == ignore:
+			engine.default_button.set_pressed_no_signal(false)
 
 
 func _process(_delta: float) -> void:
@@ -38,6 +53,8 @@ func _process(_delta: float) -> void:
 func _reset_engines() -> void:
 	_clear_engine_containers()
 	_add_engines()
+	if is_visible_in_tree():
+		NotificationManager.notify("Engine List Updated", 2.0, true)
 
 
 func _add_engines() -> void:
@@ -45,6 +62,7 @@ func _add_engines() -> void:
 		return
 	var available = EngineManager.get_available_versions()
 	var installed = EngineManager.get_installed_versions()
+	var default = ConfigManager.get_config_data("settings", "default_engine")
 	for engine in range(available.size()):
 		var i = ENGINE_SCENE.instantiate()
 		var title = available[engine]["name"]
@@ -55,7 +73,11 @@ func _add_engines() -> void:
 			is_installed = true
 		else:
 			available_container.add_child(i)
-		i.setup(self, engine, title, source, is_installed)
+		var is_default = false
+		if default != null:
+			if default == title:
+				is_default = true
+		i.setup(self, engine, title, source, is_installed, is_default)
 
 
 func _clear_engine_containers() -> void:

@@ -11,11 +11,15 @@ var this_group: int = -1
 var title: String = ""
 
 
-func setup(new_master: Control, group: int, new_title: String = "") -> void:
+func setup(new_master: Control, group: int, is_hidden: bool, new_title: String = "") -> void:
+	if not is_node_ready():
+		await ready
 	master = new_master
 	this_group = group
 	title = new_title
 	title_node.set_text(title)
+	if is_hidden:
+		group_container.set_visible(false)
 
 
 func get_container() -> Container:
@@ -29,6 +33,7 @@ func _on_hide_button_pressed() -> void:
 		NotificationManager.notify("Group Empty", 2.0, true)
 		return
 	group_container.set_visible(!group_container.is_visible())
+	ProjectManager.hide_show_group(this_group, !group_container.is_visible())
 
 
 func _on_group_button_pressed() -> void:

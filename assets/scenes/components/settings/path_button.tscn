@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://htj7qnaek4fi"]
+
+[ext_resource type="Texture2D" uid="uid://dve6nltqywobb" path="res://assets/icons/icon_remove.svg" id="1_pbhup"]
+
+[node name="PathButton" type="Button"]
+custom_minimum_size = Vector2(1200, 0)
+size_flags_horizontal = 4
+tooltip_text = "Remove Path"
+text = "Path 1"
+icon = ExtResource("1_pbhup")
+alignment = 0
+text_overrun_behavior = 2
+clip_text = true
+icon_alignment = 2

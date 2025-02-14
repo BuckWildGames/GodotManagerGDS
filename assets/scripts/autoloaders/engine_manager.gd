@@ -15,9 +15,18 @@ var installed_versions: Array = []
 signal available_versions_changed()
 signal installed_versions_changed()
 
+
+func _ready() -> void:
+	_load_settings()
+
+
 func setup() -> void:
 	check_installed_versions()
 	fetch_available_versions()
+
+
+func load_settings() -> void:
+	_load_settings()
 
 
 func set_install_dir(new_dir: String) -> void:
@@ -78,7 +87,7 @@ func fetch_available_versions(use_cache: bool = true) -> void:
 
 func get_version_index(version_name: String) -> int:
 	for i in range(available_versions.size()):
-		if version_name in available_versions[i]["name"]:
+		if version_name == available_versions[i]["name"]:
 			return i
 	return -1  # Return -1 if not found
 
@@ -134,7 +143,7 @@ func run_project(index: int, project_path: String) -> bool:
 		return false
 	var godot_exe = _get_runnable_path(index)
 	if FileAccess.file_exists(godot_exe):
-		OS.create_process(godot_exe, [project_path])
+		OS.create_process(godot_exe, ["--path", project_path])
 		_debugger("Running project in Godot version: " + version_name)
 	else:
 		_debugger("Executable not found for: " + version_name, true)
@@ -152,7 +161,7 @@ func run_project_in_editor(index: int, project_path: String) -> bool:
 		return false
 	var godot_exe = _get_runnable_path(index)
 	if FileAccess.file_exists(godot_exe):
-		OS.create_process(godot_exe, ["-e", project_path])
+		OS.create_process(godot_exe, ["-e", "--path", project_path])
 		_debugger("Running editor in Godot version: " + version_name)
 	else:
 		_debugger("Executable not found for: " + version_name, true)
@@ -179,6 +188,8 @@ func run_engine(index) -> bool:
 
 
 func _is_cache_valid() -> bool:
+	if cache_expiry == -1:
+		return true
 	var cache = FileManager.load_data("user://", CACHE_FILE)
 	if not cache.is_empty():
 		if "timestamp" in cache and "versions" in cache:
@@ -220,25 +231,53 @@ func _on_http_request_completed(_result, response_code, _headers, body) -> void:
 		return
 	var releases = json.get_data()
 	available_versions.clear()
+	if not releases is Array:
+		releases = [releases]
 	for release in releases:
 		if "tag_name" in release:
 			var version_name = release["tag_name"]
+			version_name = version_name.replace("-stable", "")
 			var assets = release.get("assets", [])
-			var done = [false, false]
 			for asset in assets:
 				var download_url = asset.get("browser_download_url", "")
 				if download_url.ends_with(".zip"):
-					if "win64.exe" in download_url:
-						available_versions.append({"name": version_name, "url": download_url})
-						done[0] = true
-					if "mono_win64" in download_url:
-						available_versions.append({"name": version_name + "-mono", "url": download_url})
-						done[1] = true
-					if done[0] == true and done[1] == true:
+					if _get_os_version_engine(version_name, download_url):
 						break
 	_debugger("Fetched %d versions" % [available_versions.size()])
 	_save_to_cache()
 	available_versions_changed.emit()
+
+
+func _get_os_version_engine(version_name: String, download_url: String) -> bool:
+	var done = [false, false]
+	if OS.has_feature("windows"):
+		if "win64.exe" in download_url:
+			available_versions.append({"name": version_name, "url": download_url})
+			done[0] = true
+		if "mono_win64" in download_url:
+			available_versions.append({"name": version_name + " - Mono", "url": download_url})
+			done[1] = true
+		if done[0] == true and done[1] == true:
+			return true
+	elif OS.has_feature("macos"):
+		if ("macos" in download_url or "osx" in download_url) and not "mono" in download_url:
+			available_versions.append({"name": version_name, "url": download_url})
+			done[0] = true
+		if "mono_macos" in download_url or "mono_osx" in download_url:
+			available_versions.append({"name": version_name + " - Mono", "url": download_url})
+			done[1] = true
+		if done[0] == true and done[1] == true:
+			return true
+	elif OS.has_feature("linux"):
+		if "linux.x86_64" in download_url and not "mono" in download_url:
+			available_versions.append({"name": version_name, "url": download_url})
+			done[0] = true
+		if "mono_linux.x86_64" in download_url:
+			available_versions.append({"name": version_name + " - Mono", "url": download_url})
+			done[1] = true
+		if done[0] == true and done[1] == true:
+			return true
+	return false
 
 
 func _save_to_cache() -> void:
@@ -249,10 +288,12 @@ func _save_to_cache() -> void:
 func _on_download_completed(_result, response_code, _headers, body, zip_path, extracted_path, version_name) -> void:
 	if response_code != 200:
 		_debugger("Failed to download: %s Response Code: %s" % [version_name, response_code], true)
+		NotificationManager.show_prompt("Download Failed, Check Connection", ["OK"], null, "")
 		return
 	var file = FileAccess.open(zip_path, FileAccess.WRITE)
 	if not file:
 		_debugger("Failed to create zip file at: " + str(zip_path), true)
+		NotificationManager.show_prompt("Install Failed, Check Permissions", ["OK"], null, "")
 		return
 	file.store_buffer(body)
 	file.close()
@@ -266,17 +307,28 @@ func _unzip_file(zip_path: String, extract_to: String, version_name: String) -> 
 	if error != OK:
 		_debugger("Failed to open zip file: " + str(zip_path), true)
 		return
-	error = zip_reader.extract_all(extract_to)
+	var files = zip_reader.get_files()
+	for file_name in files:
+		var file_data = zip_reader.read_file(file_name)
+		var full_path = extract_to.path_join(file_name)
+		var dir = full_path.get_base_dir()
+		DirAccess.make_dir_recursive_absolute(dir)
+		var file = FileAccess.open(full_path, FileAccess.WRITE)
+		if file:
+			file.store_buffer(file_data)
+			file.close()
+		else:
+			_debugger("Failed to extract: " + file_name, true)
+			zip_reader.close()
+			return
 	zip_reader.close()
-	if error != OK:
-		_debugger("Failed to extract zip for: " + str(version_name), true)
-		return
 	installed_versions.append(version_name)
-	_debugger("Extracted: %s to: %s" %[version_name, extract_to])
-	var path = zip_path.replace("/" + version_name + ".zip", "")
-	var file_name = version_name + ".zip"
-	FileManager.delete_file(path, file_name, false)
+	_debugger("Extracted: %s to: %s" % [version_name, extract_to])
+	var zip_folder = zip_path.get_base_dir()
+	var zip_file_name = zip_path.get_file()
+	FileManager.delete_file(zip_folder, zip_file_name, false)
 	installed_versions_changed.emit()
+
 
 
 func _get_runnable_path(index: int) -> String:
@@ -298,6 +350,26 @@ func _get_runnable_path(index: int) -> String:
 			godot_exe += file
 			break
 	return godot_exe
+
+
+func _load_settings() -> void:
+	var new_install_dir = ConfigManager.get_config_data("settings", "install_path")
+	if new_install_dir != null:
+		install_dir = new_install_dir
+	var latest_version = ConfigManager.get_config_data("settings", "latest_version")
+	if latest_version != null:
+		use_latest = latest_version
+	var fetch_time = ConfigManager.get_config_data("settings", "fetch_time")
+	if fetch_time != null:
+		match fetch_time:
+			0:
+				cache_expiry =  -1 # never
+			1:
+				cache_expiry = 86400 # a day
+			2:
+				cache_expiry = 604800 # a week
+			3:
+				cache_expiry = 2592000 # a month
 
 
 func _debugger(debug_message: String, error: bool = false) -> void:

@@ -132,7 +132,7 @@ text = "Renderer:"
 
 [node name="EngineRendererButton" type="OptionButton" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-tooltip_text = "Select An Engine Version"
+tooltip_text = "Select A Renderer"
 selected = 0
 item_count = 3
 popup/item_0/text = "Forward Plus"

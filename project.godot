@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GodotManagerRedux"
-config/version="0.2.0"
+config/version="0.3.0"
 run/main_scene="res://assets/scenes/main.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
@@ -23,6 +23,7 @@ ConfigManager="*res://assets/scripts/autoloaders/config_manager.gd"
 DebugManager="*res://assets/scripts/autoloaders/debug_manager.gd"
 FileManager="*res://assets/scripts/autoloaders/file_manager.gd"
 NotificationManager="*res://assets/scripts/autoloaders/notification_manager.gd"
+SettingsManager="*res://assets/scripts/autoloaders/settings_manager.gd"
 EngineManager="*res://assets/scripts/autoloaders/engine_manager.gd"
 ProjectManager="*res://assets/scripts/autoloaders/project_manager.gd"
 

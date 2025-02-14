@@ -47,7 +47,7 @@ func erase_config_data(category: String, data_name: String) -> bool:
 	return complete
 
 
-func get_config_category(category: String) -> Variant:
+func get_config_category(category: String) -> Dictionary:
 	var value = null
 	category = category.capitalize()
 	if config_data.has(category):

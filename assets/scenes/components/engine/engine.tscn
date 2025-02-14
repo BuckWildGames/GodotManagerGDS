@@ -64,7 +64,6 @@ custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Uninstall"
-theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
 icon = ExtResource("4_xufpf")
 icon_alignment = 1
 expand_icon = true
@@ -74,11 +73,11 @@ custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Set As Default"
-theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
+toggle_mode = true
 icon = ExtResource("5_jlm80")
 icon_alignment = 1
 expand_icon = true
 
 [connection signal="pressed" from="EngineContainer/ButtonContainer/DownloadButton" to="." method="button_pressed" binds= ["download"]]
 [connection signal="pressed" from="EngineContainer/ButtonContainer/UninstallButton" to="." method="button_pressed" binds= ["uninstall"]]
-[connection signal="pressed" from="EngineContainer/ButtonContainer/DefaultButton" to="." method="button_pressed" binds= ["default"]]
+[connection signal="toggled" from="EngineContainer/ButtonContainer/DefaultButton" to="." method="_on_default_button_toggled"]

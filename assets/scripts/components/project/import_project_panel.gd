@@ -16,6 +16,7 @@ func _on_confirmed() -> void:
 	if ProjectManager.import_project(path):
 		get_parent().hide()
 		hide()
+		NotificationManager.notify("Project Imported", 2.0, true)
 	else:
 		NotificationManager.notify("Project Not Found", 3.0, true)
 

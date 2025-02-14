@@ -31,17 +31,21 @@ layout_mode = 2
 [node name="ProjectContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Icon" type="TextureRect" parent="ProjectContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 texture = ExtResource("2_m00bx")
 expand_mode = 1
 
 [node name="Info" type="VBoxContainer" parent="ProjectContainer"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="ProjectContainer/Info"]
 layout_mode = 2
@@ -50,17 +54,21 @@ text = "New Project"
 
 [node name="Description" type="Label" parent="ProjectContainer/Info"]
 layout_mode = 2
+mouse_filter = 1
 text = "No Description"
 text_overrun_behavior = 3
 
 [node name="Path" type="Label" parent="ProjectContainer/Info"]
 layout_mode = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
 text = "No File Path"
+text_overrun_behavior = 3
 
 [node name="VSeparator" type="VSeparator" parent="ProjectContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_filter = 2
 theme_override_constants/separation = 64
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
 
@@ -81,6 +89,7 @@ vertical_alignment = 1
 [node name="VSeparator2" type="VSeparator" parent="ProjectContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
+mouse_filter = 2
 theme_override_constants/separation = 128
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
 
@@ -94,7 +103,7 @@ alignment = 1
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-tooltip_text = "Copy To Favorites"
+tooltip_text = "Add / Remove Favorites"
 theme_override_colors/icon_pressed_color = Color(1, 0.403922, 0.368627, 1)
 toggle_mode = true
 icon = ExtResource("5_glp54")

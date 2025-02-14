@@ -28,7 +28,7 @@ var can_create: bool = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
-		project_name.release_focus()
+		project_name.call_deferred("release_focus")
 		project_path.call_deferred("release_focus")
 
 
@@ -37,8 +37,11 @@ func setup() -> void:
 	path = "Unknown Path"
 	project_path.set_text(path)
 	description = "No Description"
-	engine_version = "4.3"
-	renderer = "Forward Plus"
+	engine_version = ConfigManager.get_config_data("settings", "default_engine")
+	_setup_engine_button()
+	_setup_renderer_button()
+	renderer = engine_renderer_button.get_item_text(0)
+	engine_renderer_button.select(0)
 	create_folder = true
 	version_control = true
 	create_folder_button.set_pressed_no_signal(true)
@@ -61,8 +64,9 @@ func button_pressed(button: String) -> void:
 					ProjectManager.create_project(title, description, path, "0.0.0", engine_version)
 					get_parent().hide()
 					hide()
+					NotificationManager.notify("Project_created", 2.0, true)
 				else:
-					NotificationManager.notify("Failed To Create Project", 5.0, true)
+					NotificationManager.notify("Failed To Create Project", 3.0, true)
 
 
 func button_toggled(toggled_on: bool, button: String) -> void:
@@ -100,6 +104,29 @@ func value_received(value: Variant, button: String) -> void:
 			engine_version = engine_version_button.get_item_text(value)
 		"renderer_changed":
 			renderer = engine_renderer_button.get_item_text(value)
+
+
+func _setup_engine_button() -> void:
+	engine_version_button.clear()
+	var index = 0
+	var selected_index = 0
+	for engine in EngineManager.get_installed_versions():
+		engine_version_button.add_item(engine, index)
+		if engine == engine_version:
+			selected_index = index
+		index += 1
+	engine_version_button.select(selected_index)
+
+
+func _setup_renderer_button() -> void:
+	engine_renderer_button.clear()
+	if "4." in engine_version:
+		engine_renderer_button.add_item("Forward Plus")
+		engine_renderer_button.add_item("Mobile")
+		engine_renderer_button.add_item("GL Compatibility")
+	else:
+		engine_renderer_button.add_item("OpenGL ES 3.0")
+		engine_renderer_button.add_item("OpenGL ES 2.0")
 
 
 func _check_path(update: bool) -> void:

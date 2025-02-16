@@ -1,7 +1,7 @@
 # GodotManagerRedux
 A tool to manage all things Godot
 
-Released for Windows.
+Released for Windows
 
 Source should work with Mac and Linux if exported for platform. *Not Tested
 

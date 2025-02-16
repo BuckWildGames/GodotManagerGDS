@@ -115,13 +115,14 @@ script = ExtResource("2_dk2vg")
 start = true
 can_go_back = false
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UiManager/Menu/Intro"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Intro"]
+layout_mode = 0
+offset_right = 1940.0
+offset_bottom = 1108.0
+scale = Vector2(0.659, 0.649)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UiManager/Menu/Intro/MarginContainer"]
+layout_mode = 2
 stream = ExtResource("4_w3iyo")
 autoplay = true
 
@@ -1046,7 +1047,7 @@ one_shot = true
 [node name="Notification" type="CanvasLayer" parent="UiManager"]
 visible = false
 
-[connection signal="finished" from="UiManager/Menu/Intro/VideoStreamPlayer" to="UiManager/Menu/Intro" method="transition" binds= ["topbar"]]
+[connection signal="finished" from="UiManager/Menu/Intro/MarginContainer/VideoStreamPlayer" to="UiManager/Menu/Intro" method="transition" binds= ["topbar"]]
 [connection signal="pressed" from="UiManager/Menu/Intro/SkipButton" to="UiManager/Menu/Intro" method="transition" binds= ["topbar"]]
 [connection signal="pressed" from="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons/NewProjectButton" to="UiManager/Menu/Projects" method="button_pressed" binds= ["new_project"]]
 [connection signal="pressed" from="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons/ImportProjectButton" to="UiManager/Menu/Projects" method="button_pressed" binds= ["import"]]

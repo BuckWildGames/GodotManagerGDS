@@ -50,17 +50,15 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 
 
 func create_project(title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
-	var project_count = ProjectManager.get_projects_dic().size()
 	var container = project_container
 	if ProjectManager.get_view_mode() == "group":
 		var groups = ProjectManager.get_groups_dic()
 		container = groups[1]["node"].get_container()
 	if container != null:
-		var project_pos = container.get_child_count()
 		var new_project = PROJECT.instantiate()
 		container.add_child(new_project)
-		new_project.setup(self, project_count, title, description, path, version, engine_version, icon, false)
-		ProjectManager.create_project(new_project, project_pos, title, description, path, version, engine_version, icon)
+		new_project.setup(self, title, description, path, version, engine_version, icon, false)
+		ProjectManager.create_project(new_project, title, description, path, version, engine_version, icon)
 
 
 func create_group() -> void:
@@ -184,12 +182,11 @@ func _reorder_projects() -> void:
 		var container = project_container
 		if ProjectManager.get_view_mode() == "group":
 			container = groups[group]["node"].get_container()
-			pos = projects[project]["group_position"]
+			pos = clamp(pos, 0, groups[group]["size"])
 			if fav:
 				var fav_container = groups[0]["node"].get_container()
-				var fav_pos = projects[project]["position"]
 				if fav_container != null:
-					fav_pos = clamp(fav_pos, 0, groups[0]["size"])
+					var fav_pos = clamp(pos, 0, groups[0]["size"])
 					fav_container.move_child(fav_node, fav_pos)
 		if container != null:
 			container.move_child(child, pos)

@@ -1,6 +1,4 @@
-extends Node
-
-const DEBUGGER: bool = false
+extends "res://assets/scripts/other/project_creator.gd"
 
 const DEFAULT_GROUPS: Dictionary = {0: {"name": "Favorites", "position": 0, "size": 0, "node": null, "hidden": false}, 1: {"name": "Ungrouped", "position": 1, "size": 0, "node": null, "hidden": false}}
 
@@ -52,7 +50,7 @@ func get_groups_dic() -> Dictionary:
 	return groups.duplicate()
 
 
-func create_project(new_project: Node, project_pos: int, title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
+func create_project(new_project: Node, title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
 	if _check_duplicate(title):
 		_debugger("Project already exists: " + title)
 		if new_project:
@@ -60,7 +58,7 @@ func create_project(new_project: Node, project_pos: int, title: String, descript
 		return
 	var project_count = projects.size()
 	groups[1]["size"] += 1
-	projects[project_count] = {"name": title, "description": description, "path": path, "version": version, "engine_version": engine_version, "icon": icon, "group": 1, "position": project_count, "group_position": project_pos, "favorite": false, "node": new_project, "favorite_node": null}
+	projects[project_count] = {"name": title, "description": description, "path": path, "version": version, "engine_version": engine_version, "icon": icon, "group": 1, "position": project_count, "favorite": false, "node": new_project, "favorite_node": null}
 	_debugger("New project created: " + str(title))
 	_save_data()
 
@@ -71,7 +69,6 @@ func remove_project(project_num: int) -> void:
 		return
 	var group = projects[project_num]["group"]
 	var pos = projects[project_num]["position"]
-	var group_pos = projects[project_num]["group_position"]
 	groups[group]["size"] -= 1
 	projects.erase(project_num)
 	for project in projects:
@@ -79,11 +76,6 @@ func remove_project(project_num: int) -> void:
 			var project_pos = projects[project]["position"]
 			if project_pos > pos:
 				projects[project]["position"] -= 1
-			var project_group = projects[project]["group"]
-			var project_group_pos = projects[project]["group_position"]
-			if group == project_group:
-				if project_group_pos > group_pos:
-					projects[project]["group_position"] -= 1
 	_debugger("Project removed: " + str(project_num))
 	_save_data()
 
@@ -95,28 +87,24 @@ func move_project_front(project_num: int) -> void:
 	var this_project = projects[project_num]["node"]
 	var group = projects[project_num]["group"]
 	var pos = projects[project_num]["position"]
+	projects[project_num]["position"] = 0
 	var fav = projects[project_num]["favorite"]
+	var fav_node = projects[project_num]["favorite_node"]
 	var container = project_container
 	var group_container = groups[group]["node"].get_container()
 	var fav_container = groups[0]["node"].get_container()
-	var group_pos = projects[project_num]["group_position"]
 	if container != null or group_container != null:
 		if view_mode == VIEW_MODE.GROUP:
 			group_container.move_child(this_project, 0)
 			if fav:
-				fav_container.move_child(this_project, 0)
+				fav_container.move_child(fav_node, 0)
 		else:
 			container.move_child(this_project, 0)
 		for project in projects:
-			if project != this_project:
+			if project != project_num:
 				var project_pos = projects[project]["position"]
 				if project_pos < pos:
 					projects[project]["position"] += 1
-				var project_group = projects[project]["group"]
-				var project_group_pos = projects[project]["group_position"]
-				if group == project_group:
-					if project_group_pos < group_pos:
-						projects[project]["group_position"] += 1
 		_debugger("Project moved to front: " + str(project_num))
 		_save_data()
 		return
@@ -131,15 +119,9 @@ func add_project_to_group(project_num: int, group_num: int) -> void:
 		_debugger("Group not found: " + str(group_num), true)
 		return
 	var old_group = projects[project_num]["group"]
-	var old_group_pos = projects[project_num]["group_position"]
 	projects[project_num]["group"] = group_num
-	projects[project_num]["group_position"] = groups[group_num]["size"]
 	groups[group_num]["size"] += 1
 	groups[old_group]["size"] -= 1
-	for project in projects:
-		if projects[project]["group"] == old_group:
-			if projects[project]["group_position"] > old_group_pos:
-				projects[project]["group_position"] -= 1
 	var project_node = projects[project_num]["node"]
 	var group_node = groups[group_num]["node"]
 	if project_node == null or group_node == null:
@@ -166,14 +148,8 @@ func remove_project_from_group(project_num: int) -> void:
 		_debugger("Group not found: " + str(old_group), true)
 		return
 	projects[project_num]["group"] = 1
-	var pos = projects[project_num]["group_position"]
-	projects[project_num ]["group_position"] = groups[1]["size"]
 	groups[1]["size"] += 1
 	groups[old_group]["size"] -= 1
-	for project in projects:
-		if projects[project]["group"] == old_group:
-			if projects[project]["group_position"] > pos:
-				projects[project]["group_position"] -= 1
 	var project_node = projects[project_num]["node"]
 	var group_node = groups[1]["node"]
 	if project_node == null or group_node == null:
@@ -388,171 +364,11 @@ func update_project(project_num: int, path: String) -> void:
 	return
 
 
-func create_project_folder(title: String, description: String, path: String, engine: String, renderer: String, create_folder: bool, create_git: bool, template: int = -1) -> bool:
-	if _check_duplicate(title):
-		_debugger("Project already exists: " + title)
-		return false
-	if not DirAccess.dir_exists_absolute(path):
-		if not create_folder:
-			_debugger("Path not found: " + path)
-			return false
-		DirAccess.make_dir_recursive_absolute(path)
-	_set_project_template(template, path)
-	var project_file_path = path + "/project.godot"
-	if "3." in engine:
-		var complete = _create_godot_3x_project_file(project_file_path, title, description, renderer)
-		if not complete:
-			_debugger("Failed to create project file", true)
-			return false
-		complete = FileManager.copy_file("res://", path, "icon.png")
-		if not complete:
-			_debugger("Failed to copy icon.png", true)
-			return false
-		complete = FileManager.copy_file("res://", path, "default_env.tres")
-		if not complete:
-			_debugger("Failed to copy default_env.tres", true)
-			return false
-		if create_git:
-			complete = FileManager.copy_file("res://", path, ".gitattributes")
-			if not complete:
-				_debugger("Failed to copy .gitattributes", true)
-				return false
-			complete = FileManager.copy_file("res://", path, ".gitignore")
-			if not complete:
-				_debugger("Failed to copy .gitignore", true)
-				return false
-	elif "4." in engine:
-		var complete = _create_godot_4x_project_file(project_file_path, title, description, engine, renderer)
-		if not complete:
-			_debugger("Failed to create project file", true)
-			return false
-		complete = FileManager.copy_file("res://", path, "icon.svg")
-		if not complete:
-			_debugger("Failed to copy icon.svg", true)
-			return false
-		if create_git:
-			complete = FileManager.copy_file("res://", path, ".gitattributes")
-			if not complete:
-				_debugger("Failed to copy .gitattributes", true)
-				return false
-			complete = FileManager.copy_file("res://", path, ".gitignore")
-			if not complete:
-				_debugger("Failed to copy .gitignore", true)
-				return false
-	_debugger("Project successfully created at:" + path)
-	return true
-
-# Not finished!!!!!!!!!!!!!!
-func _set_project_template(template: int, path: String) -> void:
-	if template == -1:
-		return
-	var folders = []
-	for folder in folders:
-		DirAccess.make_dir_recursive_absolute(path + "/" + folder)
-
-
-func _create_godot_3x_project_file(project_file_path: String, title: String, description: String, renderer: String) -> bool:
-	var config_version = 4
-	var config = ConfigFile.new()
-	config.set_value("", "config_version", config_version)
-	config.set_value("application", "config/name", title)
-	config.set_value("application", "config/description", description)
-	config.set_value("application", "config/icon", "res://icon.png")
-	if "GLES2" in renderer:
-		config.set_value("rendering", "quality/driver/driver_name", "GLES2")
-	var error = config.save(project_file_path)
-	if error != OK:
-		_debugger("Failed to save project file", true)
-		return false
-	var file = FileAccess.open(project_file_path, FileAccess.READ_WRITE)
-	if file:
-		var content = file.get_as_text()
-		file.seek(0)
-		file.store_string("; Engine configuration file.\n; It's best edited using the editor UI and not directly,\n; since the parameters that go here are not all obvious.\n;\n; Format:\n;   [section] ; section goes between []\n;   param=value ; assign values to parameters\n\n")
-		file.store_string(content)
-	file.close()
-	_debugger("Created 3x project file")
-	return true
-
-
-func _create_godot_4x_project_file(project_file_path: String, title: String, description: String, engine: String, renderer: String) -> bool:
-	var config_version = 5
-	var config = ConfigFile.new()
-	config.set_value("", "config_version", config_version)
-	config.set_value("application", "config/name", title)
-	config.set_value("application", "config/description", description)
-	config.set_value("application", "config/features", PackedStringArray([engine, renderer]))
-	config.set_value("application", "config/icon", "res://icon.svg")
-	if "Mobile" in renderer:
-		config.set_value("rendering", "renderer/rendering_method", "mobile")
-	if "Compatibility" in renderer:
-		config.set_value("rendering", "renderer/rendering_method", "gl_compatibility")
-		config.set_value("rendering", "renderer/rendering_method.mobile", "gl_compatibility")
-	var error = config.save(project_file_path)
-	if error != OK:
-		_debugger("Failed to save project file", true)
-		return false
-	var file = FileAccess.open(project_file_path, FileAccess.READ_WRITE)
-	if file:
-		var content = file.get_as_text()
-		file.seek(0)
-		file.store_string("; Engine configuration file.\n; It's best edited using the editor UI and not directly,\n; since the parameters that go here are not all obvious.\n;\n; Format:\n;   [section] ; section goes between []\n;   param=value ; assign values to parameters\n\n")
-		file.store_string(content)
-	file.close()
-	_debugger("Created 4x project file")
-	return true
-
-
 func _check_duplicate(project_name: String) -> bool:
 	for project in projects:
 		if project_name == projects[project]["name"]:
 			return true
 	return false
-
-
-func _get_project_data(project_path: String) -> Dictionary:
-	var data = {}
-	var config = ConfigFile.new()
-	if config.load(project_path + "/project.godot") == OK:
-		var project_name = config.get_value("application", "config/name", "Unnamed Project")
-		var project_description = config.get_value("application", "config/description", "No Description")
-		var project_version = config.get_value("application", "config/version", "Version Unknown")
-		var version = _get_godot_version(config)
-		var icon_path = _get_icon(config, project_path)
-		var icon_texture = null
-		if FileAccess.file_exists(icon_path):
-			icon_texture = load(icon_path)
-		data = {
-			"name": project_name,
-			"description": project_description,
-			"version": project_version,
-			"path": project_path,
-			"engine_version": version,
-			"icon": icon_texture
-		}
-	return data
-
-
-func _get_godot_version(config: ConfigFile) -> String:
-	if config.has_section(""):
-		if config.has_section_key("application", "config/features"):
-			return config.get_value("application", "config/features")[0]
-		var config_version = config.get_value("", "config_version", -1)
-		match config_version:
-			4: 
-				return "3.x"
-			5: 
-				return "4.x"
-	return "Unknown Version"
-
-
-func _get_icon(config: ConfigFile, path: String) -> String:
-	if config.has_section("header"):
-		if config.has_section_key("application", "config/icon"):
-			var icon_path = config.get_value("application", "config/icon")
-			icon_path = icon_path.replace("res://", "")
-			return path + icon_path
-	return path + "/icon.svg"
 
 
 func _save_data() -> void:
@@ -566,11 +382,15 @@ func _load_data() -> void:
 		var loaded_projects = data["projects"].duplicate()
 		for project in loaded_projects:
 			projects[project.to_int()] = loaded_projects[project]
-			if projects[project.to_int()]["icon"] != null:
+			# Remove later
+			if projects[project.to_int()].has("group_position"):
+				projects[project.to_int()].erase("group_position")
+			# 
+			if projects[project.to_int()].has("icon") and not projects[project.to_int()]["icon"] == null:
 				projects[project.to_int()]["icon"] = str_to_var(projects[project.to_int()]["icon"])
-			if projects[project.to_int()]["node"] != null:
+			if projects[project.to_int()].has("node") and not projects[project.to_int()]["node"] == null:
 				projects[project.to_int()]["node"] = str_to_var(projects[project.to_int()]["node"])
-			if projects[project.to_int()]["favorite_node"] != null:
+			if projects[project.to_int()].has("favorite_node") and not projects[project.to_int()]["favorite_node"] == null:
 				projects[project.to_int()]["favorite_node"] = str_to_var(projects[project.to_int()]["favorite_node"])
 			for property in projects[project.to_int()]:
 				if projects[project.to_int()][property] is float:
@@ -579,7 +399,7 @@ func _load_data() -> void:
 		var loaded_groups = data["groups"].duplicate()
 		for group in loaded_groups:
 			groups[group.to_int()] = loaded_groups[group]
-			if groups[group.to_int()]["node"] != null:
+			if groups[group.to_int()].has("node") and not groups[group.to_int()]["node"] == null:
 				groups[group.to_int()]["node"] = str_to_var(groups[group.to_int()]["node"])
 			for property in groups[group.to_int()]:
 				if groups[group.to_int()][property] is float:
@@ -594,16 +414,3 @@ func _load_data() -> void:
 					view_mode = VIEW_MODE.LIST
 				2:
 					view_mode = VIEW_MODE.GROUP
-
-
-func _debugger(debug_message: String, error: bool = false) -> void:
-	if error:
-		DebugManager.log_error(debug_message, str(get_script().get_path()))
-	else:
-		DebugManager.log_debug(debug_message, str(get_script().get_path()))
-	# Check if script is debug
-	if DEBUGGER == true:
-		# Check if os debug on
-		if OS.is_debug_build():
-			# Print message
-			print_debug(debug_message)

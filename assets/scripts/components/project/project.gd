@@ -69,6 +69,7 @@ func value_received(value: Variant, button: String) -> void:
 					var index = EngineManager.get_version_index(engine_version)
 					var complete = EngineManager.run_project_in_editor(index, path)
 					if complete:
+						ProjectManager.move_project_front(this_project)
 						NotificationManager.notify("Opening Editor", 2.0, true)
 						var quit = ConfigManager.get_config_data("settings", "quit_edit")
 						if quit:
@@ -80,6 +81,7 @@ func value_received(value: Variant, button: String) -> void:
 					var index = EngineManager.get_version_index(engine_version)
 					var complete = EngineManager.run_project(index, path)
 					if complete:
+						ProjectManager.move_project_front(this_project)
 						NotificationManager.notify("Running Project", 2.0, true)
 					else:
 						NotificationManager.show_prompt("Failed To Open Project, Verify Engine Installation.", ["OK"], self, "")
@@ -122,6 +124,7 @@ func _on_project_button_pressed() -> void:
 			var index = EngineManager.get_version_index(engine_version)
 			var complete = EngineManager.run_project_in_editor(index, path)
 			if complete:
+				ProjectManager.move_project_front(this_project)
 				NotificationManager.notify("Opening Editor", 2.0, true)
 				var quit = ConfigManager.get_config_data("settings", "quit_edit")
 				if quit:

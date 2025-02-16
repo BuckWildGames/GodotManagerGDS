@@ -19,7 +19,7 @@ The original also has not been updated in a while and doesn't seem to work for m
 
 -Project management basics working.
 
--Support for 4x projects.
+-Support for 4x and 3x projects.
 
 -Create / Import projects.
 
@@ -33,19 +33,21 @@ The original also has not been updated in a while and doesn't seem to work for m
 
 -Install / Uninstall engine version.
 
--Multiple settings.
+-Open engine specific project manager.
 
--More to come!
+-Multiple settings.
 
 # Plan:
 
--Add full project management for multiple Godot versions (old and new).
+-Add project project templates and more.
 
--Add full engine management (choose mirror, etc).
+-Add ability to choose engine mirror.
 
 -Add asset library management (download, install, upload, etc).
 
 -Add lots of customizable options.
+
+-And more!
 
 # Screenshots:
 

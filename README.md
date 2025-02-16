@@ -9,7 +9,11 @@ Made in Godot 4.3
 
 Inspired by GodotManager: https://github.com/eumario/godot-manager
 
+Intended to be lightweight and easy to use but still flexable for more advanced users.
+
 This project has been made from scratch, other than the Godot icons.
+
+Written in GD Script so most Godot users can easily modify or contribute.
 
 The original is written in C# so no code was used in this project.
 

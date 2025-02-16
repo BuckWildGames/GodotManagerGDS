@@ -324,6 +324,9 @@ func import_project(path: String) -> bool:
 		_debugger("Project file not found in path: " + path, true)
 		return false
 	var project_data = _get_project_data(path)
+	if project_data.is_empty():
+		_debugger("Failed to get project data: " + path, true)
+		return false
 	project_master.create_project(
 		project_data["name"],
 		project_data["description"],

@@ -55,9 +55,10 @@ func create_project(title: String, description: String, path: String, version: S
 		var groups = ProjectManager.get_groups_dic()
 		container = groups[1]["node"].get_container()
 	if container != null:
+		var project_count = ProjectManager.get_projects_dic().size()
 		var new_project = PROJECT.instantiate()
 		container.add_child(new_project)
-		new_project.setup(self, title, description, path, version, engine_version, icon, false)
+		new_project.setup(self, project_count, title, description, path, version, engine_version, icon, false)
 		ProjectManager.create_project(new_project, title, description, path, version, engine_version, icon)
 
 

@@ -152,7 +152,7 @@ func _on_delete(option: String) -> void:
 			ProjectManager.remove_project(this_project)
 			queue_free()
 		"Delete":
-			var folder_path = path.replace("/" + title_label.get_text(), "")
+			var folder_path = path.replace("/" + _convert_title(title_label.get_text()), "")
 			if FileManager.delete_folder(folder_path, _convert_title(title_label.get_text()), true):
 				ProjectManager.remove_project(this_project)
 				queue_free()

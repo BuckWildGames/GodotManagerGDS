@@ -18,23 +18,16 @@ func create_project_folder(title: String, description: String, path: String, eng
 		if not complete:
 			_debugger("Failed to create project file", true)
 			return false
-		complete = FileManager.copy_file("res://", path, "icon.png")
+		complete = FileManager.copy_file("res://assets/files", path, "icon.png")
 		if not complete:
 			_debugger("Failed to copy icon.png", true)
 			return false
-		complete = FileManager.copy_file("res://", path, "default_env.tres")
+		var env = preload("res://assets/files/default_env.tres")
+		complete = FileManager.save_resource(path, "default_env.tres", env)
+		#complete = FileManager.copy_file("res://assets/files", path, "default_env.tres")
 		if not complete:
 			_debugger("Failed to copy default_env.tres", true)
 			return false
-		if create_git:
-			complete = FileManager.copy_file("res://", path, ".gitattributes")
-			if not complete:
-				_debugger("Failed to copy .gitattributes", true)
-				return false
-			complete = FileManager.copy_file("res://", path, ".gitignore")
-			if not complete:
-				_debugger("Failed to copy .gitignore", true)
-				return false
 	elif "4." in engine:
 		var complete = _create_godot_4x_project_file(project_file_path, title, description, engine, renderer)
 		if not complete:
@@ -44,15 +37,15 @@ func create_project_folder(title: String, description: String, path: String, eng
 		if not complete:
 			_debugger("Failed to copy icon.svg", true)
 			return false
-		if create_git:
-			complete = FileManager.copy_file("res://", path, ".gitattributes")
-			if not complete:
-				_debugger("Failed to copy .gitattributes", true)
-				return false
-			complete = FileManager.copy_file("res://", path, ".gitignore")
-			if not complete:
-				_debugger("Failed to copy .gitignore", true)
-				return false
+	if create_git:
+		var complete = FileManager.copy_file("res://assets/files", path, ".gitattributes")
+		if not complete:
+			_debugger("Failed to copy .gitattributes", true)
+			return false
+		complete = FileManager.copy_file("res://assets/files", path, ".gitignore")
+		if not complete:
+			_debugger("Failed to copy .gitignore", true)
+			return false
 	_debugger("Project successfully created at:" + path)
 	return true
 

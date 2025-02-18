@@ -18,8 +18,10 @@ func _ready() -> void:
 	ProjectManager.call_deferred("setup", self, project_container)
 
 
-func _enter_tree() -> void:
-	call_deferred("_init_projects")
+func enter(previous : String):
+	super.enter(previous)
+	if is_node_ready():
+		call_deferred("_init_projects")
 
 
 func button_pressed(button: String) -> void:

@@ -257,21 +257,21 @@ func move_group(group_num: int, move_up: bool) -> void:
 		return
 	var pos = groups[group_num]["position"]
 	if move_up and pos > 2:
-		groups[group_num]["position"] = pos - 1
 		project_container.move_child(groups[group_num]["node"], pos - 1)
 		for group in groups:
 			if groups[group]["position"] == pos - 1:
 				groups[group]["position"] = pos
 				break
+		groups[group_num]["position"] = pos - 1
 		_debugger("Group moved up: " + str(group_num))
 	elif not move_up and pos < groups.size() - 1:
-		groups[group_num]["position"] = pos + 1
 		project_container.move_child(groups[group_num]["node"], pos + 1)
 		for group in groups:
 			if groups[group]["position"] == pos + 1:
 				groups[group]["position"] = pos
 				break
-			_debugger("Group moved down: " + str(group_num))
+		groups[group_num]["position"] = pos + 1
+		_debugger("Group moved down: " + str(group_num))
 	_save_data()
 
 

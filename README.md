@@ -49,7 +49,7 @@ The original also has not been updated in a while and doesn't seem to work for m
 
 # Plan:
 
--Add project project templates and more.
+-Add project templates and more.
 
 -Add ability to choose engine mirror.
 

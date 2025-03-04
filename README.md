@@ -1,5 +1,6 @@
 # GodotManagerGDS
 (GD Script)
+
 A tool to manage all things Godot
 
 Released for Windows

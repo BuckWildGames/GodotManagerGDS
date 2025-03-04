@@ -72,6 +72,8 @@ func button_pressed(button: String) -> void:
 					NotificationManager.notify("Project Created", 2.0, true)
 					var index = EngineManager.get_version_index(engine_version)
 					EngineManager.run_project_in_editor(index, path)
+					var pos = ProjectManager.get_projects_dic().size() - 1
+					ProjectManager.move_project_front(pos)
 					NotificationManager.notify("Opening Editor", 2.0, true)
 					var quit = ConfigManager.get_config_data("settings", "quit_edit")
 					if quit:

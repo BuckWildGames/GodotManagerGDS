@@ -65,6 +65,8 @@ func _on_install(option: String) -> void:
 		var complete = EngineManager.install_version(this_engine)
 		if not complete:
 			NotificationManager.show_prompt("Failed To Install, Verify Install Path.", ["OK"], self, "")
+		else:
+			NotificationManager.notify("Please Wait, May Take A Moment.", 10.0, true)
 
 
 func _on_uninstall(option: String) -> void:

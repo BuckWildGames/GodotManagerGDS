@@ -13,7 +13,8 @@ func _on_dir_selected(dir: String) -> void:
 
 
 func _on_confirmed() -> void:
-	if ProjectManager.import_project(path):
+	var complete = ProjectManager.import_project(path)
+	if complete:
 		get_parent().hide()
 		hide()
 		NotificationManager.notify("Project Imported", 2.0, true)

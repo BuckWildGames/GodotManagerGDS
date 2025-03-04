@@ -12,9 +12,12 @@ const MISSING_ICON: CompressedTexture2D = preload("res://assets/icons/missing_ic
 @onready var icon: TextureRect = $ProjectContainer/Icon
 @onready var title_label: Label = $ProjectContainer/Info/Title
 @onready var description: Label = $ProjectContainer/Info/Description
-@onready var path_label: Label = $ProjectContainer/Info/Path
+@onready var path_label: Label = $ProjectContainer/Info/PathContainer/Path
 @onready var version_label: Label = $ProjectContainer/Version
-@onready var engine_version_label: Label = $ProjectContainer/EngineVersion
+@onready var engine_version_label: Label = $ProjectContainer/EngineContainer/EngineVersion
+
+@onready var edit_panel: Panel = $EditPanel
+@onready var line_edit: LineEdit = $EditPanel/Box/LineEdit
 
 @onready var delay_timer: Timer = $DelayTimer
 
@@ -28,6 +31,7 @@ var engine_version: String = ""
 var missing: bool = false
 var click_delay: float = 1.0
 var clicked: bool = false
+var temp_engine: String = ""
 
 
 func _ready() -> void:
@@ -36,6 +40,13 @@ func _ready() -> void:
 	group_popup.index_pressed.connect(value_received.bind("group"))
 	menu_button.get_popup().index_pressed.connect(value_received.bind("popup"))
 	menu_button.get_popup().transparent_bg = true
+	menu_button.get_popup().set_item_icon_max_width(4, 16)
+	menu_button.get_popup().set_item_tooltip(0, "Edit")
+	menu_button.get_popup().set_item_tooltip(1, "Play")
+	menu_button.get_popup().set_item_tooltip(2, "Add To Group")
+	menu_button.get_popup().set_item_tooltip(3, "Remove From Group")
+	menu_button.get_popup().set_item_tooltip(4, "Change Engine Version")
+	menu_button.get_popup().set_item_tooltip(5, "Remove / Delete")
 
 
 func setup(new_master: Control, project: int, new_title: String, new_desc: String, new_path: String, new_version: String, new_engine: String, new_icon: CompressedTexture2D, is_favorite: bool) -> void:
@@ -47,11 +58,12 @@ func setup(new_master: Control, project: int, new_title: String, new_desc: Strin
 	title_label.set_text(new_title)
 	description.set_text(new_desc)
 	description.set_tooltip_text(new_desc)
-	path_label.set_text("Path: " + new_path)
+	path_label.set_text(new_path)
 	path_label.set_tooltip_text(new_path)
 	version_label.set_text(new_version)
 	engine_version = new_engine
-	engine_version_label.set_text("Godot: " + engine_version)
+	line_edit.set_text(new_engine)
+	engine_version_label.set_text(engine_version)
 	if new_icon == null:
 		new_icon = DEFAULT_ICON
 	icon.set_texture(new_icon)
@@ -90,7 +102,9 @@ func value_received(value: Variant, button: String) -> void:
 					groups_button.show_popup()
 				3:# Remove from group
 					ProjectManager.remove_project_from_group(this_project)
-				4:# Delete
+				4:# Change engine version
+					edit_panel.set_visible(true)
+				5:# Delete
 					NotificationManager.show_prompt(
 						"Do you want to Remove project from manager\nor Delete project and move to trash?",
 						["Cancel", "Remove", "Delete"],
@@ -144,6 +158,20 @@ func _on_favorite_button_toggled(toggled_on: bool) -> void:
 		ProjectManager.add_project_to_favorites(this_project)
 	else:
 		ProjectManager.remove_project_from_favorites(this_project)
+
+
+func _on_line_edit_text_changed(new_text: String) -> void:
+		temp_engine = new_text
+
+
+func _on_confirm_button_pressed() -> void:
+	if "4." in temp_engine or "3." in temp_engine:
+		engine_version = temp_engine
+		engine_version_label.set_text(engine_version)
+		ProjectManager.change_project_engine_version(this_project, engine_version)
+		edit_panel.set_visible(false)
+	else:
+		NotificationManager.notify("Engine Version Not Valid", 2.0, true)
 
 
 func _on_delete(option: String) -> void:

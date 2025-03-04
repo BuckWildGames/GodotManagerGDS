@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="GodotManagerRedux"
-config/version="0.4.3"
+config/name="GodotManagerGDS"
+config/version="0.4.4"
 run/main_scene="res://assets/scenes/main.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")

@@ -367,6 +367,15 @@ func update_project(project_num: int, path: String) -> void:
 	return
 
 
+func change_project_engine_version(project_num: int, new_version: String) -> void:
+	if not projects.has(project_num):
+		_debugger("Project not found: " + str(project_num), true)
+		return
+	projects[project_num]["engine_version"] = new_version
+	_debugger("Project engine version changed: " + str(project_num))
+	_save_data()
+
+
 func _check_duplicate(project_name: String) -> bool:
 	for project in projects:
 		if project_name == projects[project]["name"]:

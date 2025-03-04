@@ -14,10 +14,12 @@ func _ready():
 func _on_mouse_entered():
 	if target_button:
 		target_button.mouse_entered.emit()
+		target_button.queue_redraw()
 
 func _on_mouse_exited():
 	if target_button:
 		target_button.mouse_exited.emit()
+		target_button.queue_redraw()
 
 func _gui_input(event):
 	if target_button:
@@ -37,3 +39,4 @@ func _gui_input(event):
 				else:
 					target_button.button_up.emit()
 					is_pressed = false
+		target_button.queue_redraw()

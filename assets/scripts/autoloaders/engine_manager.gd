@@ -255,7 +255,7 @@ func _get_os_version(version_name: String, download_url: String) -> bool:
 			available_versions.append({"name": version_name, "url": download_url})
 			done[0] = true
 		if "mono_win64" in download_url:
-			available_versions.append({"name": version_name + " - Mono", "url": download_url})
+			available_versions.append({"name": version_name + " - C#", "url": download_url})
 			done[1] = true
 		if done[0] == true and done[1] == true:
 			return true
@@ -264,7 +264,7 @@ func _get_os_version(version_name: String, download_url: String) -> bool:
 			available_versions.append({"name": version_name, "url": download_url})
 			done[0] = true
 		if "mono_macos" in download_url or "mono_osx" in download_url:
-			available_versions.append({"name": version_name + " - Mono", "url": download_url})
+			available_versions.append({"name": version_name + " - C#", "url": download_url})
 			done[1] = true
 		if done[0] == true and done[1] == true:
 			return true
@@ -273,7 +273,7 @@ func _get_os_version(version_name: String, download_url: String) -> bool:
 			available_versions.append({"name": version_name, "url": download_url})
 			done[0] = true
 		if "mono_linux.x86_64" in download_url:
-			available_versions.append({"name": version_name + " - Mono", "url": download_url})
+			available_versions.append({"name": version_name + " - C#", "url": download_url})
 			done[1] = true
 		if done[0] == true and done[1] == true:
 			return true

@@ -4,7 +4,7 @@ const DEFAULT_ICON: CompressedTexture2D = preload("res://icon.svg")
 
 @onready var icon: TextureRect = $EngineContainer/Icon
 @onready var title_label: Label = $EngineContainer/Info/Title
-@onready var source_label: Label = $EngineContainer/Info/Source
+@onready var source_label: Label = $EngineContainer/Info/SourceContainer/Source
 
 @onready var download_button: Button = $EngineContainer/ButtonContainer/DownloadButton
 @onready var uninstall_button: Button = $EngineContainer/ButtonContainer/UninstallButton
@@ -26,7 +26,7 @@ func setup(new_master: Control, engine: int, new_title: String, source: String, 
 	this_engine = engine
 	is_installed = installed
 	title_label.set_text(new_title)
-	source_label.set_text("Source: " + source)
+	source_label.set_text(source)
 	source_label.set_tooltip_text(source)
 	download_button.set_visible(!installed)
 	uninstall_button.set_visible(installed)

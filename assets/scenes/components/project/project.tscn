@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://hanjvknsffsn"]
+[gd_scene load_steps=18 format=3 uid="uid://hanjvknsffsn"]
 
 [ext_resource type="Script" path="res://assets/scripts/components/project/project.gd" id="1_qrneh"]
 [ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_m00bx"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b4u64ob2rivlo" path="res://assets/icons/icon_ft_folder.svg" id="5_op8ke"]
 [ext_resource type="Texture2D" uid="uid://o2ykjo8ca67j" path="res://assets/icons/godot.svg" id="6_47g68"]
 [ext_resource type="Texture2D" uid="uid://bf5krva5rxd1t" path="res://assets/icons/add_category.svg" id="6_g7fgt"]
+[ext_resource type="Texture2D" uid="uid://dobhkrjxf4y83" path="res://assets/icons/icon_ft_gdscript.svg" id="6_hu7j0"]
 [ext_resource type="Texture2D" uid="uid://c2xbkbwbsmsou" path="res://assets/icons/rem_category.svg" id="7_hn4pb"]
 [ext_resource type="Texture2D" uid="uid://daw83uwtd0e81" path="res://assets/icons/submenu.svg" id="9_7e2h5"]
 [ext_resource type="Texture2D" uid="uid://dve6nltqywobb" path="res://assets/icons/icon_remove.svg" id="10_10jt3"]
@@ -66,6 +67,7 @@ layout_mode = 2
 mouse_filter = 1
 text = "No Description"
 text_overrun_behavior = 3
+max_lines_visible = 1
 script = ExtResource("4_3x4ht")
 target_button = NodePath("../../../ProjectButton")
 
@@ -74,6 +76,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="ProjectContainer/Info/PathContainer"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("5_op8ke")
 
 [node name="Path" type="Label" parent="ProjectContainer/Info/PathContainer" node_paths=PackedStringArray("target_button")]
@@ -93,6 +96,14 @@ mouse_filter = 2
 theme_override_constants/separation = 64
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
 
+[node name="TypeTexture" type="TextureRect" parent="ProjectContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_hu7j0")
+
 [node name="Version" type="Label" parent="ProjectContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -103,6 +114,7 @@ vertical_alignment = 1
 [node name="EngineContainer" type="HBoxContainer" parent="ProjectContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="ProjectContainer/EngineContainer"]
@@ -110,6 +122,7 @@ custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("6_47g68")
 expand_mode = 1
 

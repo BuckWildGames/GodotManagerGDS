@@ -50,15 +50,16 @@ func get_groups_dic() -> Dictionary:
 	return groups.duplicate()
 
 
-func create_project(new_project: Node, title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
+func create_project(new_project: Node, title: String, description: String, path: String, version: String, engine_version: String, icon: ImageTexture = null) -> void:
 	if _check_duplicate(title):
 		_debugger("Project already exists: " + title)
 		if new_project:
 			new_project.queue_free()
 		return
+	var project_num = get_project_num()
 	var project_count = projects.size()
 	groups[1]["size"] += 1
-	projects[project_count] = {"name": title, "description": description, "path": path, "version": version, "engine_version": engine_version, "icon": icon, "group": 1, "position": project_count, "favorite": false, "node": new_project, "favorite_node": null}
+	projects[project_num] = {"name": title, "description": description, "path": path, "version": version, "engine_version": engine_version, "icon": icon, "group": 1, "position": project_count, "favorite": false, "node": new_project, "favorite_node": null}
 	_debugger("New project created: " + str(title))
 	_save_data()
 
@@ -69,7 +70,14 @@ func remove_project(project_num: int) -> void:
 		return
 	var group = projects[project_num]["group"]
 	var pos = projects[project_num]["position"]
-	groups[group]["size"] -= 1
+	var node = projects[project_num]["node"]
+	var fav = projects[project_num]["favorite"]
+	if fav:
+		remove_project_from_favorites(project_num)
+	if group > 1:
+		remove_project_from_group(project_num)
+	node.queue_free()
+	groups[1]["size"] -= 1
 	projects.erase(project_num)
 	for project in projects:
 		if project != project_num:
@@ -221,8 +229,9 @@ func remove_project_from_favorites(project_num: int) -> void:
 
 
 func create_group(new_group: Node) -> void:
+	var group_num = get_group_num()
 	var group_count = groups.size()
-	groups[group_count] = {"name": "", "position": group_count, "size": 0, "node": new_group, "hidden": false}
+	groups[group_num] = {"name": "", "position": group_count, "size": 0, "node": new_group, "hidden": false}
 	_debugger("Group created")
 	_save_data()
 
@@ -374,6 +383,22 @@ func change_project_engine_version(project_num: int, new_version: String) -> voi
 	projects[project_num]["engine_version"] = new_version
 	_debugger("Project engine version changed: " + str(project_num))
 	_save_data()
+
+
+func get_project_num() -> int:
+	var count = projects.size()
+	for num in count:
+		if not projects.has(num):
+			return num
+	return count
+
+
+func get_group_num() -> int:
+	var count = groups.size()
+	for num in count:
+		if not groups.has(num):
+			return num
+	return count
 
 
 func _check_duplicate(project_name: String) -> bool:

@@ -51,29 +51,29 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 				_init_projects()
 
 
-func create_project(title: String, description: String, path: String, version: String, engine_version: String, icon: CompressedTexture2D = null) -> void:
+func create_project(title: String, description: String, path: String, version: String, engine_version: String, icon: ImageTexture = null) -> void:
 	var container = project_container
 	if ProjectManager.get_view_mode() == "group":
 		var groups = ProjectManager.get_groups_dic()
 		container = groups[1]["node"].get_container()
 	if container != null:
-		var project_count = ProjectManager.get_projects_dic().size()
+		var project_num = ProjectManager.get_project_num()
 		var new_project = PROJECT.instantiate()
 		container.add_child(new_project)
-		new_project.setup(self, project_count, title, description, path, version, engine_version, icon, false)
+		new_project.setup(self, project_num, title, description, path, version, engine_version, icon, false)
 		ProjectManager.create_project(new_project, title, description, path, version, engine_version, icon)
 
 
 func create_group() -> void:
 	if not project_container:
 		return
-	var group_count = ProjectManager.get_groups_dic().size()
+	var group_num = ProjectManager.get_group_num()
 	var title = ""
 	var new_group = null
 	if ProjectManager.get_view_mode() == "group":
 		new_group = CUSTOM_GROUP.instantiate()
 		project_container.add_child(new_group)
-		new_group.setup(self, group_count, false, title)
+		new_group.setup(self, group_num, false, title)
 	ProjectManager.create_group(new_group)
 
 

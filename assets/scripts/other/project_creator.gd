@@ -121,7 +121,9 @@ func _get_project_data(project_path: String) -> Dictionary:
 		var icon_path = _get_icon(config, project_path)
 		var icon_texture = null
 		if FileAccess.file_exists(icon_path):
-			icon_texture = load(icon_path)
+			var img = Image.new()
+			img.load(icon_path)
+			icon_texture = ImageTexture.create_from_image(img)
 		data = {
 			"name": project_name,
 			"description": project_description,
@@ -134,7 +136,7 @@ func _get_project_data(project_path: String) -> Dictionary:
 
 
 func _get_godot_version(config: ConfigFile) -> String:
-	if config.has_section(""):
+	if config.has_section("application"):
 		if config.has_section_key("application", "config/features"):
 			return config.get_value("application", "config/features")[0]
 		var config_version = config.get_value("", "config_version", -1)
@@ -147,10 +149,10 @@ func _get_godot_version(config: ConfigFile) -> String:
 
 
 func _get_icon(config: ConfigFile, path: String) -> String:
-	if config.has_section("header"):
+	if config.has_section("application"):
 		if config.has_section_key("application", "config/icon"):
 			var icon_path = config.get_value("application", "config/icon")
-			icon_path = icon_path.replace("res://", "")
+			icon_path = icon_path.replace("res://", "/")
 			return path + icon_path
 	return path + "/icon.svg"
 

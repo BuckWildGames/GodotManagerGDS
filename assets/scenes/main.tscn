@@ -331,7 +331,7 @@ expand_icon = true
 [node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
-tooltip_text = "Scan For Engine Versions"
+tooltip_text = "Scan For Installed Engine Versions"
 icon = ExtResource("8_g0prn")
 icon_alignment = 1
 expand_icon = true
@@ -473,7 +473,6 @@ access = 2
 script = ExtResource("13_uh2lq")
 
 [node name="Assets" type="Panel" parent="UiManager/Menu"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -554,6 +553,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Settings" type="Panel" parent="UiManager/Menu"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -632,7 +632,6 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -735,6 +734,7 @@ theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
 [node name="ProjectsContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

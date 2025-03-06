@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://rssm5d1ogvyj"]
+[gd_scene load_steps=11 format=3 uid="uid://rssm5d1ogvyj"]
 
 [ext_resource type="Script" path="res://assets/scripts/components/engine/engine.gd" id="1_2uetq"]
 [ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_ayk2b"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_hkp8i"]
 [ext_resource type="Texture2D" uid="uid://rt86oqy7ww5x" path="res://assets/icons/download.svg" id="3_wr1pd"]
+[ext_resource type="Texture2D" uid="uid://donrhresjoen1" path="res://assets/icons/web.svg" id="4_785ao"]
 [ext_resource type="Script" path="res://assets/scripts/ui/elements/passthrough_label.gd" id="4_onlox"]
 [ext_resource type="Texture2D" uid="uid://17otjx5n2k44" path="res://assets/icons/uninstall.svg" id="4_xufpf"]
 [ext_resource type="Texture2D" uid="uid://byx0jqnxqmq5g" path="res://assets/icons/default.svg" id="5_jlm80"]
@@ -45,14 +46,25 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_hkp8i")
 text = "Engine Version"
 
-[node name="Source" type="Label" parent="EngineContainer/Info" node_paths=PackedStringArray("target_button")]
+[node name="SourceContainer" type="HBoxContainer" parent="EngineContainer/Info"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="EngineContainer/Info/SourceContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("4_785ao")
+expand_mode = 2
+
+[node name="Source" type="Label" parent="EngineContainer/Info/SourceContainer" node_paths=PackedStringArray("target_button")]
+layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
 text = "No Source"
+vertical_alignment = 1
 text_overrun_behavior = 3
 script = ExtResource("4_onlox")
-target_button = NodePath("../../../EngineButton")
+target_button = NodePath("../../../../EngineButton")
 
 [node name="VSeparator" type="VSeparator" parent="EngineContainer"]
 layout_mode = 2

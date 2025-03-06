@@ -2,6 +2,7 @@ extends Node
 
 const DEFAULT_ICON: CompressedTexture2D = preload("res://icon.svg")
 const MISSING_ICON: CompressedTexture2D = preload("res://assets/icons/missing_icon.svg")
+const CS_ICON: CompressedTexture2D = preload("res://assets/icons/icon_ft_csharp.svg")
 
 @onready var project_button: Button = $ProjectButton
 @onready var menu_button: MenuButton = $ProjectContainer/ButtonContainer/MenuButton
@@ -13,6 +14,7 @@ const MISSING_ICON: CompressedTexture2D = preload("res://assets/icons/missing_ic
 @onready var title_label: Label = $ProjectContainer/Info/Title
 @onready var description: Label = $ProjectContainer/Info/Description
 @onready var path_label: Label = $ProjectContainer/Info/PathContainer/Path
+@onready var type_texture: TextureRect = $ProjectContainer/TypeTexture
 @onready var version_label: Label = $ProjectContainer/Version
 @onready var engine_version_label: Label = $ProjectContainer/EngineContainer/EngineVersion
 
@@ -49,7 +51,7 @@ func _ready() -> void:
 	menu_button.get_popup().set_item_tooltip(5, "Remove / Delete")
 
 
-func setup(new_master: Control, project: int, new_title: String, new_desc: String, new_path: String, new_version: String, new_engine: String, new_icon: CompressedTexture2D, is_favorite: bool) -> void:
+func setup(new_master: Control, project: int, new_title: String, new_desc: String, new_path: String, new_version: String, new_engine: String, new_icon: ImageTexture, is_favorite: bool) -> void:
 	if not is_node_ready():
 		await ready
 	master = new_master
@@ -62,11 +64,15 @@ func setup(new_master: Control, project: int, new_title: String, new_desc: Strin
 	path_label.set_tooltip_text(new_path)
 	version_label.set_text(new_version)
 	engine_version = new_engine
+	temp_engine = new_engine
 	line_edit.set_text(new_engine)
+	if "C#" in engine_version:
+		type_texture.set_texture(CS_ICON)
 	engine_version_label.set_text(engine_version)
 	if new_icon == null:
-		new_icon = DEFAULT_ICON
-	icon.set_texture(new_icon)
+		icon.set_texture(DEFAULT_ICON)
+	else:
+		icon.set_texture(new_icon)
 	favorite_button.set_pressed_no_signal(is_favorite)
 	_check_if_missing()
 
@@ -178,12 +184,10 @@ func _on_delete(option: String) -> void:
 	match option:
 		"Remove":
 			ProjectManager.remove_project(this_project)
-			queue_free()
 		"Delete":
 			var folder_path = path.replace("/" + _convert_title(title_label.get_text()), "")
 			if FileManager.delete_folder(folder_path, _convert_title(title_label.get_text()), true):
 				ProjectManager.remove_project(this_project)
-				queue_free()
 			else:
 				NotificationManager.show_prompt("Failed To Delete Project, Verify Project Location.", ["OK"], self, "")
 

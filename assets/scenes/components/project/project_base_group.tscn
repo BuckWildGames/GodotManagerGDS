@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dibi0y4uuijcl"]
 
-[ext_resource type="Script" path="res://assets/scripts/components/project/project_group.gd" id="1_3goeg"]
+[ext_resource type="Script" uid="uid://bxb1c7e03fl0k" path="res://assets/scripts/components/project/project_group.gd" id="1_3goeg"]
 [ext_resource type="Texture2D" uid="uid://b6g0f2635xog7" path="res://assets/icons/drop_down1.svg" id="2_etaph"]
 
 [node name="BaseGroup" type="MarginContainer"]

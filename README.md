@@ -23,8 +23,6 @@ Written in GD Script so most Godot users can easily modify or contribute.
 
 The original is written in C# so no code was used in this project.
 
-The original also has not been updated in a while and doesn't seem to work for me in version 4x.
-
 # Progress:
 
 -Project management basics working.

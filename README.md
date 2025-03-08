@@ -7,7 +7,7 @@ Released for Windows
 
 Source should work with Mac and Linux if exported for platform. *Not Tested
 
-Made in Godot 4.3
+Made in Godot 4.4
 
 *Work in progress
 

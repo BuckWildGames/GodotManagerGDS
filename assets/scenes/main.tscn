@@ -478,44 +478,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qetjj")
+can_go_back = false
 
-[node name="EngineButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets"]
-visible = false
+[node name="AssetButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -56.0
+offset_left = -24.0
 offset_top = 80.0
-offset_right = 56.0
+offset_right = 24.0
 offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="EngineButtons" type="HBoxContainer" parent="UiManager/Menu/Assets/EngineButtonPanel"]
+[node name="AssetButtons" type="HBoxContainer" parent="UiManager/Menu/Assets/AssetButtonPanel"]
 layout_mode = 2
 alignment = 1
 
-[node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Assets/EngineButtonPanel/EngineButtons"]
+[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Assets/AssetButtonPanel/AssetButtons"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
-tooltip_text = "Import Engine Version"
-icon = ExtResource("7_j1i18")
-icon_alignment = 1
-expand_icon = true
-
-[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Assets/EngineButtonPanel/EngineButtons"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-tooltip_text = "Scan For Engine Versions"
-icon = ExtResource("8_g0prn")
-icon_alignment = 1
-expand_icon = true
-
-[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Assets/EngineButtonPanel/EngineButtons"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-tooltip_text = "Fetch Available Versions From Web"
+tooltip_text = "Fetch Available Assets From Web"
 icon = ExtResource("13_lukhs")
 icon_alignment = 1
 expand_icon = true
@@ -539,7 +523,7 @@ theme_override_constants/margin_bottom = 10
 [node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="AssetContainer" type="VBoxContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

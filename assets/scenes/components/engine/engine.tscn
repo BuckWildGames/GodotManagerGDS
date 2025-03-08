@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://rssm5d1ogvyj"]
 
-[ext_resource type="Script" path="res://assets/scripts/components/engine/engine.gd" id="1_2uetq"]
+[ext_resource type="Script" uid="uid://0y5kamfhx06j" path="res://assets/scripts/components/engine/engine.gd" id="1_2uetq"]
 [ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_ayk2b"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="2_hkp8i"]
 [ext_resource type="Texture2D" uid="uid://rt86oqy7ww5x" path="res://assets/icons/download.svg" id="3_wr1pd"]
 [ext_resource type="Texture2D" uid="uid://donrhresjoen1" path="res://assets/icons/web.svg" id="4_785ao"]
-[ext_resource type="Script" path="res://assets/scripts/ui/elements/passthrough_label.gd" id="4_onlox"]
+[ext_resource type="Script" uid="uid://bvhoao44imy8h" path="res://assets/scripts/ui/elements/passthrough_label.gd" id="4_onlox"]
 [ext_resource type="Texture2D" uid="uid://17otjx5n2k44" path="res://assets/icons/uninstall.svg" id="4_xufpf"]
 [ext_resource type="Texture2D" uid="uid://byx0jqnxqmq5g" path="res://assets/icons/default.svg" id="5_jlm80"]
 

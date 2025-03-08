@@ -1,11 +1,11 @@
 [gd_scene load_steps=53 format=3 uid="uid://bh5qukhbtj3l8"]
 
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/intro.gd" id="2_dk2vg"]
-[ext_resource type="Script" path="res://assets/scripts/ui/main/ui_manager.gd" id="2_tnjal"]
-[ext_resource type="Script" path="res://assets/scripts/ui/main/ui_state.gd" id="3_qetjj"]
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/projects.gd" id="4_iuch6"]
-[ext_resource type="VideoStream" path="res://assets/theme/intro/blue_animation_short_.ogv" id="4_w3iyo"]
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/top_bar.gd" id="6_mf18v"]
+[ext_resource type="Script" uid="uid://1fpwqklb04fx" path="res://assets/scripts/ui/panels/intro.gd" id="2_dk2vg"]
+[ext_resource type="Script" uid="uid://d2pus8drk5ppb" path="res://assets/scripts/ui/main/ui_manager.gd" id="2_tnjal"]
+[ext_resource type="Script" uid="uid://dnbq4445j8p60" path="res://assets/scripts/ui/main/ui_state.gd" id="3_qetjj"]
+[ext_resource type="Script" uid="uid://u4n76b1lltb0" path="res://assets/scripts/ui/panels/projects.gd" id="4_iuch6"]
+[ext_resource type="VideoStream" uid="uid://d3eocrx4e1efu" path="res://assets/theme/intro/blue_animation_short_.ogv" id="4_w3iyo"]
+[ext_resource type="Script" uid="uid://dkyn728iyldaq" path="res://assets/scripts/ui/panels/top_bar.gd" id="6_mf18v"]
 [ext_resource type="Texture2D" uid="uid://immt4g820m0t" path="res://assets/icons/icon_new.svg" id="6_yfqsu"]
 [ext_resource type="Texture2D" uid="uid://bvw52dswus7v" path="res://assets/icons/import.svg" id="7_j1i18"]
 [ext_resource type="Texture2D" uid="uid://brjqd6fprckfc" path="res://assets/icons/project.svg" id="7_jlp00"]
@@ -17,14 +17,14 @@
 [ext_resource type="Texture2D" uid="uid://badxu3qu3vn1a" path="res://assets/icons/category_view.svg" id="11_bgy32"]
 [ext_resource type="Texture2D" uid="uid://1duaj2y4lena" path="res://assets/icons/settings.svg" id="11_d4u4i"]
 [ext_resource type="PackedScene" uid="uid://b7vrmx3lii178" path="res://assets/scenes/components/project/create_new_project.tscn" id="11_fjxcw"]
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/engines.gd" id="12_848c3"]
-[ext_resource type="Script" path="res://assets/scripts/components/project/import_project_panel.gd" id="12_scykc"]
+[ext_resource type="Script" uid="uid://bbi4d83g81u45" path="res://assets/scripts/ui/panels/engines.gd" id="12_848c3"]
+[ext_resource type="Script" uid="uid://d1658bkrepdb8" path="res://assets/scripts/components/project/import_project_panel.gd" id="12_scykc"]
 [ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="13_inmwf"]
 [ext_resource type="Texture2D" uid="uid://donrhresjoen1" path="res://assets/icons/web.svg" id="13_lukhs"]
-[ext_resource type="Script" path="res://assets/scripts/components/engine/import_engine_panel.gd" id="13_uh2lq"]
-[ext_resource type="Script" path="res://assets/scripts/components/engine/engine_group.gd" id="14_ko5hj"]
+[ext_resource type="Script" uid="uid://dt1levsw03xty" path="res://assets/scripts/components/engine/import_engine_panel.gd" id="13_uh2lq"]
+[ext_resource type="Script" uid="uid://dg0mef68mjbhp" path="res://assets/scripts/components/engine/engine_group.gd" id="14_ko5hj"]
 [ext_resource type="Texture2D" uid="uid://b6g0f2635xog7" path="res://assets/icons/drop_down1.svg" id="15_6n8gi"]
-[ext_resource type="Script" path="res://assets/scripts/ui/panels/settings.gd" id="17_k1cmv"]
+[ext_resource type="Script" uid="uid://eo6w4tx0ltos" path="res://assets/scripts/ui/panels/settings.gd" id="17_k1cmv"]
 [ext_resource type="Texture2D" uid="uid://c6k7vd8suocu0" path="res://assets/icons/folder_browse.svg" id="18_wxjwn"]
 [ext_resource type="Texture2D" uid="uid://c4b02jaf0qdg7" path="res://assets/icons/minus.svg" id="20_5car4"]
 [ext_resource type="Texture2D" uid="uid://w5ub5mjcd1v5" path="res://assets/icons/min_max.svg" id="21_ey4mm"]
@@ -124,7 +124,6 @@ scale = Vector2(0.659, 0.649)
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UiManager/Menu/Intro/MarginContainer"]
 layout_mode = 2
 stream = ExtResource("4_w3iyo")
-autoplay = true
 
 [node name="SkipButton" type="Button" parent="UiManager/Menu/Intro"]
 layout_mode = 1
@@ -479,44 +478,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qetjj")
+can_go_back = false
 
-[node name="EngineButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets"]
-visible = false
+[node name="AssetButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -56.0
+offset_left = -24.0
 offset_top = 80.0
-offset_right = 56.0
+offset_right = 24.0
 offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="EngineButtons" type="HBoxContainer" parent="UiManager/Menu/Assets/EngineButtonPanel"]
+[node name="AssetButtons" type="HBoxContainer" parent="UiManager/Menu/Assets/AssetButtonPanel"]
 layout_mode = 2
 alignment = 1
 
-[node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Assets/EngineButtonPanel/EngineButtons"]
+[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Assets/AssetButtonPanel/AssetButtons"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
-tooltip_text = "Import Engine Version"
-icon = ExtResource("7_j1i18")
-icon_alignment = 1
-expand_icon = true
-
-[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Assets/EngineButtonPanel/EngineButtons"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-tooltip_text = "Scan For Engine Versions"
-icon = ExtResource("8_g0prn")
-icon_alignment = 1
-expand_icon = true
-
-[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Assets/EngineButtonPanel/EngineButtons"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-tooltip_text = "Fetch Available Versions From Web"
+tooltip_text = "Fetch Available Assets From Web"
 icon = ExtResource("13_lukhs")
 icon_alignment = 1
 expand_icon = true
@@ -540,7 +523,7 @@ theme_override_constants/margin_bottom = 10
 [node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="AssetContainer" type="VBoxContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -691,6 +674,7 @@ tooltip_text = "Set Fetch Interval"
 selected = 1
 item_count = 4
 popup/item_0/text = "Never"
+popup/item_0/id = 0
 popup/item_1/text = "Daily"
 popup/item_1/id = 1
 popup/item_2/text = "Weekly"
@@ -760,6 +744,7 @@ tooltip_text = "Set Default Project View"
 selected = 0
 item_count = 3
 popup/item_0/text = "Last Used"
+popup/item_0/id = 0
 popup/item_1/text = "List"
 popup/item_1/id = 1
 popup/item_2/text = "Group"

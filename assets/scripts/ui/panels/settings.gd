@@ -1,5 +1,6 @@
 extends UIState
 
+const UPDATER: Script = preload("res://assets/scripts/other/updater.gd")
 const PATH_BUTTON: PackedScene = preload("res://assets/scenes/components/settings/path_button.tscn")
 
 @onready var engine_button: Button = $SettingsButtonPanel/SettingsButtons/EngineButton
@@ -32,6 +33,9 @@ var is_project_path: bool = false
 func _ready() -> void:
 	_change_tab(1)
 	_load_settings(true)
+	var updater = UPDATER.new()
+	SettingsManager.add_child(updater)
+	updater.check_for_update()
 
 
 func enter(previous : String):

@@ -8,6 +8,7 @@ func init_settings() -> void:
 	ConfigManager.set_config_data("settings", "install_path", "")
 	ConfigManager.set_config_data("settings", "fetch_time", 1)
 	ConfigManager.set_config_data("settings", "latest_version", false)
+	ConfigManager.set_config_data("settings", "run_console", false)
 	ConfigManager.set_config_data("settings", "intro_video", false)
 	ConfigManager.set_config_data("settings", "default_engine", "")
 	ConfigManager.set_config_data("settings", "quit_edit", false)

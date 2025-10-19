@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://1fpwqklb04fx" path="res://assets/scripts/ui/panels/intro.gd" id="2_dk2vg"]
 [ext_resource type="Script" uid="uid://d2pus8drk5ppb" path="res://assets/scripts/ui/main/ui_manager.gd" id="2_tnjal"]
-[ext_resource type="Script" uid="uid://dnbq4445j8p60" path="res://assets/scripts/ui/main/ui_state.gd" id="3_qetjj"]
 [ext_resource type="Script" uid="uid://u4n76b1lltb0" path="res://assets/scripts/ui/panels/projects.gd" id="4_iuch6"]
 [ext_resource type="VideoStream" uid="uid://d3eocrx4e1efu" path="res://assets/theme/intro/blue_animation_short_.ogv" id="4_w3iyo"]
 [ext_resource type="Script" uid="uid://dkyn728iyldaq" path="res://assets/scripts/ui/panels/top_bar.gd" id="6_mf18v"]
@@ -25,6 +24,7 @@
 [ext_resource type="Script" uid="uid://dg0mef68mjbhp" path="res://assets/scripts/components/engine/engine_group.gd" id="14_ko5hj"]
 [ext_resource type="Texture2D" uid="uid://b6g0f2635xog7" path="res://assets/icons/drop_down1.svg" id="15_6n8gi"]
 [ext_resource type="Script" uid="uid://eo6w4tx0ltos" path="res://assets/scripts/ui/panels/settings.gd" id="17_k1cmv"]
+[ext_resource type="Script" uid="uid://cram30tt2jq04" path="res://assets/scripts/ui/panels/assets.gd" id="17_rk0tg"]
 [ext_resource type="Texture2D" uid="uid://c6k7vd8suocu0" path="res://assets/icons/folder_browse.svg" id="18_wxjwn"]
 [ext_resource type="Texture2D" uid="uid://c4b02jaf0qdg7" path="res://assets/icons/minus.svg" id="20_5car4"]
 [ext_resource type="Texture2D" uid="uid://w5ub5mjcd1v5" path="res://assets/icons/min_max.svg" id="21_ey4mm"]
@@ -472,12 +472,13 @@ access = 2
 script = ExtResource("13_uh2lq")
 
 [node name="Assets" type="Panel" parent="UiManager/Menu"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_qetjj")
+script = ExtResource("17_rk0tg")
 can_go_back = false
 
 [node name="AssetButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets"]
@@ -536,7 +537,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Settings" type="Panel" parent="UiManager/Menu"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -711,6 +711,13 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 tooltip_text = "Set Default Engine Version"
+
+[node name="RunConsole" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+tooltip_text = "Set Engine To Run Console"
+text = "Run Console"
 
 [node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
 layout_mode = 2
@@ -1059,6 +1066,8 @@ visible = false
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/OpenInstallButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["open_install"]]
 [connection signal="item_selected" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/FetchTimes" to="UiManager/Menu/Settings" method="value_received" binds= ["fetch_time"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/LatestVersion" to="UiManager/Menu/Settings" method="button_toggled" binds= ["latest_version"]]
+[connection signal="item_selected" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox/DefaultEngine" to="UiManager/Menu/Settings" method="value_received" binds= ["default_engine"]]
+[connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox/RunConsole" to="UiManager/Menu/Settings" method="button_toggled" binds= ["run_console"]]
 [connection signal="item_selected" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/DefaultProjectView" to="UiManager/Menu/Settings" method="value_received" binds= ["default_view"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/QuitEdit" to="UiManager/Menu/Settings" method="button_toggled" binds= ["quit_edit"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ClearDataButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["clear_data"]]

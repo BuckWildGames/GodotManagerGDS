@@ -16,6 +16,7 @@ const PATH_BUTTON: PackedScene = preload("res://assets/scenes/components/setting
 @onready var install_path: LineEdit = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox/InstallPath
 @onready var fetch_times_button: OptionButton = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/FetchTimes
 @onready var latest_version_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/LatestVersion
+@onready var run_console_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox/RunConsole
 @onready var default_engine_button: OptionButton = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox/DefaultEngine
 @onready var select_folder_dialog: FileDialog = $SelectFolderDialog
 
@@ -78,6 +79,8 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 			_change_tab(3)
 		"latest_version":
 			ConfigManager.set_config_data("settings", "latest_version", toggled_on)
+		"run_console":
+			ConfigManager.set_config_data("settings", "run_console", toggled_on)
 		"quit_edit":
 			ConfigManager.set_config_data("settings", "quit_edit", toggled_on)
 		"intro_video":
@@ -178,6 +181,8 @@ func _load_settings(startup: bool = false) -> void:
 		fetch_times_button.select(settings["fetch_time"])
 	if settings.has("latest_version"):
 		latest_version_button.set_pressed_no_signal(settings["latest_version"])
+	if settings.has("run_console"):
+		run_console_button.set_pressed_no_signal(settings["run_console"])
 	if settings.has("intro_video"):
 		skip_intro_button.set_pressed_no_signal(settings["intro_video"])
 	if settings.has("quit_edit"):

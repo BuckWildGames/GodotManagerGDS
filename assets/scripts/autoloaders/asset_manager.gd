@@ -2,7 +2,7 @@ extends Node
 
 const DEBUGGER: bool = false
 
-const GODOT_ASSET_LIB_API = "https://godotengine.org/asset-library/api/assets"
+const GODOT_ASSET_LIB_API = "https://godotengine.org/asset-library/api/asset"
 const ICON_SIZE = Vector2(64, 64)
 
 func setup() -> void:
@@ -94,7 +94,8 @@ func _on_http_request_completed(_result, response_code, _headers, body) -> void:
 		return
 	var data = json.data
 	if data.has("result"):
-		_display_assets(data["result"])
+		print(data["result"])
+		#_display_assets(data["result"])
 
 
 func _on_download_request_completed(_result, response_code, _headers, body, _request, title) -> void:

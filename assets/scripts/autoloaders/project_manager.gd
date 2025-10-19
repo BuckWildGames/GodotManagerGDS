@@ -380,6 +380,10 @@ func change_project_engine_version(project_num: int, new_version: String) -> voi
 	if not projects.has(project_num):
 		_debugger("Project not found: " + str(project_num), true)
 		return
+	var path = projects[project_num]["path"]
+	if not await _update_engine_version(path, new_version):
+		_debugger("Failed to update project engine version")
+		return
 	projects[project_num]["engine_version"] = new_version
 	_debugger("Project engine version changed: " + str(project_num))
 	_save_data()

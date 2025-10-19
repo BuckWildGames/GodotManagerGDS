@@ -7,6 +7,7 @@ const CACHE_FILE: String = "cache.json"
 
 var install_dir: String = ""
 var use_latest: bool = false
+var use_console: bool = false
 var cache_expiry: int = 86400 # 24 hours
 
 var available_versions: Array = []
@@ -126,7 +127,16 @@ func uninstall_version(index: int) -> bool:
 	if not installed_versions.has(version_name):
 		_debugger("Version %s is not installed" % [version_name])
 		return false
-	FileManager.delete_folder(install_dir, version_name, false)
+	var files = FileManager.get_files(install_dir + "/" + version_name)
+	for file in files:
+		var delete = FileManager.delete_file(install_dir + "/" + version_name, file, false)
+		if not delete:
+			_debugger("Failed to delete file: " + file, true)
+			return false
+	var complete = FileManager.delete_folder(install_dir, version_name, false)
+	if not complete:
+		_debugger("Failed to delete folder: " + version_name, true)
+		return false
 	installed_versions.erase(version_name)
 	_debugger("Version uninstalled: " + version_name)
 	installed_versions_changed.emit()
@@ -143,7 +153,7 @@ func run_project(index: int, project_path: String) -> bool:
 		return false
 	var godot_exe = _get_runnable_path(index)
 	if FileAccess.file_exists(godot_exe):
-		OS.create_process(godot_exe, ["--path", project_path])
+		OS.create_process(godot_exe, ["--path", project_path], use_console)
 		_debugger("Running project in Godot version: " + version_name)
 	else:
 		_debugger("Executable not found for: " + version_name, true)
@@ -161,7 +171,7 @@ func run_project_in_editor(index: int, project_path: String) -> bool:
 		return false
 	var godot_exe = _get_runnable_path(index)
 	if FileAccess.file_exists(godot_exe):
-		OS.create_process(godot_exe, ["-e", "--path", project_path])
+		OS.create_process(godot_exe, ["-e", "--path", project_path], use_console)
 		_debugger("Running editor in Godot version: " + version_name)
 	else:
 		_debugger("Executable not found for: " + version_name, true)
@@ -179,7 +189,7 @@ func run_engine(index) -> bool:
 		return false
 	var godot_exe = _get_runnable_path(index)
 	if FileAccess.file_exists(godot_exe):
-		OS.create_process(godot_exe, ["--project-manager"])
+		OS.create_process(godot_exe, ["--project-manager"], use_console)
 		_debugger("Running Godot version: " + version_name)
 	else:
 		_debugger("Executable not found for: " + version_name, true)
@@ -346,9 +356,10 @@ func _get_runnable_path(index: int) -> String:
 	if files == null:
 		_debugger("Failed to get files in: " + extracted_path, true)
 	for file in files:
-		if not "console" in file and target_file in file:
-			godot_exe += file
-			break
+		if (not use_console and not "console" in file) or (use_console and "console" in file):
+			if target_file in file:
+				godot_exe += file
+				break
 	return godot_exe
 
 
@@ -359,6 +370,9 @@ func _load_settings() -> void:
 	var latest_version = ConfigManager.get_config_data("settings", "latest_version")
 	if latest_version != null:
 		use_latest = latest_version
+	var run_console = ConfigManager.get_config_data("settings", "run_console")
+	if run_console != null:
+		use_console = run_console
 	var fetch_time = ConfigManager.get_config_data("settings", "fetch_time")
 	if fetch_time != null:
 		match fetch_time:

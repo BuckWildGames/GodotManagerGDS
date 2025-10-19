@@ -18,6 +18,7 @@ func _ready() -> void:
 func enter(previous : String):
 	super.enter(previous)
 	EngineManager.load_settings()
+	call_deferred("_reset_engines", false)
 
 
 func button_pressed(button: String) -> void:
@@ -50,10 +51,10 @@ func _process(_delta: float) -> void:
 		empty_label.set_visible(false)
 
 
-func _reset_engines() -> void:
+func _reset_engines(notify: bool = true) -> void:
 	_clear_engine_containers()
 	_add_engines()
-	if is_visible_in_tree():
+	if is_visible_in_tree() and notify:
 		NotificationManager.notify("Engine List Updated", 2.0, true)
 
 

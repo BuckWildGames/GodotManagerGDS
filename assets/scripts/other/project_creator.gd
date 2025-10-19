@@ -99,6 +99,35 @@ func _create_godot_4x_project_file(project_file_path: String, title: String, des
 	if error != OK:
 		_debugger("Failed to save project file", true)
 		return false
+	_create_project_file_header(project_file_path)
+	_debugger("Created 4x project file")
+	return true
+
+
+func _update_engine_version(project_path: String, new_engine_version: String) -> bool:
+	var config = ConfigFile.new()
+	var config_path = project_path + "/project.godot"
+	if config.load(config_path) == OK:
+		var version = config.get_value("", "config_version")
+		if version == 4:
+			return false
+		var features = config.get_value("application", "config/features")
+		if "4." in features[1]:
+			_debugger("Failed to get features", true)
+			return false
+		config.set_value("application", "config/features", null)
+		await get_tree().process_frame
+		config.set_value("application", "config/features", PackedStringArray([new_engine_version, features[1]]))
+		var error = config.save(config_path)
+		if error != OK:
+			_debugger("Failed to save project file", true)
+			return false
+		_create_project_file_header(config_path)
+		return true
+	return false
+
+
+func _create_project_file_header(project_file_path: String) -> void:
 	var file = FileAccess.open(project_file_path, FileAccess.READ_WRITE)
 	if file:
 		var content = file.get_as_text()
@@ -106,8 +135,6 @@ func _create_godot_4x_project_file(project_file_path: String, title: String, des
 		file.store_string("; Engine configuration file.\n; It's best edited using the editor UI and not directly,\n; since the parameters that go here are not all obvious.\n;\n; Format:\n;   [section] ; section goes between []\n;   param=value ; assign values to parameters\n\n")
 		file.store_string(content)
 	file.close()
-	_debugger("Created 4x project file")
-	return true
 
 
 func _get_project_data(project_path: String) -> Dictionary:

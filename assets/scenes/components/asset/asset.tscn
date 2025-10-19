@@ -1,0 +1,122 @@
+[gd_scene load_steps=11 format=3 uid="uid://cngn8py4o50a1"]
+
+[ext_resource type="Script" uid="uid://0y5kamfhx06j" path="res://assets/scripts/components/engine/engine.gd" id="1_gkcvh"]
+[ext_resource type="Texture2D" uid="uid://dyd3sb041guj7" path="res://icon.svg" id="2_sjmi2"]
+[ext_resource type="FontFile" uid="uid://4a7ofbj2m6ny" path="res://assets/theme/fonts/droid-sans.bold.ttf" id="3_k5efx"]
+[ext_resource type="Texture2D" uid="uid://donrhresjoen1" path="res://assets/icons/web.svg" id="4_gwvb4"]
+[ext_resource type="Script" uid="uid://bvhoao44imy8h" path="res://assets/scripts/ui/elements/passthrough_label.gd" id="5_cxqua"]
+[ext_resource type="Texture2D" uid="uid://rt86oqy7ww5x" path="res://assets/icons/download.svg" id="6_5wkr8"]
+[ext_resource type="Texture2D" uid="uid://17otjx5n2k44" path="res://assets/icons/uninstall.svg" id="7_t6xcc"]
+[ext_resource type="Texture2D" uid="uid://byx0jqnxqmq5g" path="res://assets/icons/default.svg" id="8_noprm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ek1pc"]
+bg_color = Color(0.411765, 0.611765, 0.909804, 0.392157)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jwesv"]
+
+[node name="Engine" type="PanelContainer"]
+script = ExtResource("1_gkcvh")
+
+[node name="EngineButton" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_ek1pc")
+
+[node name="EngineContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="EngineContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("2_sjmi2")
+expand_mode = 1
+
+[node name="Info" type="VBoxContainer" parent="EngineContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="EngineContainer/Info"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_k5efx")
+text = "Engine Version"
+
+[node name="SourceContainer" type="HBoxContainer" parent="EngineContainer/Info"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="EngineContainer/Info/SourceContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("4_gwvb4")
+expand_mode = 2
+
+[node name="Source" type="Label" parent="EngineContainer/Info/SourceContainer" node_paths=PackedStringArray("target_button")]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.588235, 0.588235, 0.588235, 1)
+text = "No Source"
+vertical_alignment = 1
+text_overrun_behavior = 3
+script = ExtResource("5_cxqua")
+target_button = NodePath("../../../../EngineButton")
+
+[node name="VSeparator" type="VSeparator" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 64
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
+
+[node name="ButtonContainer" type="HBoxContainer" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="DownloadButton" type="Button" parent="EngineContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Download"
+icon = ExtResource("6_5wkr8")
+icon_alignment = 1
+expand_icon = true
+
+[node name="UninstallButton" type="Button" parent="EngineContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Uninstall"
+icon = ExtResource("7_t6xcc")
+icon_alignment = 1
+expand_icon = true
+
+[node name="DefaultButton" type="Button" parent="EngineContainer/ButtonContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Set As Default"
+toggle_mode = true
+icon = ExtResource("8_noprm")
+icon_alignment = 1
+expand_icon = true
+
+[node name="VSeparator2" type="VSeparator" parent="EngineContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jwesv")
+
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="EngineButton" to="." method="button_pressed" binds= ["run"]]
+[connection signal="pressed" from="EngineContainer/ButtonContainer/DownloadButton" to="." method="button_pressed" binds= ["download"]]
+[connection signal="pressed" from="EngineContainer/ButtonContainer/UninstallButton" to="." method="button_pressed" binds= ["uninstall"]]
+[connection signal="toggled" from="EngineContainer/ButtonContainer/DefaultButton" to="." method="_on_default_button_toggled"]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_delay_timer_timeout"]

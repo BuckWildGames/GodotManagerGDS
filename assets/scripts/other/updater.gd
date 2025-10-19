@@ -3,6 +3,7 @@ extends Node
 const DEBUGGER: bool = false
 
 const MANAGER_GITHUB_API: String = "https://api.github.com/repos/BuckWildGames/GodotManagerGDS/releases"
+const RELEASES: String = "https://github.com/BuckWildGames/GodotManagerGDS/releases"
 
 func check_for_update() -> void:
 	_fetch_from_github()
@@ -71,7 +72,7 @@ func _compare_version(version_name: String) -> int:
 
 func _on_update(option: String) -> void:
 	if option == "GoTo":
-		OS.shell_open("https://github.com/BuckWildGames/GodotManagerGDS/releases")
+		OS.shell_open(RELEASES)
 	queue_free()
 
 

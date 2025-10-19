@@ -22,6 +22,7 @@ func enter(previous : String):
 	super.enter(previous)
 	if is_node_ready():
 		call_deferred("_init_projects")
+	EngineManager.load_settings()
 
 
 func button_pressed(button: String) -> void:

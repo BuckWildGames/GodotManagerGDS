@@ -370,7 +370,8 @@ func update_project(project_num: int, path: String) -> void:
 	projects[project_num]["path"] = project_data["path"]
 	projects[project_num]["version"] = project_data["version"]
 	if not "x" in project_data["engine_version"]:
-		projects[project_num]["engine_version"] = project_data["engine_version"]
+		if _version_is_greater(project_data["engine_version"], projects[project_num]["engine_version"]):
+			projects[project_num]["engine_version"] = project_data["engine_version"]
 	projects[project_num]["icon"] = project_data["icon"]
 	_debugger("Project Updated: " + str(project_num))
 	return
@@ -408,6 +409,28 @@ func get_group_num() -> int:
 func _check_duplicate(project_name: String) -> bool:
 	for project in projects:
 		if project_name == projects[project]["name"]:
+			return true
+	return false
+
+
+func _version_string_to_array(version_string: String) -> Array:
+	var major = version_string.substr(0, 1)
+	var minor = version_string.substr(3, 1)
+	var patch = "0"
+	if version_string.length() > 3:
+		patch = version_string.substr(5, 1)
+	if major.is_valid_int() and minor.is_valid_int() and patch.is_valid_int():
+		return [major.to_int(), minor.to_int(), patch.to_int()]
+	return []
+
+
+func _version_is_greater(version_check: String, version_compare: String) -> bool:
+	var version_check_array = _version_string_to_array(version_check)
+	var version_compare_array = _version_string_to_array(version_compare)
+	for num in version_check_array.size():
+		var check_num = version_check_array[num]
+		var compare_num = version_compare_array[num]
+		if check_num > compare_num:
 			return true
 	return false
 

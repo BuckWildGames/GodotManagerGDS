@@ -107,12 +107,14 @@ func _create_godot_4x_project_file(project_file_path: String, title: String, des
 func _update_engine_version(project_path: String, new_engine_version: String) -> bool:
 	var config = ConfigFile.new()
 	var config_path = project_path + "/project.godot"
+	if new_engine_version.length() > 3:
+		new_engine_version = new_engine_version.substr(0, 3)
 	if config.load(config_path) == OK:
 		var version = config.get_value("", "config_version")
 		if version == 4:
 			return false
 		var features = config.get_value("application", "config/features")
-		if "4." in features[1]:
+		if features.is_empty() or not "4." in features[0]:
 			_debugger("Failed to get features", true)
 			return false
 		config.set_value("application", "config/features", null)

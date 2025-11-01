@@ -37,6 +37,7 @@ func button_pressed(button: String) -> void:
 			var folders = ConfigManager.get_config_data("settings", "project_folders")
 			if folders != null:
 				ProjectManager.scan_for_projects(folders)
+				reload_projects()
 				NotificationManager.notify("Scanned For Projects", 2.0, true)
 			else:
 				NotificationManager.notify("No Project Folders Set", 3.0, true)

@@ -10,6 +10,7 @@ const PROJECT: PackedScene = preload("res://assets/scenes/components/project/pro
 @onready var list_view_button: Button = $ViewButtonPanel/ViewButtons/ListViewButton
 @onready var group_view_button: Button = $ViewButtonPanel/ViewButtons/GroupViewButton
 
+@onready var dialog_container: PanelContainer = $DialogContainer
 @onready var create_new_project: PanelContainer = $DialogContainer/CreateNewProject
 @onready var import_project_dialog: FileDialog = $DialogContainer/ImportProjectDialog
 
@@ -20,6 +21,7 @@ func _ready() -> void:
 
 func enter(previous : String):
 	super.enter(previous)
+	set_dialog_visible(false)
 	if is_node_ready():
 		call_deferred("_init_projects")
 	EngineManager.load_settings()
@@ -76,6 +78,14 @@ func create_group() -> void:
 		project_container.add_child(new_group)
 		new_group.setup(self, group_num, false, title)
 	ProjectManager.create_group(new_group)
+
+
+func set_dialog_visible(dialog_is_visible: bool) -> void:
+	dialog_container.set_visible(dialog_is_visible)
+
+
+func reload_projects() -> void:
+	call_deferred("_init_projects")
 
 
 func _process(_delta: float) -> void:

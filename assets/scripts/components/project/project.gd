@@ -8,6 +8,7 @@ const CS_ICON: CompressedTexture2D = preload("res://assets/icons/icon_ft_csharp.
 @onready var menu_button: MenuButton = $ProjectContainer/ButtonContainer/MenuButton
 @onready var groups_button: MenuButton = $GroupsButton
 @onready var favorite_button: Button = $ProjectContainer/ButtonContainer/FavoriteButton
+@onready var find_button: Button = $ProjectContainer/ButtonContainer/FindButton
 @onready var delete_button: Button = $ProjectContainer/ButtonContainer/DeleteButton
 
 @onready var icon: TextureRect = $ProjectContainer/Icon
@@ -21,6 +22,7 @@ const CS_ICON: CompressedTexture2D = preload("res://assets/icons/icon_ft_csharp.
 @onready var edit_panel: Panel = $EditPanel
 @onready var line_edit: LineEdit = $EditPanel/Box/LineEdit
 
+@onready var path_dialog: FileDialog = $PathDialog
 @onready var delay_timer: Timer = $DelayTimer
 
 var group_popup: PopupMenu = null
@@ -33,6 +35,7 @@ var engine_version: String = ""
 var missing: bool = false
 var click_delay: float = 1.0
 var clicked: bool = false
+var opening: bool = false
 var temp_engine: String = ""
 
 
@@ -123,6 +126,9 @@ func value_received(value: Variant, button: String) -> void:
 			else:
 				master.create_group()
 				ProjectManager.add_project_to_group(this_project, ProjectManager.get_project_groups().size() - 1)
+		"path_selected":
+			var new_path = str(value)
+			_check_new_path(new_path)
 
 
 func _get_groups() -> void:
@@ -140,7 +146,8 @@ func _get_groups() -> void:
 
 func _on_project_button_pressed() -> void:
 	if master and path != "":
-		if clicked:
+		if clicked and not opening:
+			opening = true
 			var index = EngineManager.get_version_index(engine_version)
 			var complete = EngineManager.run_project_in_editor(index, path)
 			if complete:
@@ -151,6 +158,7 @@ func _on_project_button_pressed() -> void:
 					await get_tree().create_timer(2.0).timeout
 					get_tree().quit()
 			else:
+				opening = false
 				NotificationManager.show_prompt("Failed To Open Project, Verify Engine Installation.", ["OK"], self, "")
 		else:
 			clicked = true
@@ -192,6 +200,11 @@ func _on_delete(option: String) -> void:
 				NotificationManager.show_prompt("Failed To Delete Project, Verify Project Location.", ["OK"], self, "")
 
 
+func _on_find() -> void:
+	master.set_dialog_visible(true)
+	path_dialog.show()
+
+
 func _check_if_missing() -> void:
 	var files = FileManager.get_files(path)
 	if files.is_empty():
@@ -201,7 +214,23 @@ func _check_if_missing() -> void:
 		favorite_button.set_visible(false)
 		menu_button.set_visible(false)
 		project_button.set_disabled(true)
+		find_button.set_visible(true)
 		delete_button.set_visible(true)
+
+
+func _check_new_path(new_path: String) -> void:
+	var files = FileManager.get_files(new_path)
+	if files.is_empty():
+		NotificationManager.show_prompt("Failed To Find Project, Verify Path.", ["OK"], self, "")
+		return
+	var new_data = ProjectManager.get_project_data(new_path)
+	var title =  title_label.get_text()
+	if not new_data["name"] == title:
+		NotificationManager.show_prompt("Project Names Do Not Match, Verify Path.", ["OK"], self, "")
+		return
+	ProjectManager.update_project(this_project, new_path)
+	master.set_dialog_visible(false)
+	master.reload_projects()
 
 
 func _convert_title(text: String) -> String:

@@ -31,27 +31,27 @@
 [ext_resource type="Texture2D" uid="uid://b252fmda74tb0" path="res://assets/icons/x.svg" id="22_xj411"]
 [ext_resource type="Texture2D" uid="uid://ca0285a44o4tn" path="res://assets/icons/resize.svg" id="30_qw8qw"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01aal"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2nqfc"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o0yy7"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45hij"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vka4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuuw6"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_abekw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltgvx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xbsnq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vorq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ms1t"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vorq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xbsnq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ltgvx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_abekw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuuw6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vka4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45hij"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o0yy7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2nqfc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01aal"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_ombjm"]
 action = &"ui_accept"
@@ -82,6 +82,9 @@ corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eve3h"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu7m7"]
+bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88pc8"]
 bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
 corner_radius_top_left = 5
@@ -92,9 +95,6 @@ expand_margin_left = 2.0
 expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qu7m7"]
-bg_color = Color(0.568627, 0, 0.0941176, 0.470588)
 
 [node name="Main" type="Node"]
 
@@ -132,23 +132,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_01aal")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2nqfc")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_o0yy7")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_45hij")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8vka4")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_kuuw6")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_abekw")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ltgvx")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xbsnq")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1ms1t")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_6vorq")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_1ms1t")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xbsnq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ltgvx")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_abekw")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_kuuw6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8vka4")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_45hij")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_o0yy7")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_2nqfc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_01aal")
 shortcut = SubResource("Shortcut_gi4iy")
 shortcut_feedback = false
 shortcut_in_tooltip = false
 
 [node name="Projects" type="Panel" parent="UiManager/Menu"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -278,6 +277,7 @@ visible = false
 layout_mode = 2
 
 [node name="ImportProjectDialog" type="FileDialog" parent="UiManager/Menu/Projects/DialogContainer"]
+oversampling_override = 1.0
 title = "Import A Project"
 initial_position = 1
 size = Vector2i(640, 480)
@@ -537,6 +537,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Settings" type="Panel" parent="UiManager/Menu"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1011,8 +1012,8 @@ icon_alignment = 1
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Close"
-theme_override_styles/hover = SubResource("StyleBoxFlat_88pc8")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_qu7m7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_88pc8")
 icon = ExtResource("22_xj411")
 icon_alignment = 1
 

@@ -348,7 +348,7 @@ func import_project(path: String) -> bool:
 	return true
 
 
-func update_project(project_num: int, path: String) -> void:
+func update_project(project_num: int, path: String, save_data: bool = false) -> void:
 	if not projects.has(project_num):
 		_debugger("Project not found: " + str(project_num), true)
 		return
@@ -374,7 +374,8 @@ func update_project(project_num: int, path: String) -> void:
 			projects[project_num]["engine_version"] = project_data["engine_version"]
 	projects[project_num]["icon"] = project_data["icon"]
 	_debugger("Project Updated: " + str(project_num))
-	return
+	if save_data:
+		_save_data()
 
 
 func change_project_engine_version(project_num: int, new_version: String) -> void:
@@ -404,6 +405,10 @@ func get_group_num() -> int:
 		if not groups.has(num):
 			return num
 	return count
+
+
+func get_project_data(project_path: String) -> Dictionary:
+	return _get_project_data(project_path)
 
 
 func _check_duplicate(project_name: String) -> bool:

@@ -228,7 +228,7 @@ func _check_new_path(new_path: String) -> void:
 	if not new_data["name"] == title:
 		NotificationManager.show_prompt("Project Names Do Not Match, Verify Path.", ["OK"], self, "")
 		return
-	ProjectManager.update_project(this_project, new_path)
+	ProjectManager.update_project(this_project, new_path, true)
 	master.set_dialog_visible(false)
 	master.reload_projects()
 

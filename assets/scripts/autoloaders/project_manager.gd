@@ -53,6 +53,9 @@ func get_groups_dic() -> Dictionary:
 func create_project(new_project: Node, title: String, description: String, path: String, version: String, engine_version: String, icon: ImageTexture = null) -> void:
 	if _check_duplicate(title):
 		_debugger("Project already exists: " + title)
+		var id = get_project_id(title)
+		if id >= 0:
+			update_project(id, path)
 		if new_project:
 			new_project.queue_free()
 		return
@@ -405,6 +408,13 @@ func get_group_num() -> int:
 		if not groups.has(num):
 			return num
 	return count
+
+
+func get_project_id(project_name: String) -> int:
+	for project in projects:
+		if projects[project]["name"] == project_name:
+			return project
+	return -1
 
 
 func get_project_data(project_path: String) -> Dictionary:

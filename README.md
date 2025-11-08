@@ -35,6 +35,8 @@ The original is written in C# so no code was used in this project.
 
 -Grouping Projects.
 
+-Add and use project templates.
+
 -Engine management basics working.
 
 -Download Godot Engine from GitHub.
@@ -45,9 +47,9 @@ The original is written in C# so no code was used in this project.
 
 -Multiple settings.
 
-# Plan:
+-Check for updates
 
--Add project templates and more.
+# Plan:
 
 -Add ability to choose engine mirror.
 

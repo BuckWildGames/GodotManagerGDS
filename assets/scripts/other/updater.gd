@@ -32,16 +32,18 @@ func _on_http_request_completed(_result, response_code, _headers, body) -> void:
 	var releases = json.get_data()
 	if not releases is Array:
 		releases = [releases]
-	var new_update = false
+	_debugger("Fetched %d versions: " % releases.size())
+	var current = true
 	for release in releases:
 		if "tag_name" in release:
 			var version_name = release["tag_name"]
-			if _compare_version(version_name) == 1:
-				new_update = true
+			var compare =  _compare_version(version_name)
+			if compare > 0:
+				current = false
 				_debugger("Not Using Current Version")
 				NotificationManager.show_prompt("A New Update Is Available", ["Close", "GoTo"], self, "_on_update")
-	_debugger("Fetched %d versions: " % releases.size())
-	if not new_update:
+				break
+	if current:
 		_debugger("Using Current Version")
 		queue_free()
 

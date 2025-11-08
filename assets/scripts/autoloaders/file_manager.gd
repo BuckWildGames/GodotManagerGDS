@@ -148,6 +148,75 @@ func delete_folder(path: String, folder_name: String, recycle: bool) -> bool:
 	return complete
 
 
+func copy_folder(from_path: String, to_path: String, folder_name: String) -> bool:
+	var debug: String = "copy_folder(" + from_path + "," + to_path + "," + folder_name + "). "
+	var folders: Array = []
+	var to_folders: Array = get_folders(to_path)
+	var complete: bool = true
+	# Check if folder exist in to path
+	if !to_folders.has(folder_name):
+		# Open folder
+		var dir = DirAccess.open(from_path)
+		# Check if folder exists
+		if dir != null:
+			# Set debug
+			debug += "Directory found. "
+			# Get all folders
+			folders = dir.get_directories()
+			# Check if folder exists
+			if folders.has(folder_name):
+				# Setup
+				var error = false
+				var new_path = from_path + "/" + folder_name
+				# Create folder
+				error = create_folder(to_path, folder_name)
+				if error:
+					# Get folder contents
+					var subfolders = get_folders(new_path)
+					var files = get_files(new_path)
+					# Copy all subfolders
+					for subfolder in subfolders:
+						var dest_path = to_path + "/" + folder_name
+						if not copy_folder(new_path, dest_path, subfolder):
+							complete = false
+							break
+					# Only proceed if subfolders were copied successfully
+					if complete:
+						# Copy all files
+						for file in files:
+							var dest_path = to_path + "/" + folder_name
+							if not copy_file(new_path, dest_path, file):
+								complete = false
+								break
+					if complete:
+						# Set debug
+						debug += "Folder Copied. "
+					else:
+						# Set debug
+						debug += "Could not copy folder contents. "
+				else:
+					# Set debug
+					debug += "Could not create destination folder. "
+					complete = false
+			else:
+				# Set debug
+				debug += "Folder not found. "
+				complete = false
+		else:
+			# Set debug
+			debug += "Directory not found. "
+			complete = false
+		# Clear dir
+		dir = null
+		folders.clear()
+	else:
+		# Set debug
+		debug += "Folder already exists. "
+	# Send to debug
+	_debugger(debug)
+	return complete
+
+
 func copy_file(from_path: String, to_path: String, file_name: String) -> bool:
 	# Set vars
 	var debug: String = "copy_file(" +from_path +"," +to_path +"," +file_name+"). "

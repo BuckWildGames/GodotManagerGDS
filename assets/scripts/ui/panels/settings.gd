@@ -12,6 +12,7 @@ const PATH_BUTTON: PackedScene = preload("res://assets/scenes/components/setting
 @onready var other_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/OtherContainer
 
 @onready var path_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox/PathContainer
+@onready var template_container: VBoxContainer = $PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox/PathContainer
 
 @onready var install_path: LineEdit = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox/InstallPath
 @onready var fetch_times_button: OptionButton = $PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox/FetchTimes
@@ -29,6 +30,7 @@ const PATH_BUTTON: PackedScene = preload("res://assets/scenes/components/setting
 
 var path: String = ""
 var is_project_path: bool = false
+var is_template: bool = false
 
 
 func _ready() -> void:
@@ -45,6 +47,10 @@ func enter(previous : String):
 	_load_settings()
 
 
+func exit() -> void:
+	ConfigManager.force_save()
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		install_path.call_deferred("release_focus")
@@ -58,6 +64,11 @@ func button_pressed(button: String) -> void:
 		"browse_project":
 			select_folder_dialog.show()
 			is_project_path = true
+			is_template = false
+		"browse_template_project":
+			select_folder_dialog.show()
+			is_project_path = true
+			is_template = true
 		"open_install":
 			SettingsManager.open_folder(path)
 		"clear_data":
@@ -93,7 +104,7 @@ func value_received(value: Variant, button: String) -> void:
 	match button:
 		"path_selected":
 			if is_project_path:
-				_add_project_path(str(value))
+				_add_project_path(str(value), is_template)
 			else:
 				path = str(value)
 				install_path.set_text(path)
@@ -114,26 +125,35 @@ func value_received(value: Variant, button: String) -> void:
 			ConfigManager.set_config_data("settings", "default_view", int(value))
 
 
-func _add_project_path(new_path: String) -> void:
+func _add_project_path(new_path: String, template: bool = false) -> void:
+	var setting = "project_folders"
+	if template:
+		setting = "template_projects"
 	var i = PATH_BUTTON.instantiate()
-	path_container.add_child(i)
+	if template:
+		template_container.add_child(i)
+	else:
+		path_container.add_child(i)
 	i.set_text(new_path)
-	i.pressed.connect(_delete_path_pressed.bind(new_path, i))
-	var folders = ConfigManager.get_config_data("settings", "project_folders")
+	i.pressed.connect(_delete_path_pressed.bind(new_path, i, template))
+	var folders = ConfigManager.get_config_data("settings", setting)
 	if folders != null:
 		if not folders.has(new_path):
 			folders.append(new_path)
 	else:
 		folders = [new_path]
-	ConfigManager.set_config_data("settings", "project_folders", folders)
+	ConfigManager.set_config_data("settings", setting, folders)
 
 
-func _delete_path_pressed(old_path: String, node: Node) -> void:
-	var folders = ConfigManager.get_config_data("settings", "project_folders")
+func _delete_path_pressed(old_path: String, node: Node, template: bool) -> void:
+	var setting = "project_folders"
+	if template:
+		setting = "template_projects"
+	var folders = ConfigManager.get_config_data("settings", setting)
 	if folders != null:
 		if folders.has(old_path):
 			folders.erase(old_path)
-			ConfigManager.set_config_data("settings", "project_folders", folders)
+			ConfigManager.set_config_data("settings", setting, folders)
 	node.queue_free()
 
 
@@ -148,13 +168,18 @@ func _change_tab(tab: int) -> void:
 
 func _get_engine_versions() -> void:
 	default_engine_button.clear()
+	default_engine_button.add_item("None")
 	var versions = EngineManager.get_installed_versions()
 	for version in versions:
 		default_engine_button.add_item(version)
+	default_engine_button.select(0)
 
 
-func _clear_path_container() -> void:
-	for child in path_container.get_children():
+func _clear_path_container(template: bool = false) -> void:
+	var container = path_container
+	if template:
+		container = template_container
+	for child in container.get_children():
 		child.queue_free()
 
 
@@ -197,3 +222,7 @@ func _load_settings(startup: bool = false) -> void:
 		_clear_path_container()
 		for folder in settings["project_folders"]:
 			_add_project_path(folder)
+	if settings.has("template_projects"):
+		_clear_path_container(true)
+		for folder in settings["template_projects"]:
+			_add_project_path(folder, true)

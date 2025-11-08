@@ -13,6 +13,8 @@ var cache_expiry: int = 86400 # 24 hours
 var available_versions: Array = []
 var installed_versions: Array = []
 
+var current_version: String = ""
+
 signal available_versions_changed()
 signal installed_versions_changed()
 
@@ -214,6 +216,7 @@ func _load_from_cache() -> void:
 		if "versions" in cache:
 			available_versions = cache["versions"]
 			_debugger("Loaded %d versions from cache." % [available_versions.size()])
+			_check_current_version(available_versions[0].name)
 		available_versions_changed.emit()
 
 
@@ -254,8 +257,16 @@ func _on_http_request_completed(_result, response_code, _headers, body) -> void:
 					if _get_os_version(version_name, download_url):
 						break
 	_debugger("Fetched %d versions" % [available_versions.size()])
+	_check_current_version(available_versions[0].name)
 	_save_to_cache()
 	available_versions_changed.emit()
+
+
+func _check_current_version(version: String) -> void:
+	if version != current_version:
+		current_version = version
+		ConfigManager.set_config_data("other", "current_version", current_version)
+		NotificationManager.show_prompt("New Godot Version Available", ["Ok"], self, "")
 
 
 func _get_os_version(version_name: String, download_url: String) -> bool:
@@ -364,6 +375,9 @@ func _get_runnable_path(index: int) -> String:
 
 
 func _load_settings() -> void:
+	var new_current_version = ConfigManager.get_config_data("other", "current_version")
+	if new_current_version != null:
+		current_version = new_current_version
 	var new_install_dir = ConfigManager.get_config_data("settings", "install_path")
 	if new_install_dir != null:
 		install_dir = new_install_dir

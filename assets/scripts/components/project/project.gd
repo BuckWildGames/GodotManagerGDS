@@ -219,6 +219,7 @@ func _check_if_missing() -> void:
 
 
 func _check_new_path(new_path: String) -> void:
+	master.set_dialog_visible(false)
 	var files = FileManager.get_files(new_path)
 	if files.is_empty():
 		NotificationManager.show_prompt("Failed To Find Project, Verify Path.", ["OK"], self, "")
@@ -229,7 +230,6 @@ func _check_new_path(new_path: String) -> void:
 		NotificationManager.show_prompt("Project Names Do Not Match, Verify Path.", ["OK"], self, "")
 		return
 	ProjectManager.update_project(this_project, new_path, true)
-	master.set_dialog_visible(false)
 	master.reload_projects()
 
 

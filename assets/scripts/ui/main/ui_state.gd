@@ -17,6 +17,10 @@ func enter(previous : String) -> void:
 		previous_panel = previous
 
 
+func exit() -> void:
+	pass
+
+
 func transition(to_panel: String) -> void:
 	master.transition(canvas, to_panel)
 

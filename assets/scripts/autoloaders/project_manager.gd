@@ -315,8 +315,11 @@ func scan_for_projects(paths: Array) -> void:
 		if not folders.is_empty():
 			for folder in folders:
 				var project_path = path + "/" + folder
-				import_project(project_path)
-	_debugger("Scanned paths: %s for projects" % [str(paths)])
+				if not import_project(project_path):
+					var recurisive_folder = FileManager.get_folders(project_path)
+					if not recurisive_folder.is_empty():
+						scan_for_projects([project_path])
+	_debugger("Scanned path: %s for projects" % [paths])
 
 
 func import_project(path: String) -> bool:

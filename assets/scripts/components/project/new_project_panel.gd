@@ -13,6 +13,7 @@ const PATH_OK: CompressedTexture2D = preload("res://assets/icons/icon_status_suc
 @onready var version_control_button: CheckButton = $MarginContainer/VBoxContainer/VersionControlButton
 @onready var engine_version_button: OptionButton = $MarginContainer/VBoxContainer/EngineVersionButton
 @onready var engine_renderer_button: OptionButton = $MarginContainer/VBoxContainer/EngineRendererButton
+@onready var template_button: OptionButton = $MarginContainer/VBoxContainer/HBoxContainer/TemplateButton
 
 var master: Control = null
 var title: String = ""
@@ -22,10 +23,11 @@ var engine_version: String = ""
 
 var renderer: String = ""
 var create_folder: bool = true
-var version_control: bool = true
+var version_control: bool = false
+var template: String = ""
+var templates: Array = []
 
-var can_create: bool = false
-
+var valid_path: bool = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
@@ -39,6 +41,7 @@ func setup(new_master: Control = null) -> void:
 	title = "New Project"
 	path = "Unknown Path"
 	project_path.set_text(path)
+	_check_path(false)
 	description = "No Description"
 	engine_version = ConfigManager.get_config_data("settings", "default_engine")
 	_setup_engine_button()
@@ -46,9 +49,11 @@ func setup(new_master: Control = null) -> void:
 	renderer = engine_renderer_button.get_item_text(0)
 	engine_renderer_button.select(0)
 	create_folder = true
-	version_control = true
-	create_folder_button.set_pressed_no_signal(true)
-	version_control_button.set_pressed_no_signal(true)
+	version_control = false
+	create_folder_button.set_pressed_no_signal(create_folder)
+	version_control_button.set_pressed_no_signal(version_control)
+	templates = []
+	_setup_template_button()
 	path_dialog.hide()
 	get_parent().show()
 	show()
@@ -64,14 +69,18 @@ func button_pressed(button: String) -> void:
 		"save":
 			if not master:
 				return
-			if can_create and title != "":
-				if ProjectManager.create_project_folder(title, description, path, engine_version, renderer, create_folder, version_control):
+			if _can_create():
+				NotificationManager.notify("Please Wait", 2.0)
+				await get_tree().create_timer(0.1).timeout
+				if ProjectManager.create_project_folder(title, description, path, engine_version, renderer, create_folder, version_control, template):
 					master.create_project(title, description, path, "0.0.0", engine_version)
 					get_parent().hide()
 					hide()
 					NotificationManager.notify("Project Created", 2.0, true)
 					var index = EngineManager.get_version_index(engine_version)
-					EngineManager.run_project_in_editor(index, path)
+					if not EngineManager.run_project_in_editor(index, path):
+						NotificationManager.notify("Failed To Open In Editor", 2.0, true)
+						return
 					var pos = ProjectManager.get_projects_dic().size() - 1
 					ProjectManager.move_project_front(pos)
 					NotificationManager.notify("Opening Editor", 2.0, true)
@@ -119,11 +128,15 @@ func value_received(value: Variant, button: String) -> void:
 			_setup_renderer_button()
 		"renderer_changed":
 			renderer = engine_renderer_button.get_item_text(int(value))
+		"template_selected":
+			if value > 0:
+				template = templates[int(value - 1)]
 
 
 func _setup_engine_button() -> void:
 	engine_version_button.clear()
-	var index = 0
+	engine_version_button.add_item("None", 0)
+	var index = 1
 	var selected_index = 0
 	for engine in EngineManager.get_installed_versions():
 		engine_version_button.add_item(engine, index)
@@ -144,12 +157,29 @@ func _setup_renderer_button() -> void:
 		engine_renderer_button.add_item("OpenGL ES 2.0")
 
 
+func _setup_template_button() -> void:
+	template_button.clear()
+	template_button.add_item("None", 0)
+	var index = 1
+	var selected_index = 0
+	var config_templates = ConfigManager.get_config_data("settings", "template_projects")
+	if not config_templates == null:
+		for temp in config_templates:
+			templates.append(temp)
+			var temp_name = temp.get_basename()
+			temp_name = temp_name.replace(temp.get_base_dir(), "")
+			temp_name = temp_name.trim_prefix("/").to_pascal_case()
+			template_button.add_item(temp_name, index)
+			index += 1
+	template_button.select(selected_index)
+
+
 func _check_path(update: bool) -> void:
 	var dir = DirAccess.open(path)
 	if not dir: 
 		path_info.set_texture(PATH_BAD)
 		path_info.set_tooltip_text("Path Not Valid")
-		can_create = false
+		valid_path = false
 		return
 	var is_project = _check_if_project_exists(path)
 	if create_folder:
@@ -164,11 +194,11 @@ func _check_path(update: bool) -> void:
 				path = path + "/" + _convert_title(title)
 			path_info.set_texture(PATH_OK)
 			path_info.set_tooltip_text("Path Valid")
-		can_create = true
+		valid_path = true
 	else:
 		path_info.set_texture(PATH_BAD)
 		path_info.set_tooltip_text("Path Destination Is Existing Project")
-		can_create = false
+		valid_path = false
 	if update:
 		project_path.set_text(path)
 		project_path.set_caret_column(project_path.get_text().length())
@@ -187,3 +217,16 @@ func _check_if_project_exists(new_path: String) -> bool:
 func _convert_title(text: String) -> String:
 	var new_title = text.replace(" ", "-")
 	return new_title.to_lower()
+
+
+func _can_create() -> bool:
+	if title.is_empty():
+		NotificationManager.notify("Set A Title", 2.0)
+		return false
+	if not valid_path:
+		NotificationManager.notify("Path Not Valid", 2.0)
+		return false
+	if engine_version.is_empty() or engine_version == "None":
+		NotificationManager.notify("Engine Version Not Valid", 2.0)
+		return false
+	return true

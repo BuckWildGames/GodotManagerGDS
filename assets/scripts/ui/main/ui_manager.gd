@@ -41,6 +41,7 @@ func transition(to_canvas: String, to_panel: String) -> void:
 		_debugger("Panel not found")
 		return
 	if not panels[current_canvas][current_panel].persistent:
+		panels[current_canvas][current_panel].exit()
 		canvass[current_canvas].remove_child(panels[current_canvas][current_panel])
 	canvass[to_canvas].add_child(panels[to_canvas][to_panel])
 	canvass[to_canvas].move_child(panels[to_canvas][to_panel], 0)

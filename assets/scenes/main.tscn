@@ -537,7 +537,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Settings" type="Panel" parent="UiManager/Menu"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -616,6 +615,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -726,7 +726,6 @@ theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
 [node name="ProjectsContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -770,6 +769,45 @@ layout_mode = 2
 text = "Clear Project Data"
 
 [node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
+
+[node name="ProjectTemplatesBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Project Templates"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Add New Path"
+text = "Add Path"
+icon = ExtResource("18_wxjwn")
+icon_alignment = 2
+
+[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PathContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
@@ -1072,6 +1110,7 @@ visible = false
 [connection signal="item_selected" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/DefaultProjectView" to="UiManager/Menu/Settings" method="value_received" binds= ["default_view"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/QuitEdit" to="UiManager/Menu/Settings" method="button_toggled" binds= ["quit_edit"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ClearDataButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["clear_data"]]
+[connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox/BrowseFolderButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["browse_template_project"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox/BrowseFolderButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["browse_project"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/SkipIntro" to="UiManager/Menu/Settings" method="button_toggled" binds= ["intro_video"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons/StartAdminButton" to="UiManager/Menu/Settings" method="button_toggled" binds= ["run_admin"]]

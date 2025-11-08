@@ -14,6 +14,7 @@ func init_settings() -> void:
 	ConfigManager.set_config_data("settings", "quit_edit", false)
 	ConfigManager.set_config_data("settings", "default_view", 0)
 	ConfigManager.set_config_data("settings", "project_folders", [])
+	ConfigManager.set_config_data("settings", "template_projects", [])
 
 
 func open_folder(path: String):

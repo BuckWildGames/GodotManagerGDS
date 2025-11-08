@@ -2,7 +2,7 @@ extends Node
 
 const DEBUGGER: bool = false
 
-func create_project_folder(title: String, description: String, path: String, engine: String, renderer: String, create_folder: bool, create_git: bool, template: int = -1) -> bool:
+func create_project_folder(title: String, description: String, path: String, engine: String, renderer: String, create_folder: bool, create_git: bool, template: String) -> bool:
 	if ProjectManager._check_duplicate(title):
 		_debugger("Project already exists: " + title)
 		return false
@@ -14,7 +14,7 @@ func create_project_folder(title: String, description: String, path: String, eng
 	_set_project_template(template, path)
 	var project_file_path = path + "/project.godot"
 	if "3." in engine:
-		var complete = _create_godot_3x_project_file(project_file_path, title, description, renderer)
+		var complete = _create_godot_3x_project_file(project_file_path, title, description, renderer, template)
 		if not complete:
 			_debugger("Failed to create project file", true)
 			return false
@@ -29,7 +29,7 @@ func create_project_folder(title: String, description: String, path: String, eng
 			_debugger("Failed to copy default_env.tres", true)
 			return false
 	elif "4." in engine:
-		var complete = _create_godot_4x_project_file(project_file_path, title, description, engine, renderer)
+		var complete = _create_godot_4x_project_file(project_file_path, title, description, engine, renderer, template)
 		if not complete:
 			_debugger("Failed to create project file", true)
 			return false
@@ -49,16 +49,21 @@ func create_project_folder(title: String, description: String, path: String, eng
 	_debugger("Project successfully created at:" + path)
 	return true
 
-# Not finished!!!!!!!!!!!!!!
-func _set_project_template(template: int, path: String) -> void:
-	if template == -1:
+
+func _set_project_template(template: String, path: String) -> void:
+	if template.is_empty() or template == "None":
 		return
-	var folders = []
+	var folders = FileManager.get_folders(template)
 	for folder in folders:
-		DirAccess.make_dir_recursive_absolute(path + "/" + folder)
+		if not folder == ".godot":
+			FileManager.copy_folder(template, path, folder)
+	_debugger("Project template used:" + template)
 
 
-func _create_godot_3x_project_file(project_file_path: String, title: String, description: String, renderer: String) -> bool:
+func _create_godot_3x_project_file(project_file_path: String, title: String, description: String, renderer: String, template: String) -> bool:
+	var extra_data = {}
+	if not template.is_empty() and template != "None":
+		extra_data = _get_project_data_extras(template)
 	var config_version = 4
 	var config = ConfigFile.new()
 	config.set_value("", "config_version", config_version)
@@ -67,6 +72,10 @@ func _create_godot_3x_project_file(project_file_path: String, title: String, des
 	config.set_value("application", "config/icon", "res://icon.png")
 	if "GLES2" in renderer:
 		config.set_value("rendering", "quality/driver/driver_name", "GLES2")
+	if not extra_data.is_empty():
+		for section in extra_data:
+			for key in extra_data[section]:
+				config.set_value(section, key, extra_data[section][key])
 	var error = config.save(project_file_path)
 	if error != OK:
 		_debugger("Failed to save project file", true)
@@ -82,7 +91,13 @@ func _create_godot_3x_project_file(project_file_path: String, title: String, des
 	return true
 
 
-func _create_godot_4x_project_file(project_file_path: String, title: String, description: String, engine: String, renderer: String) -> bool:
+func _create_godot_4x_project_file(project_file_path: String, title: String, description: String, engine: String, renderer: String, template: String) -> bool:
+	var extra_data = {}
+	if not template.is_empty() and template != "None":
+		extra_data = _get_project_data_extras(template)
+	var engine_array = engine.split(".")
+	if engine_array.size() > 2:
+		engine = engine_array[0] +"." +engine_array[1]
 	var config_version = 5
 	var config = ConfigFile.new()
 	config.set_value("", "config_version", config_version)
@@ -95,6 +110,10 @@ func _create_godot_4x_project_file(project_file_path: String, title: String, des
 	if "Compatibility" in renderer:
 		config.set_value("rendering", "renderer/rendering_method", "gl_compatibility")
 		config.set_value("rendering", "renderer/rendering_method.mobile", "gl_compatibility")
+	if not extra_data.is_empty():
+		for section in extra_data:
+			for key in extra_data[section]:
+				config.set_value(section, key, extra_data[section][key])
 	var error = config.save(project_file_path)
 	if error != OK:
 		_debugger("Failed to save project file", true)
@@ -161,6 +180,22 @@ func _get_project_data(project_path: String) -> Dictionary:
 			"engine_version": version,
 			"icon": icon_texture
 		}
+	return data
+
+
+func _get_project_data_extras(project_path: String) -> Dictionary:
+	var data = {}
+	var config = ConfigFile.new()
+	if config.load(project_path + "/project.godot") == OK:
+		var sections = config.get_sections()
+		for section in sections:
+			if section == "application":
+				continue
+			if not data.has(section):
+					data[section] = {}
+			var keys = config.get_section_keys(section)
+			for key in keys:
+				data[section][key] = config.get_value(section, key)
 	return data
 
 

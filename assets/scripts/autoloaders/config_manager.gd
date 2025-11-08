@@ -55,7 +55,6 @@ func get_config_category(category: String) -> Dictionary:
 	return value
 
 
-# Clear config data (cat must be 0-2) or will fail
 func clear_config_category(category: String) -> bool:
 	var complete = false
 	category = category.capitalize()
@@ -85,6 +84,10 @@ func update_runtime(delta: float) -> float:
 		runtime += 1.0 * delta
 		return runtime
 	return -1.0
+
+
+func force_save() -> void:
+	_save_data()
 
 
 func _process(delta: float) -> void:

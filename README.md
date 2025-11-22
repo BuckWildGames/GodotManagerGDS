@@ -3,9 +3,9 @@
 
 A tool to manage all things Godot
 
-Released for Windows
+Released for Windows and Linux
 
-Source should work with Mac and Linux if exported for platform. *Not Tested
+Might work on Mac, not sure
 
 Made in Godot 4.5
 

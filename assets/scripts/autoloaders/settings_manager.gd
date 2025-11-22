@@ -10,6 +10,8 @@ func init_settings() -> void:
 	ConfigManager.set_config_data("settings", "latest_version", false)
 	ConfigManager.set_config_data("settings", "run_console", false)
 	ConfigManager.set_config_data("settings", "intro_video", false)
+	ConfigManager.set_config_data("settings", "hide_minimize", false)
+	ConfigManager.set_config_data("settings", "hide_maximize", false)
 	ConfigManager.set_config_data("settings", "default_engine", "")
 	ConfigManager.set_config_data("settings", "quit_edit", false)
 	ConfigManager.set_config_data("settings", "default_view", 0)

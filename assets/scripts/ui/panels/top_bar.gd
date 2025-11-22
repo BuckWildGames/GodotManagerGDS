@@ -7,6 +7,8 @@ extends UIState
 @onready var asset_lib_button: Button = $Bar/MarginContainer/MainButtons/AssetLibButton
 @onready var settings_button: Button = $Bar/MarginContainer/MainButtons/SettingsButton
 @onready var resize_button: Button = $ResizeButton
+@onready var hide_button: Button = $Bar/MarginContainer/WindowButtons/HideButton
+@onready var min_max_button: Button = $Bar/MarginContainer/WindowButtons/MinMaxButton
 @onready var delay_timer: Timer = $DelayTimer
 
 var is_pressed: bool = false
@@ -23,6 +25,7 @@ func enter(previous : String):
 	version_label.set_text(ConfigManager.get_version())
 	call_deferred("transition" , "projects")
 	_reset_buttons(1)
+	_set_min_max()
 
 
 func button_pressed(button: String) -> void:
@@ -61,6 +64,7 @@ func button_toggled(_toggled_on: bool, button: String) -> void:
 
 
 func _reset_buttons(ignore: int) -> void:
+	_set_min_max()
 	projects_button.set_pressed_no_signal(ignore == 1)
 	engines_button.set_pressed_no_signal(ignore == 2)
 	asset_lib_button.set_pressed_no_signal(ignore == 3)
@@ -91,6 +95,15 @@ func _input(event: InputEvent) -> void:
 			var mouse_position = DisplayServer.mouse_get_position()
 			var new_size = start_window_size + (Vector2(mouse_position.x, mouse_position.y)  - start_mouse_pos)
 			DisplayServer.window_set_size(new_size.abs())
+
+
+func _set_min_max() -> void:
+	var hide_minimize = ConfigManager.get_config_data("settings", "hide_minimize")
+	var hide_maximize = ConfigManager.get_config_data("settings", "hide_maximize")
+	if hide_minimize != null:
+		hide_button.set_visible(!hide_minimize)
+	if hide_maximize != null:
+		min_max_button.set_visible(!hide_maximize)
 
 
 func _on_delay_timer_timeout() -> void:

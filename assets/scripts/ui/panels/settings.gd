@@ -22,6 +22,8 @@ const PATH_BUTTON: PackedScene = preload("res://assets/scenes/components/setting
 @onready var select_folder_dialog: FileDialog = $SelectFolderDialog
 
 @onready var skip_intro_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/OtherContainer/SkipIntro
+@onready var hide_minimize_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button/HideMinimize
+@onready var hide_maximize_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button/HideMaximize
 @onready var start_admin_button: CheckBox = $PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons/StartAdminButton
 
 @onready var default_project_view_button: OptionButton = $PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox/DefaultProjectView
@@ -96,6 +98,10 @@ func button_toggled(toggled_on: bool, button: String) -> void:
 			ConfigManager.set_config_data("settings", "quit_edit", toggled_on)
 		"intro_video":
 			ConfigManager.set_config_data("settings", "intro_video", toggled_on)
+		"hide_minimize":
+			ConfigManager.set_config_data("settings", "hide_minimize", toggled_on)
+		"hide_maximize":
+			ConfigManager.set_config_data("settings", "hide_maximize", toggled_on)
 		"run_admin":
 			ConfigManager.set_config_data("settings", "run_admin", toggled_on)
 
@@ -210,6 +216,10 @@ func _load_settings(startup: bool = false) -> void:
 		run_console_button.set_pressed_no_signal(settings["run_console"])
 	if settings.has("intro_video"):
 		skip_intro_button.set_pressed_no_signal(settings["intro_video"])
+	if settings.has("hide_minimize"):
+		hide_minimize_button.set_pressed_no_signal(settings["hide_minimize"])
+	if settings.has("hide_maximize"):
+		hide_maximize_button.set_pressed_no_signal(settings["hide_maximize"])
 	if settings.has("quit_edit"):
 		quit_edit_button.set_pressed_no_signal(settings["quit_edit"])
 	if settings.has("default_engine"):

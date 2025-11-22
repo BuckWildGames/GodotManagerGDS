@@ -13,7 +13,7 @@ func _on_dir_selected(dir: String) -> void:
 
 
 func _on_confirmed() -> void:
-	#ProjectManager.import_project(path)
+	EngineManager.import_installed_version(path)
 	get_parent().hide()
 	hide()
 

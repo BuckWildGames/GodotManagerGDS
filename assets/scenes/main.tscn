@@ -148,6 +148,7 @@ shortcut_feedback = false
 shortcut_in_tooltip = false
 
 [node name="Projects" type="Panel" parent="UiManager/Menu"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -318,20 +319,20 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 layout_mode = 2
 alignment = 1
 
+[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Scan For Installed Engine Versions"
+icon = ExtResource("8_g0prn")
+icon_alignment = 1
+expand_icon = true
+
 [node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
 visible = false
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Import Engine Version"
 icon = ExtResource("7_j1i18")
-icon_alignment = 1
-expand_icon = true
-
-[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
-custom_minimum_size = Vector2(24, 0)
-layout_mode = 2
-tooltip_text = "Scan For Installed Engine Versions"
-icon = ExtResource("8_g0prn")
 icon_alignment = 1
 expand_icon = true
 
@@ -457,7 +458,8 @@ grow_vertical = 2
 
 [node name="ImportEngineDialog" type="FileDialog" parent="UiManager/Menu/Engines/DialogContainer"]
 auto_translate_mode = 1
-title = "Import A Project"
+oversampling_override = 1.0
+title = "Import A Engine"
 initial_position = 1
 size = Vector2i(640, 480)
 transient_to_focused = true
@@ -853,20 +855,47 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 1
-text = "Hmm, So Empty..."
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="SkipIntro" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 tooltip_text = "Set Skip Intro Video"
 text = "Skip Intro Video"
+
+[node name="TopBarBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox"]
+layout_mode = 2
+text = "Top Bar Buttons"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="HideMinimize" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+tooltip_text = "Hide Minimize Button"
+text = "Hide Minimize Button"
+
+[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button"]
+layout_mode = 2
+theme_override_constants/separation = 64
+theme_override_styles/separator = SubResource("StyleBoxEmpty_3jv2q")
+
+[node name="HideMaximize" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+tooltip_text = "Hide Maximize Button"
+text = "Hide Maximize Button"
 
 [node name="AdminBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
 layout_mode = 2
@@ -889,7 +918,6 @@ alignment = 1
 [node name="StartAdminButton" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-size_flags_horizontal = 8
 tooltip_text = "Set Start With Admin Permissions"
 text = "Start As Admin"
 
@@ -903,6 +931,13 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 tooltip_text = "Relaunch With Admin Permissions"
 text = "Relaunch As Admin"
+
+[node name="LinkButton" type="LinkButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "GoTo GitHub Page"
+text = "GitHub Page"
+uri = "https://github.com/BuckWildGames/GodotManagerGDS"
 
 [node name="SelectFolderDialog" type="FileDialog" parent="UiManager/Menu/Settings"]
 auto_translate_mode = 1
@@ -1088,8 +1123,8 @@ visible = false
 [connection signal="canceled" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_canceled"]
 [connection signal="confirmed" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_confirmed"]
 [connection signal="dir_selected" from="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" to="UiManager/Menu/Projects/DialogContainer/ImportProjectDialog" method="_on_dir_selected"]
-[connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ImportEngineButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["import"]]
 [connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ScanEnginesButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["scan"]]
+[connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/ImportEngineButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["import"]]
 [connection signal="pressed" from="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons/RefreshAvailableButton" to="UiManager/Menu/Engines" method="button_pressed" binds= ["refresh"]]
 [connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed" method="_on_hide_button_pressed"]
 [connection signal="pressed" from="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox/HideButton" to="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled" method="_on_hide_button_pressed"]
@@ -1113,6 +1148,8 @@ visible = false
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox/BrowseFolderButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["browse_template_project"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox/BrowseFolderButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["browse_project"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/SkipIntro" to="UiManager/Menu/Settings" method="button_toggled" binds= ["intro_video"]]
+[connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button/HideMinimize" to="UiManager/Menu/Settings" method="button_toggled" binds= ["hide_minimize"]]
+[connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button/HideMaximize" to="UiManager/Menu/Settings" method="button_toggled" binds= ["hide_maximize"]]
 [connection signal="toggled" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons/StartAdminButton" to="UiManager/Menu/Settings" method="button_toggled" binds= ["run_admin"]]
 [connection signal="pressed" from="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons/RelaunchButton" to="UiManager/Menu/Settings" method="button_pressed" binds= ["run_admin"]]
 [connection signal="dir_selected" from="UiManager/Menu/Settings/SelectFolderDialog" to="UiManager/Menu/Settings" method="value_received" binds= ["path_selected"]]

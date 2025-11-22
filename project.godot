@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="GodotManagerGDS"
-config/version="0.5.0"
+config/version="0.5.3"
 run/main_scene="res://assets/scenes/main.tscn"
 config/use_custom_user_dir=true
+config/custom_user_dir_name="GodotManagerGDS"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 

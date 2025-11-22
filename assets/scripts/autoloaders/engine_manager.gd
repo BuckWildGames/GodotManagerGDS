@@ -62,7 +62,7 @@ func check_installed_versions() -> void:
 		var is_engine = false
 		var files = FileManager.get_files(install_dir + "/" + version)
 		for file in files:
-			if "Godot" in file and ".exe" in file:
+			if "Godot" in file and _get_file_extension() in file:
 				is_engine = true
 		if is_engine:
 			installed_versions.append(version)
@@ -72,9 +72,10 @@ func import_installed_version(path: String) -> void:
 	var is_engine = false
 	var version_name = ""
 	var files = FileManager.get_files(path)
+	var file_extension = _get_file_extension()
 	for file in files:
-		if "Godot" in file and ".exe" in file:
-			version_name = file.replace(".exe", "")
+		if "Godot" in file and file_extension in file:
+			version_name = file.replace(file_extension, "")
 			version_name = version_name.replace("_console", "")
 			is_engine = true
 	if is_engine:
@@ -351,18 +352,22 @@ func _unzip_file(zip_path: String, extract_to: String, version_name: String) -> 
 	installed_versions_changed.emit()
 
 
+func _get_file_extension() -> String:
+	var file_extension: String
+	if OS.has_feature("windows"):
+		file_extension = ".exe"
+	elif OS.has_feature("macos"):
+		file_extension = ".app/Contents/MacOS/Godot"
+	elif OS.has_feature("linux"):
+		file_extension = ".x86_64"  # Adjust for 32-bit if necessary
+	return file_extension
+
 
 func _get_runnable_path(index: int) -> String:
 	var version_name = available_versions[index]["name"]
 	var extracted_path = install_dir + "/" + version_name
 	var godot_exe = extracted_path + "/"
-	var target_file
-	if OS.has_feature("windows"):
-		target_file = ".exe"
-	elif OS.has_feature("macos"):
-		target_file = ".app/Contents/MacOS/Godot"
-	elif OS.has_feature("linux"):
-		target_file = ".x86_64"  # Adjust for 32-bit if necessary
+	var target_file = _get_file_extension()
 	var files = FileManager.get_files(extracted_path)
 	if files == null:
 		_debugger("Failed to get files in: " + extracted_path, true)

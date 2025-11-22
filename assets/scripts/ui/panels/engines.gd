@@ -24,8 +24,9 @@ func enter(previous : String):
 func button_pressed(button: String) -> void:
 	match button:
 		"import":
-			pass
+			import_engine_dialog.setup()
 		"scan":
+			EngineManager.check_installed_versions()
 			EngineManager.get_installed_versions()
 			NotificationManager.notify("Scanning For Installed Versions", 2.0, true)
 		"refresh":

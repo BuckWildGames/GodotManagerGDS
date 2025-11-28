@@ -169,6 +169,11 @@ func run_project_in_editor(index: int, project_path: String) -> bool:
 		_debugger("Invalid version index for running editor: " + str(index), true)
 		return false
 	var version_name = available_versions[index]["name"]
+	for version in installed_versions:
+		if version_name in version:
+			index = installed_versions.find(version)
+			version_name = version
+			break
 	if not installed_versions.has(version_name):
 		_debugger("Version %s is not installed" % [version_name])
 		return false

@@ -142,6 +142,8 @@ func _get_last_commit_dict() -> Dictionary:
 
 
 func _is_newer() -> bool:
+	if last_commit == "None":
+		return true
 	var last_version = _get_last_commit_dict()
 	if version.major > last_version.major:
 		return true

@@ -169,9 +169,10 @@ func run_project_in_editor(index: int, project_path: String) -> bool:
 		_debugger("Invalid version index for running editor: " + str(index), true)
 		return false
 	var version_name = available_versions[index]["name"]
+	#var installed_index = index
 	for version in installed_versions:
 		if version_name in version:
-			index = installed_versions.find(version)
+			#installed_index = installed_versions.find(version)
 			version_name = version
 			break
 	if not installed_versions.has(version_name):
@@ -269,9 +270,11 @@ func _on_http_request_completed(_result, response_code, _headers, body) -> void:
 
 
 func _check_current_version(version: String) -> void:
+	for installed in installed_versions:
+		if version == installed:
+			current_version = version
+			ConfigManager.set_config_data("other", "current_version", current_version)
 	if version != current_version:
-		current_version = version
-		ConfigManager.set_config_data("other", "current_version", current_version)
 		NotificationManager.show_prompt("New Godot Version Available", ["Ok"], self, "")
 
 

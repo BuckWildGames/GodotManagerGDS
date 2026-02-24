@@ -169,16 +169,17 @@ func run_project_in_editor(index: int, project_path: String) -> bool:
 		_debugger("Invalid version index for running editor: " + str(index), true)
 		return false
 	var version_name = available_versions[index]["name"]
-	#var installed_index = index
-	for version in installed_versions:
-		if version_name in version:
-			#installed_index = installed_versions.find(version)
-			version_name = version
-			break
+	var installed_index = index
+	if not installed_versions.has(version_name):
+		for version in installed_versions:
+			if version_name in version:
+				installed_index = installed_versions.find(version)
+				version_name = version
+				break
 	if not installed_versions.has(version_name):
 		_debugger("Version %s is not installed" % [version_name])
 		return false
-	var godot_exe = _get_runnable_path(index)
+	var godot_exe = _get_runnable_path(installed_index)
 	if FileAccess.file_exists(godot_exe):
 		OS.create_process(godot_exe, ["-e", "--path", project_path], use_console)
 		_debugger("Running editor in Godot version: " + version_name)

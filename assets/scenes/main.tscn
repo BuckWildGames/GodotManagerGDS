@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://bh5qukhbtj3l8"]
+[gd_scene format=3 uid="uid://bh5qukhbtj3l8"]
 
 [ext_resource type="Script" uid="uid://1fpwqklb04fx" path="res://assets/scripts/ui/panels/intro.gd" id="2_dk2vg"]
 [ext_resource type="Script" uid="uid://d2pus8drk5ppb" path="res://assets/scripts/ui/main/ui_manager.gd" id="2_tnjal"]
@@ -96,15 +96,15 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" unique_id=3969212]
 
-[node name="UiManager" type="Node" parent="." node_paths=PackedStringArray("canvas_layers")]
+[node name="UiManager" type="Node" parent="." unique_id=31867279 node_paths=PackedStringArray("canvas_layers")]
 script = ExtResource("2_tnjal")
 canvas_layers = [NodePath("Menu"), NodePath("Notification")]
 
-[node name="Menu" type="CanvasLayer" parent="UiManager"]
+[node name="Menu" type="CanvasLayer" parent="UiManager" unique_id=1507008555]
 
-[node name="Intro" type="Panel" parent="UiManager/Menu"]
+[node name="Intro" type="Panel" parent="UiManager/Menu" unique_id=336276919]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,17 +115,17 @@ script = ExtResource("2_dk2vg")
 start = true
 can_go_back = false
 
-[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Intro"]
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Intro" unique_id=1543003617]
 layout_mode = 0
 offset_right = 1940.0
 offset_bottom = 1108.0
 scale = Vector2(0.659, 0.649)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UiManager/Menu/Intro/MarginContainer"]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UiManager/Menu/Intro/MarginContainer" unique_id=850729466]
 layout_mode = 2
 stream = ExtResource("4_w3iyo")
 
-[node name="SkipButton" type="Button" parent="UiManager/Menu/Intro"]
+[node name="SkipButton" type="Button" parent="UiManager/Menu/Intro" unique_id=1840031311]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,7 +147,7 @@ shortcut = SubResource("Shortcut_gi4iy")
 shortcut_feedback = false
 shortcut_in_tooltip = false
 
-[node name="Projects" type="Panel" parent="UiManager/Menu"]
+[node name="Projects" type="Panel" parent="UiManager/Menu" unique_id=1779936064]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -157,7 +157,7 @@ grow_vertical = 2
 script = ExtResource("4_iuch6")
 can_go_back = false
 
-[node name="ProjectButtonPanel" type="PanelContainer" parent="UiManager/Menu/Projects"]
+[node name="ProjectButtonPanel" type="PanelContainer" parent="UiManager/Menu/Projects" unique_id=328083620]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -169,11 +169,11 @@ offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="ProjectButtons" type="HBoxContainer" parent="UiManager/Menu/Projects/ProjectButtonPanel"]
+[node name="ProjectButtons" type="HBoxContainer" parent="UiManager/Menu/Projects/ProjectButtonPanel" unique_id=1364673771]
 layout_mode = 2
 alignment = 1
 
-[node name="NewProjectButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons"]
+[node name="NewProjectButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons" unique_id=76590286]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "New Project"
@@ -181,7 +181,7 @@ icon = ExtResource("6_yfqsu")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ImportProjectButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons"]
+[node name="ImportProjectButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons" unique_id=1119511376]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Import Project"
@@ -189,7 +189,7 @@ icon = ExtResource("7_j1i18")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ScanProjectsButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons"]
+[node name="ScanProjectsButton" type="Button" parent="UiManager/Menu/Projects/ProjectButtonPanel/ProjectButtons" unique_id=189249277]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Scan For Projects"
@@ -197,7 +197,7 @@ icon = ExtResource("8_g0prn")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ViewButtonPanel" type="PanelContainer" parent="UiManager/Menu/Projects"]
+[node name="ViewButtonPanel" type="PanelContainer" parent="UiManager/Menu/Projects" unique_id=125004388]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -209,11 +209,11 @@ offset_bottom = 112.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="ViewButtons" type="HBoxContainer" parent="UiManager/Menu/Projects/ViewButtonPanel"]
+[node name="ViewButtons" type="HBoxContainer" parent="UiManager/Menu/Projects/ViewButtonPanel" unique_id=235261703]
 layout_mode = 2
 alignment = 1
 
-[node name="ListViewButton" type="Button" parent="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons"]
+[node name="ListViewButton" type="Button" parent="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons" unique_id=1863280948]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "List View"
@@ -223,7 +223,7 @@ icon = ExtResource("10_gl32o")
 icon_alignment = 1
 expand_icon = true
 
-[node name="GroupViewButton" type="Button" parent="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons"]
+[node name="GroupViewButton" type="Button" parent="UiManager/Menu/Projects/ViewButtonPanel/ViewButtons" unique_id=609018573]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Group View"
@@ -232,7 +232,7 @@ icon = ExtResource("11_bgy32")
 icon_alignment = 1
 expand_icon = true
 
-[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Projects"]
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Projects" unique_id=383942915]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -241,22 +241,22 @@ offset_top = 128.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Projects/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Projects/PanelContainer" unique_id=1455622955]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer" unique_id=1267925268]
 layout_mode = 2
 
-[node name="ProjectContainer" type="VBoxContainer" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="ProjectContainer" type="VBoxContainer" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer/ScrollContainer" unique_id=131726747]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer"]
+[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Projects/PanelContainer/MarginContainer" unique_id=1681524678]
 visible = false
 layout_mode = 2
 size_flags_vertical = 1
@@ -264,7 +264,7 @@ text = "Hmm, So Empty..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Projects"]
+[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Projects" unique_id=809242799]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -273,11 +273,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CreateNewProject" parent="UiManager/Menu/Projects/DialogContainer" instance=ExtResource("11_fjxcw")]
+[node name="CreateNewProject" parent="UiManager/Menu/Projects/DialogContainer" unique_id=986862708 instance=ExtResource("11_fjxcw")]
 visible = false
 layout_mode = 2
 
-[node name="ImportProjectDialog" type="FileDialog" parent="UiManager/Menu/Projects/DialogContainer"]
+[node name="ImportProjectDialog" type="FileDialog" parent="UiManager/Menu/Projects/DialogContainer" unique_id=985326970]
 oversampling_override = 1.0
 title = "Import A Project"
 initial_position = 1
@@ -293,7 +293,7 @@ file_mode = 2
 access = 2
 script = ExtResource("12_scykc")
 
-[node name="Engines" type="Panel" parent="UiManager/Menu"]
+[node name="Engines" type="Panel" parent="UiManager/Menu" unique_id=984697776]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -303,7 +303,7 @@ grow_vertical = 2
 script = ExtResource("12_848c3")
 can_go_back = false
 
-[node name="EngineButtonPanel" type="PanelContainer" parent="UiManager/Menu/Engines"]
+[node name="EngineButtonPanel" type="PanelContainer" parent="UiManager/Menu/Engines" unique_id=1149216626]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -315,11 +315,11 @@ offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="EngineButtons" type="HBoxContainer" parent="UiManager/Menu/Engines/EngineButtonPanel"]
+[node name="EngineButtons" type="HBoxContainer" parent="UiManager/Menu/Engines/EngineButtonPanel" unique_id=315276047]
 layout_mode = 2
 alignment = 1
 
-[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+[node name="ScanEnginesButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons" unique_id=653590713]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Scan For Installed Engine Versions"
@@ -327,7 +327,7 @@ icon = ExtResource("8_g0prn")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+[node name="ImportEngineButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons" unique_id=1411754622]
 visible = false
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
@@ -336,7 +336,7 @@ icon = ExtResource("7_j1i18")
 icon_alignment = 1
 expand_icon = true
 
-[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons"]
+[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Engines/EngineButtonPanel/EngineButtons" unique_id=1570843314]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Fetch Available Versions From Web"
@@ -344,7 +344,7 @@ icon = ExtResource("13_lukhs")
 icon_alignment = 1
 expand_icon = true
 
-[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Engines"]
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Engines" unique_id=1823413467]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -353,93 +353,93 @@ offset_top = 128.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer" unique_id=2095328235]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer" unique_id=582463223]
 layout_mode = 2
 
-[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer" unique_id=1299516092]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="InstalledContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="InstalledContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=1661207565]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Installed" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer"]
+[node name="Installed" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer" unique_id=546380171]
 layout_mode = 2
 script = ExtResource("14_ko5hj")
 
-[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed"]
+[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed" unique_id=1318696964]
 layout_mode = 2
 text = "Installed Versions"
 
-[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed"]
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed" unique_id=1905974344]
 layout_mode = 2
 alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox" unique_id=1575040216]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox"]
+[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed/HBox" unique_id=764342427]
 layout_mode = 2
 tooltip_text = "Hide"
 toggle_mode = true
 icon = ExtResource("15_6n8gi")
 icon_alignment = 1
 
-[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed"]
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstalledContainer/Installed" unique_id=675537568]
 layout_mode = 2
 
-[node name="NotInstalledContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="NotInstalledContainer" type="MarginContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=992184776]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="NotInstalled" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer"]
+[node name="NotInstalled" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer" unique_id=1302713180]
 layout_mode = 2
 script = ExtResource("14_ko5hj")
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled" unique_id=1426349765]
 layout_mode = 2
 theme_override_constants/separation = 24
 theme_override_styles/separator = SubResource("StyleBoxEmpty_w4jdi")
 
-[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
+[node name="Label" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled" unique_id=1736781535]
 layout_mode = 2
 text = "Available Versions"
 
-[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
+[node name="HBox" type="HBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled" unique_id=611907852]
 layout_mode = 2
 alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox" unique_id=305545506]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox"]
+[node name="HideButton" type="Button" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled/HBox" unique_id=946043080]
 layout_mode = 2
 tooltip_text = "Hide"
 toggle_mode = true
 icon = ExtResource("15_6n8gi")
 icon_alignment = 1
 
-[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled"]
+[node name="GroupContainer" type="VBoxContainer" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/NotInstalledContainer/NotInstalled" unique_id=71159700]
 layout_mode = 2
 
-[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer"]
+[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Engines/PanelContainer/MarginContainer" unique_id=307428540]
 visible = false
 layout_mode = 2
 size_flags_vertical = 1
@@ -447,7 +447,7 @@ text = "Hmm, So Empty..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Engines"]
+[node name="DialogContainer" type="PanelContainer" parent="UiManager/Menu/Engines" unique_id=325349155]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -456,7 +456,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ImportEngineDialog" type="FileDialog" parent="UiManager/Menu/Engines/DialogContainer"]
+[node name="ImportEngineDialog" type="FileDialog" parent="UiManager/Menu/Engines/DialogContainer" unique_id=829980295]
 auto_translate_mode = 1
 oversampling_override = 1.0
 title = "Import A Engine"
@@ -473,7 +473,7 @@ file_mode = 2
 access = 2
 script = ExtResource("13_uh2lq")
 
-[node name="Assets" type="Panel" parent="UiManager/Menu"]
+[node name="Assets" type="Panel" parent="UiManager/Menu" unique_id=2094452453]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -483,7 +483,7 @@ grow_vertical = 2
 script = ExtResource("17_rk0tg")
 can_go_back = false
 
-[node name="AssetButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets"]
+[node name="AssetButtonPanel" type="PanelContainer" parent="UiManager/Menu/Assets" unique_id=508899323]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -495,11 +495,11 @@ offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="AssetButtons" type="HBoxContainer" parent="UiManager/Menu/Assets/AssetButtonPanel"]
+[node name="AssetButtons" type="HBoxContainer" parent="UiManager/Menu/Assets/AssetButtonPanel" unique_id=1016304808]
 layout_mode = 2
 alignment = 1
 
-[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Assets/AssetButtonPanel/AssetButtons"]
+[node name="RefreshAvailableButton" type="Button" parent="UiManager/Menu/Assets/AssetButtonPanel/AssetButtons" unique_id=348201728]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 tooltip_text = "Fetch Available Assets From Web"
@@ -507,7 +507,7 @@ icon = ExtResource("13_lukhs")
 icon_alignment = 1
 expand_icon = true
 
-[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Assets"]
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Assets" unique_id=591151523]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -516,29 +516,29 @@ offset_top = 128.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Assets/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Assets/PanelContainer" unique_id=709845265]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer" unique_id=1290757036]
 layout_mode = 2
 
-[node name="AssetContainer" type="VBoxContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="AssetContainer" type="VBoxContainer" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer/ScrollContainer" unique_id=169176350]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer"]
+[node name="EmptyLabel" type="Label" parent="UiManager/Menu/Assets/PanelContainer/MarginContainer" unique_id=504746869]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Hmm, So Empty..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Settings" type="Panel" parent="UiManager/Menu"]
+[node name="Settings" type="Panel" parent="UiManager/Menu" unique_id=428554011]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -547,7 +547,7 @@ grow_vertical = 2
 script = ExtResource("17_k1cmv")
 can_go_back = false
 
-[node name="SettingsButtonPanel" type="PanelContainer" parent="UiManager/Menu/Settings"]
+[node name="SettingsButtonPanel" type="PanelContainer" parent="UiManager/Menu/Settings" unique_id=1794712278]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -559,11 +559,11 @@ offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3xcak")
 
-[node name="SettingsButtons" type="HBoxContainer" parent="UiManager/Menu/Settings/SettingsButtonPanel"]
+[node name="SettingsButtons" type="HBoxContainer" parent="UiManager/Menu/Settings/SettingsButtonPanel" unique_id=1038278253]
 layout_mode = 2
 alignment = 1
 
-[node name="EngineButton" type="Button" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons"]
+[node name="EngineButton" type="Button" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons" unique_id=639837955]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 tooltip_text = "Engine Settings"
@@ -573,10 +573,10 @@ text = "Engine"
 icon_alignment = 1
 expand_icon = true
 
-[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons"]
+[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons" unique_id=1694845498]
 layout_mode = 2
 
-[node name="ProjectsButton" type="Button" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons"]
+[node name="ProjectsButton" type="Button" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons" unique_id=903390194]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 tooltip_text = "Project Settings"
@@ -585,10 +585,10 @@ text = "Project"
 icon_alignment = 1
 expand_icon = true
 
-[node name="VSeparator2" type="VSeparator" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons"]
+[node name="VSeparator2" type="VSeparator" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons" unique_id=1630964238]
 layout_mode = 2
 
-[node name="OtherButton" type="Button" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons"]
+[node name="OtherButton" type="Button" parent="UiManager/Menu/Settings/SettingsButtonPanel/SettingsButtons" unique_id=769993595]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 tooltip_text = "Other Settings"
@@ -597,7 +597,7 @@ text = "Other"
 icon_alignment = 1
 expand_icon = true
 
-[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Settings"]
+[node name="PanelContainer" type="PanelContainer" parent="UiManager/Menu/Settings" unique_id=894910034]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -606,28 +606,28 @@ offset_top = 128.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Settings/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/Settings/PanelContainer" unique_id=2001939305]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer" unique_id=32499979]
 layout_mode = 2
 
-[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="EngineContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer" unique_id=1513466807]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="InstallPathInputBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="InstallPathInputBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=1778442922]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox" unique_id=1523185251]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -635,17 +635,17 @@ text = "Install Location: "
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="InstallPath" type="LineEdit" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox"]
+[node name="InstallPath" type="LineEdit" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox" unique_id=130033365]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Install Location"
 context_menu_enabled = false
-virtual_keyboard_enabled = false
 drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
 caret_blink = true
 
-[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox"]
+[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/InstallPathInputBox" unique_id=310382787]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -653,15 +653,15 @@ tooltip_text = "Browse Folders"
 icon = ExtResource("18_wxjwn")
 icon_alignment = 1
 
-[node name="OpenInstallButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="OpenInstallButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=586698520]
 layout_mode = 2
 text = "Open Install Location"
 
-[node name="FetchEngineBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="FetchEngineBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=1326194405]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox" unique_id=1861027293]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -669,7 +669,7 @@ text = "Auto Fetch Versions: "
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="FetchTimes" type="OptionButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox"]
+[node name="FetchTimes" type="OptionButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox" unique_id=1517824302]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -685,23 +685,23 @@ popup/item_2/id = 2
 popup/item_3/text = "Monthly"
 popup/item_3/id = 3
 
-[node name="LatestVersion" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox"]
+[node name="LatestVersion" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/FetchEngineBox" unique_id=12364831]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 tooltip_text = "Set Only Fetch Latest Version"
 text = "Only Fetch Latest Version"
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=352476878]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
-[node name="DefaultEngineInputBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="DefaultEngineInputBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=1483248990]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox" unique_id=1724560738]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -709,36 +709,36 @@ text = "Default Engine Version: "
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DefaultEngine" type="OptionButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox"]
+[node name="DefaultEngine" type="OptionButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox" unique_id=1342606010]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 tooltip_text = "Set Default Engine Version"
 
-[node name="RunConsole" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox"]
+[node name="RunConsole" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer/DefaultEngineInputBox" unique_id=990000713]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 tooltip_text = "Set Engine To Run Console"
 text = "Run Console"
 
-[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer"]
+[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/EngineContainer" unique_id=548557656]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
-[node name="ProjectsContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="ProjectsContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer" unique_id=203084113]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="DefaulViewBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+[node name="DefaulViewBox" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer" unique_id=835135503]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox" unique_id=1518412867]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -746,7 +746,7 @@ text = "Default Project View: "
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DefaultProjectView" type="OptionButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox"]
+[node name="DefaultProjectView" type="OptionButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox" unique_id=131321072]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -760,27 +760,27 @@ popup/item_1/id = 1
 popup/item_2/text = "Group"
 popup/item_2/id = 2
 
-[node name="QuitEdit" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox"]
+[node name="QuitEdit" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/DefaulViewBox" unique_id=876499079]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 tooltip_text = "Set Quit On Edit Project"
 text = "Quit On Edit Project"
 
-[node name="ClearDataButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+[node name="ClearDataButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer" unique_id=1144077356]
 layout_mode = 2
 text = "Clear Project Data"
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer" unique_id=1171438207]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
-[node name="ProjectTemplatesBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+[node name="ProjectTemplatesBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer" unique_id=1163455747]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox" unique_id=1528222343]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -788,12 +788,12 @@ text = "Project Templates"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox" unique_id=677840786]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox" unique_id=1883584540]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -802,24 +802,24 @@ text = "Add Path"
 icon = ExtResource("18_wxjwn")
 icon_alignment = 2
 
-[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox" unique_id=1520162460]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PathContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox"]
+[node name="PathContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectTemplatesBox" unique_id=195589483]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer" unique_id=222853426]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_jpqbd")
 
-[node name="ProjectLocationsBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer"]
+[node name="ProjectLocationsBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer" unique_id=644748152]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox" unique_id=1439893691]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -827,12 +827,12 @@ text = "Project Locations"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox" unique_id=2094744620]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox"]
+[node name="BrowseFolderButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox" unique_id=1214622123]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -841,105 +841,105 @@ text = "Add Path"
 icon = ExtResource("18_wxjwn")
 icon_alignment = 2
 
-[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox"]
+[node name="HSeparator2" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox" unique_id=1209422339]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PathContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox"]
+[node name="PathContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/ProjectsContainer/ProjectLocationsBox" unique_id=908639587]
 layout_mode = 2
 
-[node name="OtherContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="OtherContainer" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer" unique_id=1914784196]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="SkipIntro" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
+[node name="SkipIntro" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer" unique_id=613019227]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 tooltip_text = "Set Skip Intro Video"
 text = "Skip Intro Video"
 
-[node name="TopBarBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
+[node name="TopBarBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer" unique_id=300770733]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox" unique_id=400516760]
 layout_mode = 2
 text = "Top Bar Buttons"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox" unique_id=1772573899]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Button" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox"]
+[node name="Button" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox" unique_id=1846025320]
 layout_mode = 2
 alignment = 1
 
-[node name="HideMinimize" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button"]
+[node name="HideMinimize" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button" unique_id=1239649560]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 tooltip_text = "Hide Minimize Button"
 text = "Hide Minimize Button"
 
-[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button"]
+[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button" unique_id=1381303878]
 layout_mode = 2
 theme_override_constants/separation = 64
 theme_override_styles/separator = SubResource("StyleBoxEmpty_3jv2q")
 
-[node name="HideMaximize" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button"]
+[node name="HideMaximize" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/TopBarBox/Button" unique_id=1021749939]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 tooltip_text = "Hide Maximize Button"
 text = "Hide Maximize Button"
 
-[node name="AdminBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
+[node name="AdminBox" type="VBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer" unique_id=806783489]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox"]
+[node name="Label" type="Label" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox" unique_id=1347689222]
 layout_mode = 2
 text = "Admin Permissions"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox"]
+[node name="HSeparator" type="HSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox" unique_id=2058696665]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Buttons" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox"]
+[node name="Buttons" type="HBoxContainer" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox" unique_id=1513509661]
 layout_mode = 2
 alignment = 1
 
-[node name="StartAdminButton" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons"]
+[node name="StartAdminButton" type="CheckBox" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons" unique_id=671803761]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 tooltip_text = "Set Start With Admin Permissions"
 text = "Start As Admin"
 
-[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons"]
+[node name="VSeparator" type="VSeparator" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons" unique_id=1775750344]
 layout_mode = 2
 theme_override_constants/separation = 64
 theme_override_styles/separator = SubResource("StyleBoxEmpty_3jv2q")
 
-[node name="RelaunchButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons"]
+[node name="RelaunchButton" type="Button" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer/AdminBox/Buttons" unique_id=46137346]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 tooltip_text = "Relaunch With Admin Permissions"
 text = "Relaunch As Admin"
 
-[node name="LinkButton" type="LinkButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer"]
+[node name="LinkButton" type="LinkButton" parent="UiManager/Menu/Settings/PanelContainer/MarginContainer/ScrollContainer/OtherContainer" unique_id=1006054314]
 layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "GoTo GitHub Page"
 text = "GitHub Page"
 uri = "https://github.com/BuckWildGames/GodotManagerGDS"
 
-[node name="SelectFolderDialog" type="FileDialog" parent="UiManager/Menu/Settings"]
+[node name="SelectFolderDialog" type="FileDialog" parent="UiManager/Menu/Settings" unique_id=1936199331]
 auto_translate_mode = 1
 title = "Select A Folder"
 initial_position = 1
@@ -954,7 +954,7 @@ mode_overrides_title = false
 file_mode = 2
 access = 2
 
-[node name="TopBar" type="Panel" parent="UiManager/Menu"]
+[node name="TopBar" type="Panel" parent="UiManager/Menu" unique_id=811584092]
 custom_minimum_size = Vector2(0, 56)
 anchors_preset = 15
 anchor_right = 1.0
@@ -967,14 +967,14 @@ script = ExtResource("6_mf18v")
 can_go_back = false
 persistent = true
 
-[node name="Bar" type="Panel" parent="UiManager/Menu/TopBar"]
+[node name="Bar" type="Panel" parent="UiManager/Menu/TopBar" unique_id=1117244078]
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/TopBar/Bar"]
+[node name="MarginContainer" type="MarginContainer" parent="UiManager/Menu/TopBar/Bar" unique_id=1068262788]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -983,13 +983,13 @@ offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitleBox" type="HBoxContainer" parent="UiManager/Menu/TopBar/Bar/MarginContainer"]
+[node name="TitleBox" type="HBoxContainer" parent="UiManager/Menu/TopBar/Bar/MarginContainer" unique_id=1016480992]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 alignment = 1
 
-[node name="Title" type="Label" parent="UiManager/Menu/TopBar/Bar/MarginContainer/TitleBox"]
+[node name="Title" type="Label" parent="UiManager/Menu/TopBar/Bar/MarginContainer/TitleBox" unique_id=450382134]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("13_inmwf")
@@ -998,7 +998,7 @@ text = "Godot Manager"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title2" type="Label" parent="UiManager/Menu/TopBar/Bar/MarginContainer/TitleBox"]
+[node name="Title2" type="Label" parent="UiManager/Menu/TopBar/Bar/MarginContainer/TitleBox" unique_id=1784800031]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 24
@@ -1006,7 +1006,7 @@ text = "GDS"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="VersionLabel" type="Label" parent="UiManager/Menu/TopBar/Bar/MarginContainer/TitleBox"]
+[node name="VersionLabel" type="Label" parent="UiManager/Menu/TopBar/Bar/MarginContainer/TitleBox" unique_id=1154019603]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -1015,14 +1015,14 @@ text = "Version Info"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MainButtons" type="HBoxContainer" parent="UiManager/Menu/TopBar/Bar/MarginContainer"]
+[node name="MainButtons" type="HBoxContainer" parent="UiManager/Menu/TopBar/Bar/MarginContainer" unique_id=428546310]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 alignment = 1
 
-[node name="ProjectsButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons"]
+[node name="ProjectsButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons" unique_id=361509907]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Projects"
@@ -1032,7 +1032,7 @@ icon = ExtResource("7_jlp00")
 icon_alignment = 1
 expand_icon = true
 
-[node name="EnginesButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons"]
+[node name="EnginesButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons" unique_id=1347045582]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Godot Engine"
@@ -1041,7 +1041,7 @@ icon = ExtResource("9_o0qh1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="AssetLibButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons"]
+[node name="AssetLibButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons" unique_id=122383616]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Asset Library"
@@ -1050,7 +1050,7 @@ icon = ExtResource("10_e1jh8")
 icon_alignment = 1
 expand_icon = true
 
-[node name="SettingsButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons"]
+[node name="SettingsButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/MainButtons" unique_id=287091000]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Settings"
@@ -1059,14 +1059,14 @@ icon = ExtResource("11_d4u4i")
 icon_alignment = 1
 expand_icon = true
 
-[node name="WindowButtons" type="HBoxContainer" parent="UiManager/Menu/TopBar/Bar/MarginContainer"]
+[node name="WindowButtons" type="HBoxContainer" parent="UiManager/Menu/TopBar/Bar/MarginContainer" unique_id=161020853]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 alignment = 2
 
-[node name="HideButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/WindowButtons"]
+[node name="HideButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/WindowButtons" unique_id=633403358]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Minimize"
@@ -1074,14 +1074,14 @@ theme = ExtResource("8_v36ak")
 icon = ExtResource("20_5car4")
 icon_alignment = 1
 
-[node name="MinMaxButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/WindowButtons"]
+[node name="MinMaxButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/WindowButtons" unique_id=566250680]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Fullscreen"
 icon = ExtResource("21_ey4mm")
 icon_alignment = 1
 
-[node name="CloseButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/WindowButtons"]
+[node name="CloseButton" type="Button" parent="UiManager/Menu/TopBar/Bar/MarginContainer/WindowButtons" unique_id=1142392421]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 tooltip_text = "Close"
@@ -1090,7 +1090,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_88pc8")
 icon = ExtResource("22_xj411")
 icon_alignment = 1
 
-[node name="ResizeButton" type="Button" parent="UiManager/Menu/TopBar"]
+[node name="ResizeButton" type="Button" parent="UiManager/Menu/TopBar" unique_id=195909090]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 1
 anchors_preset = 3
@@ -1107,10 +1107,10 @@ icon = ExtResource("30_qw8qw")
 icon_alignment = 1
 expand_icon = true
 
-[node name="DelayTimer" type="Timer" parent="UiManager/Menu/TopBar"]
+[node name="DelayTimer" type="Timer" parent="UiManager/Menu/TopBar" unique_id=263473766]
 one_shot = true
 
-[node name="Notification" type="CanvasLayer" parent="UiManager"]
+[node name="Notification" type="CanvasLayer" parent="UiManager" unique_id=1948257506]
 visible = false
 
 [connection signal="finished" from="UiManager/Menu/Intro/MarginContainer/VideoStreamPlayer" to="UiManager/Menu/Intro" method="transition" binds= ["topbar"]]

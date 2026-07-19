@@ -373,7 +373,7 @@ func _get_file_extension() -> String:
 
 
 func _get_runnable_path(index: int) -> String:
-	var version_name = available_versions[index]["name"]
+	var version_name = installed_versions[index]
 	var extracted_path = install_dir + "/" + version_name
 	var godot_exe = extracted_path + "/"
 	var target_file = _get_file_extension()
